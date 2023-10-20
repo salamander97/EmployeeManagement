@@ -3,7 +3,6 @@ package nexus.employee.userUI;
 import nexus.employee.DBConnection;
 import nexus.employee.EmployeeManager;
 import nexus.employee.MainUI;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -97,7 +96,7 @@ public class AdminUI implements ActionListener {
         } else if (ae.getSource() == btnUpdate) {
             adminJf.setVisible(false);
             adminJf.dispose();
-            employeeManager.showSearchFrame();
+            employeeManager.showUpdateFrame();
         } else if (ae.getSource() == btnLogout) {
             DBConnection dbConnection=new DBConnection();
             dbConnection.closeConnection();

@@ -49,9 +49,6 @@ class ForgetPassword implements ActionListener
         btnCheck.setBorder(BorderFactory.createCompoundBorder(
             BorderFactory.createLineBorder(Color.WHITE,3), 
             BorderFactory.createEmptyBorder(10, 15, 10, 15)));
-        // btnCheck.setOpaque(false);
-        // btnCheck.setContentAreaFilled(true);
-        // btnCheck.setBorderPainted(false);
         btnCheck.setBackground(Color.BLACK);
         btnCheck.setForeground(Color.WHITE);
         btnCheck.setFont(new Font("Times_New_Roman",Font.PLAIN,18));

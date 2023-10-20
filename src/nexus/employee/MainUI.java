@@ -63,8 +63,7 @@ public class MainUI extends JFrame implements ActionListener {
                 login.setVisible(true);
             }
         });
-
-        // Thiết lập login
+    // Thiết lập login
         login=new JFrame();
         login.setSize(900, 600);
         login.setLocation(300, 200);
