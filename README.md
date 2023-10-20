@@ -85,10 +85,10 @@
    USE Employee Data;
    
    CREATE TABLE login (
+   id INT AUTO_INCREMENT PRIMARY KEY,
    username VARCHAR(255) NOT NULL,
    password VARCHAR(255) NOT NULL,
-   keyid VARCHAR(255) NOT NULL,
-   PRIMARY KEY (username)
+   role_id INT
    );
    
 ### 従業員データベース内
@@ -117,7 +117,7 @@
 著者 :pencil2: Salamander :raised_hand:
 
 
-このReadmeが従業員管理アプリケーションに関する情報を網羅していることを願っています。ご意見やフィードバックをお待ちしております。 :pray: :tada:
+このReadmeが従業員管理アプリケーションに関する情報を網羅していることを願っています。:pray: :tada:
 
 ありがとうございます！ :rocket:
 
@@ -197,11 +197,12 @@ This is an employee management application using Java Swing and MySQL database. 
    
 
    CREATE TABLE login (
+   id INT AUTO_INCREMENT PRIMARY KEY,
    username VARCHAR(255) NOT NULL,
    password VARCHAR(255) NOT NULL,
-   keyid VARCHAR(255) NOT NULL,
-   PRIMARY KEY (username)
+   role_id INT
    );
+
 
    
 ### In the Employee Data Database :floppy_disk:
@@ -229,4 +230,4 @@ These tables are crucial for storing and managing employee information, providin
   
 **Author** :pencil2: Salamander :raised_hand:
 
-Hope this Readme covers all the information about your employee management application. Appreciate your feedback to improve it. :pray: :tada:
+Hope this Readme covers all the information about your employee management application.:pray: :tada:
