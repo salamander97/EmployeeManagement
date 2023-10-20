@@ -1,4 +1,4 @@
-# 従業員管理システム
+S# 従業員管理システム
 
 **Employee Management System** :briefcase:
 
