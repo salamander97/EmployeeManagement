@@ -228,7 +228,7 @@ class ForgetPassword implements ActionListener
         }
     }
 
-    public static void main(String[]ar)
+    public static void main(String[] args)
     {
         ForgetPassword f=new ForgetPassword();
     }
