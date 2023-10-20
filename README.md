@@ -5,6 +5,7 @@
      git clone https://github.com/salamander97/EmployeeManagement.git
      cd EmployeeManagement
      ```
+**Author** :pencil2: Salamander 👮‍♂️
 
 
 # 従業員管理システム
@@ -116,13 +117,104 @@
 
 これらのテーブルは、従業員情報を保存し、データベースへのセキュアなアクセスを提供し、役割に基づくアクセス権を管理するために重要です. :floppy_disk:
 
-   
-著者 :pencil2: Salamander :raised_hand:
-
 
 このReadmeが従業員管理アプリケーションに関する情報を網羅していることを願っています。:pray: :tada:
 
 ありがとうございます！ :rocket:
+
+ChatGPT
+Hệ thống Quản lý Nhân sự :briefcase:
+Giới thiệu :rocket:
+
+Đây là một ứng dụng quản lý nhân viên sử dụng Java Swing và cơ sở dữ liệu MySQL. :computer:
+
+Tính năng :gear:
+
+Đăng nhập người dùng và kiểm soát quyền truy cập (quản trị viên và nhân viên) :key:
+Quản lý thông tin nhân viên (thêm/sửa/xóa/tìm kiếm) :bust_in_silhouette:
+Quản lý chấm công nhân viên :calendar:
+Công nghệ :wrench:
+
+Ngôn ngữ: Java :coffee:
+Framework giao diện đồ họa: Java Swing :art:
+Cơ sở dữ liệu: MySQL :floppy_disk:
+Thư viện phụ thuộc :inbox_tray:
+
+JDK 21 :hammer:
+MySQL Connector/J 8.0.31 :electric_plug:
+Hướng dẫn cài đặt :arrow_down:
+
+Cài đặt JDK 21 :arrow_upper_right:
+Cài đặt MySQL và tạo cơ sở dữ liệu "Employee Data" :package:
+Nhập dự án vào IDE của bạn (Eclipse, IntelliJ, v.v.) :inbox_tray:
+Thêm thư viện MySQL Connector/J 8.0.31 vào đường dẫn lớp (classpath) :file_folder:
+Sửa thông tin kết nối cơ sở dữ liệu (tên người dùng, mật khẩu, v.v.) trong DBConnection.java :pencil:
+Chạy lớp MainUI để khởi động ứng dụng :rocket:
+Các lớp chính :hammer_and_wrench:
+
+DBConnection: Quản lý kết nối cơ sở dữ liệu :file_folder:
+MainUI: Cung cấp giao diện đăng nhập và menu chính :computer:
+AdminUI: Giao diện quản trị viên :bar_chart:
+EmployeeUI: Giao diện nhân viên :briefcase:
+AuthManager: Xử lý xác thực người dùng và quyền truy cập :cop:
+EmployeeManager: Quản lý các hoạt động CRUD trên nhân viên :busts_in_silhouette:
+*Xem mã nguồn cho các lớp khác :file_folder:
+Cài đặt MySQL và Tạo Cơ sở dữ liệu "Employee Data" :floppy_disk:
+Cài đặt MySQL: Đảm bảo bạn đã cài đặt MySQL trên máy tính của bạn. Nếu chưa, bạn có thể tải MySQL từ trang web chính thức của MySQL (https://dev.mysql.com/downloads/mysql/).
+
+Đảm bảo bạn đã cài đặt MySQL trên máy tính của bạn. Nếu chưa, bạn có thể tải MySQL từ trang web chính thức của MySQL (https://dev.mysql.com/downloads/mysql/).
+
+Khởi động máy chủ MySQL: Sau khi cài đặt hoàn tất, hãy khởi động máy chủ MySQL.
+
+Khởi động máy chủ MySQL sau khi cài đặt hoàn tất.
+
+Truy cập dòng lệnh MySQL hoặc MySQL Workbench: Bạn có thể sử dụng dòng lệnh MySQL hoặc MySQL Workbench để tạo cơ sở dữ liệu và bảng. Dưới đây là một ví dụ sử dụng dòng lệnh MySQL:
+
+Bạn có thể sử dụng dòng lệnh MySQL hoặc MySQL Workbench để tạo cơ sở dữ liệu và bảng. Dưới đây là một ví dụ sử dụng dòng lệnh MySQL:
+
+Mở Command Prompt hoặc Terminal và nhập lệnh sau để truy cập MySQL:
+
+Mở Command Prompt hoặc Terminal và nhập lệnh sau để truy cập MySQL:
+     ```shell
+     mysql -u root -p
+     ```
+Sau đó, nhập mật khẩu khi được yêu cầu.
+
+Tạo cơ sở dữ liệu "Employee Data":
+   ```sql
+   CREATE DATABASE Employee Data;
+   ```
+   ```sql
+   USE Employee Data;
+   ```
+   ```sql
+   CREATE TABLE login (
+   id INT AUTO_INCREMENT PRIMARY KEY,
+   username VARCHAR(255) NOT NULL,
+   password VARCHAR(255) NOT NULL,
+   role_id INT
+   );
+   ```
+Trong Cơ sở dữ liệu Quản lý Nhân sự :floppy_disk:
+Trong Cơ sở dữ liệu Quản lý Nhân sự, bạn tạo hai bảng: employees và login để lưu trữ dữ liệu nhân viên và thông tin đăng nhập để truy cập cơ sở dữ liệu.
+
+Bảng: employees :busts_in_silhouette:
+
+Bảng này được sử dụng để lưu trữ dữ liệu nhân viên.
+Nó bao gồm các trường như employee_id, name, gender, dob (ngày sinh), address, email, phone, position, và role_id.
+Trường employee_id là một khóa chính duy nhất cho từng nhân viên.
+Các trường trong bảng này lưu trữ thông tin về nhân viên, như tên, giới tính, ngày sinh, địa chỉ, địa chỉ email, số điện thoại, vị trí, và role_id.
+Bảng: login :key:
+
+Bảng này được sử dụng để quản lý thông tin đăng nhập.
+Nó bao gồm các trường như username, password, id, và role_id.
+Trường username lưu trữ tên người dùng được sử dụng để đăng nhập.
+Trường password lưu trữ mật khẩu tương ứng.
+Trường id có thể được sử dụng để khôi phục mật khẩu trong trường hợp người dùng quên chi tiết tài khoản của họ.
+Trường role_id được sử dụng để quản lý quyền truy cập, phân biệt giữa quản trị viên và người dùng thường.
+Những bảng này rất quan trọng để lưu trữ và quản lý thông tin nhân viên, cung cấp quyền truy cập an toàn vào cơ sở dữ liệu và quản lý quyền truy cập dựa trên vai trò. :lock:
+
+Hi vọng rằng Readme này đã bao quát tất cả thông tin về ứng dụng quản lý nhân viên của bạn. :pray: :tada:
 
 # Employee Management System :briefcase:
 
@@ -230,7 +322,5 @@ In Employee Data, you create two tables: `employees` and `login` to store employ
 
 These tables are crucial for storing and managing employee information, providing secure access to the database, and administering role-based access rights. :lock:
 
-  
-**Author** :pencil2: Salamander :raised_hand:
 
 Hope this Readme covers all the information about your employee management application.:pray: :tada:
