@@ -74,8 +74,7 @@
    username VARCHAR(255) NOT NULL,
    password VARCHAR(255) NOT NULL,
    keyid VARCHAR(255) NOT NULL,
-   PRIMARY KEY (username)
-);
+   PRIMARY KEY (username));
 
 
 **著者** :pencil2: Salamander:raised_hand:
