@@ -66,14 +66,17 @@
 
    **データベースとテーブルを作成するために、MySQLコマンドラインまたはMySQL Workbenchを使用できます。以下はMySQLコマンドラインを使用する例です。**
 
-   **コマンド プロンプトまたはターミナルを開き、次のコマンドを入力してMySQLにアクセスします。**
+   コマンド プロンプトまたはターミナルを開き、次のコマンドを入力してMySQLにアクセスします。
+
 
      ```shell
      mysql -u root -p
      ```
-   **その後、求められる場合はパスワードを入力してください。**
 
-4. **`Employee Data`データベースの作成 (Create the `Employee Data` Database)**:
+
+   その後、求められる場合はパスワードを入力してください。
+
+5. **`Employee Data`データベースの作成 (Create the `Employee Data` Database)**:
 
    ```sql
    CREATE DATABASE Employee Data;
