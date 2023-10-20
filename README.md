@@ -1,5 +1,4 @@
-# EmployeeManagement-従業員管理システム
-Dưới đây là phiên bản Readme bằng tiếng Nhật với biểu tượng và emoji:
+# 従業員管理システム
 
 **Employee Management System** :briefcase:
 
@@ -53,45 +52,53 @@ Dưới đây là phiên bản Readme bằng tiếng Nhật với biểu tượn
 
 ありがとうございます！ :rocket:
 
-Employee Management System :briefcase:
 
-Introduction :rocket:
+**Employee Management System** :briefcase:
+
+**Introduction** :rocket:
 
 This is an employee management application using Java Swing and MySQL database. :computer:
 
-Features :gear:
+**Features** :gear:
 
-User login and access control (admin and employee) :key:
-Manage employee information (add/edit/delete/search) :bust_in_silhouette:
-Manage employee attendance :calendar:
-Technologies :wrench:
+- User login and access control (admin and employee) :key:
+- Manage employee information (add/edit/delete/search) :bust_in_silhouette:
+- Manage employee attendance :calendar:
 
-Language: Java :coffee:
-GUI Framework: Java Swing :art:
-Database: MySQL :floppy_disk:
-Dependencies :inbox_tray:
+**Technologies** :wrench:
 
-JDK 21 :hammer:
-MySQL Connector/J 8.0.31 :electric_plug:
-Installation Guide :arrow_down:
+- Language: Java :coffee:
+- GUI Framework: Java Swing :art:
+- Database: MySQL :floppy_disk:
 
-Install JDK 21 :arrow_upper_right:
-Install MySQL and create employee_management database :package:
-Import project into IDE (Eclipse, IntelliJ,...) :inbox_tray:
-Add MySQL Connector/J 8.0.31 library to classpath :file_folder:
-Modify database connection information (username, password,...) in DBConnection.java :pencil:
-Run MainUI class to start application :rocket:
-Main Classes :hammer_and_wrench:
+**Dependencies** :inbox_tray:
 
-DBConnection: Connect to database :file_folder:
-MainUI: Login screen and main menu :computer:
-AdminUI: Admin interface :bar_chart:
-EmployeeUI: Employee interface :briefcase:
-AuthManager: Handle user authentication and authorization :cop:
-EmployeeManager: Manage CRUD operations on employees :busts_in_silhouette:
-*See source code for other classes :file_folder:
+- JDK 21 :hammer:
+- MySQL Connector/J 8.0.31 :electric_plug:
 
-Author salamander :pencil2:
+**Installation Guide** :arrow_down:
+
+1. Install JDK 21 :arrow_upper_right:
+2. Install MySQL and create employee_management database :package:
+3. Import project into IDE (Eclipse, IntelliJ,...) :inbox_tray:
+4. Add MySQL Connector/J 8.0.31 library to classpath :file_folder:
+5. Modify database connection information (username, password,...) in DBConnection.java :pencil:
+6. Run MainUI class to start application :rocket:
+
+**Main Classes** :hammer_and_wrench:
+
+- DBConnection: Connect to database :file_folder:
+- MainUI: Login screen and main menu :computer:
+- AdminUI: Admin interface :bar_chart:
+- EmployeeUI: Employee interface :briefcase:
+- AuthManager: Handle user authentication and authorization :cop:
+- EmployeeManager: Manage CRUD operations on employees :busts_in_silhouette:
+- *See source code for other classes :file_folder:
+
+**Author** :pencil2:
+
+Author name :raised_hand:
+
 Email: trunghieu.bomm@gmail.com :email:
 
 Hope this Readme covers all the information about your employee management application. Appreciate your feedback to improve it. :pray: :tada:
