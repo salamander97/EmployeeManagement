@@ -47,15 +47,13 @@
 
    **お使いのコンピュータにMySQLがインストールされていることを確認してください。まだインストールされていない場合は、公式MySQLウェブサイト（https://dev.mysql.com/downloads/mysql/）からMySQLをダウンロードできます。**
 
-2. **MySQLサーバーの起動 (Start MySQL Server)**: インストールが完了したら、MySQLサーバーを起動してください。
+2. **MySQLサーバーの起動 (Start MySQL Server)**: 
 
    **インストールが完了したら、MySQLサーバーを起動してください。**
 
-3. **MySQLコマンドラインまたはMySQL Workbenchへのアクセス (Access MySQL Command Line or MySQL Workbench)**: データベースとテーブルを作成するために、MySQLコマンドラインまたはMySQL Workbenchを使用できます。以下はMySQLコマンドラインを使用する例です。
-
+3. **MySQLコマンドラインまたはMySQL Workbenchへのアクセス (Access MySQL Command Line or MySQL Workbench)**:
+4. 
    **データベースとテーブルを作成するために、MySQLコマンドラインまたはMySQL Workbenchを使用できます。以下はMySQLコマンドラインを使用する例です。**
-
-   - コマンド プロンプトまたはターミナルを開き、次のコマンドを入力してMySQLにアクセスします。
 
      **コマンド プロンプトまたはターミナルを開き、次のコマンドを入力してMySQLにアクセスします。**
 
@@ -63,11 +61,9 @@
      mysql -u root -p
      ```
 
-     その後、求められる場合はパスワードを入力してください。
-
      **その後、求められる場合はパスワードを入力してください。**
 
-4. **"employee_management"データベースの作成 (Create the "employee_management" Database)**:
+5. **"employee_management"データベースの作成 (Create the "employee_management" Database)**:
 
    ```sql
    CREATE DATABASE employee_management;
