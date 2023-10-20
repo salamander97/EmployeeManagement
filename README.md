@@ -48,7 +48,7 @@
 - MainUI: ログイン画面とメインメニュー :computer:
 - AdminUI: 管理者画面 :bar_chart:
 - EmployeeUI: 従業員画面 :briefcase:
-- AuthManager: ユーザー認証とアクセス制御 :cop:
+- EmployeeReader: ユーザー認証とアクセス制御 :cop:
 - EmployeeManager: 従業員に関するCRUD操作の管理 :busts_in_silhouette:
 - *他のクラスについてはソースコードを参照 :file_folder:
 
@@ -155,7 +155,7 @@
 - MainUI: Cung cấp màn hình đăng nhập và menu chính :computer: 
 - AdminUI: Giao diện quản trị viên :bar_chart: 
 - EmployeeUI: Giao diện nhân viên :briefcase: 
-- AuthManager: Xử lý xác thực người dùng và cấp quyền :cop: 
+- EmployeeReader: Xử lý xác thực người dùng và cấp quyền :cop: 
 - EmployeeManager: Quản lý các thao tác CRUD trên nhân viên :busts_in_silhouette: 
 - *Xem mã nguồn để biết về các lớp khác :file_folder: 
 
@@ -248,7 +248,7 @@ This is an employee management application using Java Swing and MySQL database. 
 - MainUI: Provides the login screen and main menu :computer:
 - AdminUI: Admin interface :bar_chart:
 - EmployeeUI: Employee interface :briefcase:
-- AuthManager: Handles user authentication and authorization :cop:
+- EmployeeReader: Handles user authentication and authorization :cop:
 - EmployeeManager: Manages CRUD operations on employees :busts_in_silhouette:
 - *See the source code for other classes :file_folder:
 
