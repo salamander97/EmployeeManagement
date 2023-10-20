@@ -1,40 +1,57 @@
 # EmployeeManagement-従業員管理システム
-これは、Java SwingとMySQLデータベースを使用した従業員管理アプリケーションです。
+Dưới đây là phiên bản Readme bằng tiếng Nhật với biểu tượng và emoji:
 
+**Employee Management System** :briefcase:
 
-⭐️機能:
-・ユーザーのログインと権限管理(管理者と従業員)
-・従業員情報の管理(追加/編集/削除/検索)
-・従業員の勤怠管理
+**はじめに** :rocket:
 
+これはJava SwingとMySQLデータベースを使用した従業員管理アプリケーションです。 :computer:
 
-⭐️言語: Java
-・GUIフレームワーク: Java Swing
-・データベース: MySQL
-⭐️依存関係:
-・JDK 21
-・MySQL Connector/J 8.0.31
-・インストールガイド
-・JDK 21のインストール
-・MySQLのインストールとemployee_managementデータベースの作成
-・IDE(Eclipse、IntelliJなど)にプロジェクトをインポート
-・MySQL Connector/J 8.0.31をクラスパスに追加
-・DBConnection.javaのデータベース接続情報(ユーザー名、パスワードなど)を修正
+**機能** :gear:
 
-->Welcomeクラスを実行してアプリケーションを起動
-⭐️主なクラス
-DBConnection: データベース接続
-MainUI: ログイン画面とメインメニュー
-AdminUI: 管理者画面
-EmployeeUI: 従業員画面
-AuthManager: ユーザー認証と権限管理
-EmployeeManager: 従業員のCRUD機能管理
-⭐️その他のクラスはソースコードを参照
+- ユーザーのログインとアクセス制御（管理者と従業員） :key:
+- 従業員情報の管理（追加/編集/削除/検索） :bust_in_silhouette:
+- 従業員の出勤管理 :calendar:
 
-👨‍💻作成者 salamander
-📫メール: trunghieu.bomm@gmail.com
+**技術** :wrench:
 
-このReadmeファイルで従業員管理アプリケーションの情報を全てカバーできていると思います。フィードバックいただけると幸いです。よろしくお願いします!
+- 言語: Java :coffee:
+- GUIフレームワーク: Java Swing :art:
+- データベース: MySQL :floppy_disk:
+
+**依存関係** :inbox_tray:
+
+- JDK 21 :hammer:
+- MySQL Connector/J 8.0.31 :electric_plug:
+
+**インストールガイド** :arrow_down:
+
+1. JDK 21をインストール :arrow_upper_right:
+2. MySQLをインストールし、employee_managementデータベースを作成 :package:
+3. プロジェクトをIDE（Eclipse、IntelliJ、...）にインポート :inbox_tray:
+4. MySQL Connector/J 8.0.31ライブラリをクラスパスに追加 :file_folder:
+5. DBConnection.javaでデータベース接続情報（ユーザー名、パスワード、...）を修正 :pencil:
+6. MainUIクラスを実行してアプリケーションを起動 :rocket:
+
+**メインクラス** :hammer_and_wrench:
+
+- DBConnection: データベースへの接続 :file_folder:
+- MainUI: ログイン画面とメインメニュー :computer:
+- AdminUI: 管理者画面 :bar_chart:
+- EmployeeUI: 従業員画面 :briefcase:
+- AuthManager: ユーザー認証とアクセス制御 :cop:
+- EmployeeManager: 従業員に関するCRUD操作の管理 :busts_in_silhouette:
+- *他のクラスについてはソースコードを参照 :file_folder:
+
+**著者** :pencil2:
+
+著者名: salamander:raised_hand:
+
+メール: trunghieu.bomm@gmail.com :email:
+
+このReadmeが従業員管理アプリケーションに関する情報を網羅していることを願っています。ご意見やフィードバックをお待ちしております。 :pray: :tada:
+
+ありがとうございます！ :rocket:
 
 Employee Management System :briefcase:
 
@@ -73,9 +90,8 @@ EmployeeUI: Employee interface :briefcase:
 AuthManager: Handle user authentication and authorization :cop:
 EmployeeManager: Manage CRUD operations on employees :busts_in_silhouette:
 *See source code for other classes :file_folder:
+
 Author salamander :pencil2:
-
-
 Email: trunghieu.bomm@gmail.com :email:
 
 Hope this Readme covers all the information about your employee management application. Appreciate your feedback to improve it. :pray: :tada:
