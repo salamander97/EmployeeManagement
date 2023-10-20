@@ -19,7 +19,7 @@
 ## 機能 :gear:
 
 - ユーザーのログインとアクセス制御（管理者と従業員） :key:
-- 従業員情報の管理（追加/編集/削除/検索） :bust_in_silhouette:
+- 従業員情報の管理（追加/更新/削除/閲覧） :bust_in_silhouette:
 - 従業員の出勤管理 :calendar:
 
 ## 使用技術 :wrench:
@@ -78,7 +78,7 @@
 
      **その後、求められる場合はパスワードを入力してください。**
 
-4. **"Employee Data"データベースの作成 (Create the "Employee Data" Database)**:
+4. **`Employee Data`データベースの作成 (Create the `Employee Data` Database)**:
 
    ```sql
    CREATE DATABASE Employee Data;
@@ -97,23 +97,23 @@
    
 ### 従業員データベース内
 
-従業員データでは、従業員データとデータベースへのアクセスに関するログイン情報を保存するために、2つのテーブル「employees」と「login」を作成します.
+従業員データでは、従業員データとデータベースへのアクセスに関するログイン情報を保存するために、2つのテーブル　`employees`と`login`を作成します.
 
 **テーブル: employees** :busts_in_silhouette: 
 
 - このテーブルは、従業員データを保存するために使用されます.
-- 「employee_id」、「name」、「gender」、「dob」（生年月日）、「address」、「email」、「phone」、「position」、「role_id」などのフィールドが含まれます.
-- 「employee_id」は各従業員の一意の識別子です.
-- このテーブルのフィールドは、従業員に関する情報を保存します. 例えば、名前, 性別, 生年月日, 住所, メールアドレス, 電話番号, ポジション, および「role_id」などです.
+- `employee_id`、 `name`、 `gender`、 `dob` 、 `address`、 `email`、 `phone`、 `position`、`role_id`などのフィールドが含まれます.
+- `employee_id`は各従業員の一意の識別子です.
+- このテーブルのフィールドは、従業員に関する情報を保存します. 例えば、名前, 性別, 生年月日, 住所, メールアドレス, 電話番号, ポジション, および`role_id`などです.
 
 **テーブル: login** :key:
 
 - このテーブルはログイン資格情報を管理するために使用されます.
-- 「username」、「password」、「id」、「role_id」などのフィールドが含まれます.
-- 「username」フィールドはログインに使用されるユーザー名を保存します.
-- 「password」フィールドはそれに対応するパスワードを保存します.
-- 「id」フィールドは、ユーザーがアカウントの詳細情報を忘れた場合のパスワードの取得に使用できます.
-- 「role_id」フィールドは、アクセス権を管理し、管理者と通常のユーザーを区別するのに使用されます. 
+- `username`、`password`、`id`、`role_id`などのフィールドが含まれます.
+- `username`フィールドはログインに使用されるユーザー名を保存します.
+- `password`フィールドはそれに対応するパスワードを保存します.
+- `id`フィールドは、ユーザーがアカウントの詳細情報を忘れた場合のパスワードの取得に使用できます.
+- `role_id`フィールドは、アクセス権を管理し、管理者と通常のユーザーを区別するのに使用されます. 
 
 これらのテーブルは、従業員情報を保存し、データベースへのセキュアなアクセスを提供し、役割に基づくアクセス権を管理するために重要です. :floppy_disk:
 
@@ -188,16 +188,16 @@
    );
    ```
 
- **Trong Cơ Sở Dữ Liệu Employee Data :floppy_disk:** 
- Trong Employee Data, bạn tạo hai bảng: `employees` và `login` để lưu trữ dữ liệu nhân viên và thông tin đăng nhập để truy cập cơ sở dữ liệu. 
+ **Trong Cơ Sở Dữ Liệu `Employee Data` :floppy_disk:** 
+ Trong `Employee Data`, bạn tạo hai bảng: `employees` và `login` để lưu trữ dữ liệu nhân viên và thông tin đăng nhập để truy cập cơ sở dữ liệu. 
 
- **Bảng: employees** :busts_in_silhouette: 
+ **Bảng: `employees`** :busts_in_silhouette: 
  - Bảng này được sử dụng để lưu trữ dữ liệu nhân viên. 
  - Nó bao gồm các trường như `employee_id`, `name`, `gender`, `dob` (ngày sinh), `address`, `email`, `phone`, `position`, và `role_id`. 
  - `employee_id` là một mã số định danh duy nhất cho mỗi nhân viên. 
  - Các trường trong bảng này lưu trữ thông tin về nhân viên, chẳng hạn như tên, giới tính, ngày sinh, địa chỉ, email, số điện thoại, vị trí, và `role_id`. 
 
- **Bảng: login** :key: 
+ **Bảng: `login`** :key: 
  - Bảng này được sử dụng để quản lý thông tin đăng nhập. 
  - Nó bao gồm các trường như `username`, `password`, `id`, và `role_id`. 
  - Trường `username` lưu trữ tên người dùng được sử dụng để đăng nhập. 
@@ -298,14 +298,14 @@ This is an employee management application using Java Swing and MySQL database. 
 
 In Employee Data, you create two tables: `employees` and `login` to store employee data and login information for accessing the database.
 
-**Table: employees** :busts_in_silhouette:
+**Table: `employees`** :busts_in_silhouette:
 
 - This table is used to store employee data.
 - It includes fields like `employee_id`, `name`, `gender`, `dob` (date of birth), `address`, `email`, `phone`, `position`, and `role_id`.
 - The `employee_id` is a unique identifier for each employee.
 - The fields in this table store information about the employees, such as their name, gender, date of birth, address, email, phone number, position, and role_id.
 
-**Table: login** :key:
+**Table: `login`** :key:
 
 - This table is used for managing login credentials.
 - It includes fields like `username`, `password`, `id`, and `role_id`.
