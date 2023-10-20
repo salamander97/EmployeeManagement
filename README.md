@@ -81,15 +81,18 @@
 
    ```sql
    CREATE DATABASE Employee Data;
-
+   ```
+   ```sql
    USE Employee Data;
-   
+   ```
+   ```sql
    CREATE TABLE login (
    id INT AUTO_INCREMENT PRIMARY KEY,
    username VARCHAR(255) NOT NULL,
    password VARCHAR(255) NOT NULL,
    role_id INT
    );
+   ```
    
 ### 従業員データベース内
 
@@ -191,18 +194,18 @@ This is an employee management application using Java Swing and MySQL database. 
 
    ```sql
    CREATE DATABASE Employee Data;
-   
-
+   ```
+   ```sql
    USE Employee Data;
-   
-
+   ```
+   ```sql
    CREATE TABLE login (
    id INT AUTO_INCREMENT PRIMARY KEY,
    username VARCHAR(255) NOT NULL,
    password VARCHAR(255) NOT NULL,
    role_id INT
    );
-
+   ```
 
    
 ### In the Employee Data Database :floppy_disk:
