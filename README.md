@@ -41,10 +41,48 @@
 - AuthManager: ユーザー認証とアクセス制御 :cop:
 - EmployeeManager: 従業員に関するCRUD操作の管理 :busts_in_silhouette:
 - *他のクラスについてはソースコードを参照 :file_folder:
+### MySQLのインストールと"employee_management"データベースの作成 :floppy_disk:
+
+1. **MySQLのインストール (Install MySQL)**: お使いのコンピュータにMySQLがインストールされていることを確認してください。インストールされていない場合は、公式MySQLウェブサイト（https://dev.mysql.com/downloads/mysql/）からMySQLをダウンロードできます。
+
+   **お使いのコンピュータにMySQLがインストールされていることを確認してください。まだインストールされていない場合は、公式MySQLウェブサイト（https://dev.mysql.com/downloads/mysql/）からMySQLをダウンロードできます。**
+
+2. **MySQLサーバーの起動 (Start MySQL Server)**: インストールが完了したら、MySQLサーバーを起動してください。
+
+   **インストールが完了したら、MySQLサーバーを起動してください。**
+
+3. **MySQLコマンドラインまたはMySQL Workbenchへのアクセス (Access MySQL Command Line or MySQL Workbench)**: データベースとテーブルを作成するために、MySQLコマンドラインまたはMySQL Workbenchを使用できます。以下はMySQLコマンドラインを使用する例です。
+
+   **データベースとテーブルを作成するために、MySQLコマンドラインまたはMySQL Workbenchを使用できます。以下はMySQLコマンドラインを使用する例です。**
+
+   - コマンド プロンプトまたはターミナルを開き、次のコマンドを入力してMySQLにアクセスします。
+
+     **コマンド プロンプトまたはターミナルを開き、次のコマンドを入力してMySQLにアクセスします。**
+
+     ```shell
+     mysql -u root -p
+     ```
+
+     その後、求められる場合はパスワードを入力してください。
+
+     **その後、求められる場合はパスワードを入力してください。**
+
+4. **"employee_management"データベースの作成 (Create the "employee_management" Database)**:
+
+   ```sql
+   CREATE DATABASE employee_management;
+   USE employee_management;
+   CREATE TABLE login (
+   username VARCHAR(255) NOT NULL,
+   password VARCHAR(255) NOT NULL,
+   keyid VARCHAR(255) NOT NULL,
+   PRIMARY KEY (username)
+);
+
 
 **著者** :pencil2:
 
-著者名: salamander:raised_hand:
+著者名: Salamander:raised_hand:
 
 メール: trunghieu.bomm@gmail.com :email:
 
@@ -97,7 +135,7 @@ This is an employee management application using Java Swing and MySQL database. 
 
 **Author** :pencil2:
 
-Author name :raised_hand:
+Author Salamander :raised_hand:
 
 Email: trunghieu.bomm@gmail.com :email:
 
