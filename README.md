@@ -159,6 +159,7 @@ This is an employee management application using Java Swing and MySQL database. 
    CREATE DATABASE employee_management;
 
    USE employee_management;
+   
    CREATE TABLE login (
   username VARCHAR(255) NOT NULL,
   password VARCHAR(255) NOT NULL,
