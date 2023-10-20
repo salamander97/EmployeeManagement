@@ -22,7 +22,7 @@
 - 従業員情報の管理（追加/編集/削除/検索） :bust_in_silhouette:
 - 従業員の出勤管理 :calendar:
 
-## 技術 :wrench:
+## 使用技術 :wrench:
 
 - 言語: Java :coffee:
 - GUIフレームワーク: Java Swing :art:
