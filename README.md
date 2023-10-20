@@ -128,11 +128,48 @@ This is an employee management application using Java Swing and MySQL database. 
 - EmployeeManager: Manage CRUD operations on employees :busts_in_silhouette:
 - *See source code for other classes :file_folder:
 
-**Author** :pencil2:
+### Install MySQL and Create the "employee_management" Database :floppy_disk:
 
-Author Salamander :raised_hand:
+### MySQLのインストールと"employee_management"データベースの作成
 
-Email: trunghieu.bomm@gmail.com :email:
+1. **Install MySQL**: Make sure you have MySQL installed on your computer. If not, you can download MySQL from the official MySQL website (https://dev.mysql.com/downloads/mysql/).
+
+   **Ensure you have MySQL installed on your computer. If not, you can download MySQL from the official MySQL website (https://dev.mysql.com/downloads/mysql/).**
+
+2. **Start MySQL Server**: 
+
+   **Start the MySQL Server after installation.**
+
+3. **Access MySQL Command Line or MySQL Workbench**:
+
+   **You can use MySQL Command Line or MySQL Workbench to create the database and table. Here's an example using MySQL Command Line:**
+
+
+     **Open Command Prompt or Terminal and enter the following command to access MySQL:**
+
+     ```shell
+     mysql -u root -p
+     ```
+
+     Then, enter your password when prompted.
+
+4. **Create the "employee_management" Database**:
+
+   ```sql
+   CREATE DATABASE employee_management;
+
+   USE employee_management;
+   CREATE TABLE login (
+  username VARCHAR(255) NOT NULL,
+  password VARCHAR(255) NOT NULL,
+  keyid VARCHAR(255) NOT NULL,
+  PRIMARY KEY (username));
+
+
+
+**Author** :pencil2: Salamander :raised_hand:
+
+Email: :email: trunghieu.bomm@gmail.com :email:
 
 Hope this Readme covers all the information about your employee management application. Appreciate your feedback to improve it. :pray: :tada:
 
