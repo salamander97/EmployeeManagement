@@ -1,4 +1,11 @@
-S# 従業員管理システム
+⬇️ Clone source or download from github ⬇️
+     ```shell
+     git clone https://github.com/salamander97/EmployeeManagement.git
+     cd EmployeeManagement
+     ```
+
+
+# 従業員管理システム
 
 **Employee Management System** :briefcase:
 
