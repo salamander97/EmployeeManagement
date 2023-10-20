@@ -78,11 +78,9 @@
 );
 
 
-**著者** :pencil2:
+**著者** :pencil2: Salamander:raised_hand:
 
-著者名: Salamander:raised_hand:
-
-メール: trunghieu.bomm@gmail.com :email:
+メール::email: trunghieu.bomm@gmail.com :email:
 
 このReadmeが従業員管理アプリケーションに関する情報を網羅していることを願っています。ご意見やフィードバックをお待ちしております。 :pray: :tada:
 
