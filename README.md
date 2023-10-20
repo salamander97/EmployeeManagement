@@ -92,7 +92,7 @@
    );
    
 著者 :pencil2: Salamander :raised_hand:
-メール::email: trunghieu.bomm@gmail.com :email:
+
 
 このReadmeが従業員管理アプリケーションに関する情報を網羅していることを願っています。ご意見やフィードバックをお待ちしております。 :pray: :tada:
 
@@ -181,7 +181,5 @@ This is an employee management application using Java Swing and MySQL database. 
    );
   
 **Author** :pencil2: Salamander :raised_hand:
-
-Email: :email: trunghieu.bomm@gmail.com :email:
 
 Hope this Readme covers all the information about your employee management application. Appreciate your feedback to improve it. :pray: :tada:
