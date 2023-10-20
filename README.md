@@ -76,12 +76,13 @@
    USE employee_management;
    
    CREATE TABLE login (
-  username VARCHAR(255) NOT NULL,
-  password VARCHAR(255) NOT NULL,
-  keyid VARCHAR(255) NOT NULL,
-  PRIMARY KEY (username)
-  );
-  著者 :pencil2: Salamander :raised_hand:
+   username VARCHAR(255) NOT NULL,
+   password VARCHAR(255) NOT NULL,
+   keyid VARCHAR(255) NOT NULL,
+   PRIMARY KEY (username)
+   );
+   
+著者 :pencil2: Salamander :raised_hand:
 メール::email: trunghieu.bomm@gmail.com :email:
 
 このReadmeが従業員管理アプリケーションに関する情報を網羅していることを願っています。ご意見やフィードバックをお待ちしております。 :pray: :tada:
@@ -164,11 +165,11 @@ This is an employee management application using Java Swing and MySQL database. 
    
 
    CREATE TABLE login (
-  username VARCHAR(255) NOT NULL,
-  password VARCHAR(255) NOT NULL,
-  keyid VARCHAR(255) NOT NULL,
-  PRIMARY KEY (username)
-  );
+   username VARCHAR(255) NOT NULL,
+   password VARCHAR(255) NOT NULL,
+   keyid VARCHAR(255) NOT NULL,
+   PRIMARY KEY (username)
+   );
   
 **Author** :pencil2: Salamander :raised_hand:
 
