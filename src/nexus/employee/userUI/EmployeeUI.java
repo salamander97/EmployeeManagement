@@ -10,160 +10,382 @@ import java.awt.event.*;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
-public class EmployeeUI implements ActionListener {
-    JFrame userJf,searchFrame;
-    JLabel jblImage;
-    JButton btnView,btnLogout;
+public class EmployeeUI {
+    JFrame userJf;
+    JLabel jlbImage;
+    JButton btnView,btnLogout,btnSearchInfor,btnCancel,btnReturn;
+    private String employeeId, name, gender, dob, address, email, phone, position, role_id;
+    private MainUI mainUI;
 
     public EmployeeUI() {
-        userJf=new JFrame();
+
         // Background Image
-        jblImage=new JLabel();
-        jblImage.setBounds(0, 0, 900, 600);
-        jblImage.setLayout(null);
+        jlbImage=new JLabel();
+        jlbImage.setBounds(0, 0, 900, 600);
+        jlbImage.setLayout(null);
+        ImageIcon img=new ImageIcon("src/nexus/employee/images/frontPage_1.png");
         ImageIcon i=new ImageIcon("src/nexus/employee/images/mainController.png");
-        jblImage.setIcon(i);
-        userJf.add(jblImage);
+
+        userJf=new JFrame("閲覧");
+        userJf.setSize(900, 600);
+        userJf.setLocation(300, 200);
+        userJf.setResizable(false);
+        userJf.setLayout(null);
+        userJf.add(jlbImage);
+        jlbImage.setIcon(i);
 
         btnView=new JButton("検索");
         btnView.setBounds(310, 400, 120, 40);
         btnView.setFont(new Font("Times_New_Roman", Font.BOLD, 18));
         btnView.setForeground(Color.BLACK);
         btnView.setBackground(Color.LIGHT_GRAY);
-        jblImage.add(btnView);
+        jlbImage.add(btnView);
 
         btnLogout=new JButton("ログアウト");
         btnLogout.setBounds(470, 400, 120, 40);
         btnLogout.setFont(new Font("Times_New_Roman", Font.BOLD,18));
         btnLogout.setForeground(Color.BLACK);
         btnLogout.setBackground(Color.LIGHT_GRAY);
-        jblImage.add(btnLogout);
+        jlbImage.add(btnLogout);
 
-        searchFrame = new JFrame("検索");
-        JLabel jlbImgSearch, jlbInfor;
-        JTextField jtxInfor;
-        JButton btnSearch, btnSearchCancel;
-        //Frame Details
-        searchFrame.setSize(900, 600);
-        searchFrame.setLocation(300, 200);
-        searchFrame.setResizable(false);
-        searchFrame.setLayout(null);
 
-        //Background Image
-        jlbImgSearch=new JLabel();
-        ImageIcon img=new ImageIcon("src/nexus/employee/images/frontPage_1.png");
-        jlbImgSearch.setBounds(0, 0, 900, 600);
-        jlbImgSearch.setLayout(null);
-        jlbImgSearch.setIcon(img);
-        searchFrame.add(jlbImgSearch);
+        JLabel jlbTitle,jlbInfor,jlbName,jlbAddress,jlbPhone,jlbEmail,jlbGender,jlbPos,jlbID,jlbDob,jlbRoleID,
+                jlbSName,jlbSAddress,jlbSPhone,jlbSEmail,jlbSGender,jlbSPos,jlbSID,jlbSDob,jlbSRoleID;
+        JTextField jtxInforSearch;
+
+        jlbTitle =new JLabel("従業員の検索");
+        jlbTitle.setBounds(350, 50, 620, 50);
+        jlbTitle.setFont(new Font("Serif", Font.BOLD, 40));
+        jlbTitle.setForeground(Color.BLACK);
+        jlbImage.add(jlbTitle);
+
 
         //Label Details
-        jlbInfor=new JLabel("従業員のID:");
-        jlbInfor.setBounds(270, 250, 250, 30);
+        jlbInfor=new JLabel("従業員の情報");
+        jlbInfor.setBounds(230, 250, 250, 50);
         jlbInfor.setForeground(Color.BLACK);
         jlbInfor.setFont(new Font("Times_New_Roman", Font.BOLD, 25));
-        jlbImgSearch.add(jlbInfor);
+        jlbImage.add(jlbInfor);
 
-        jtxInfor=new JTextField();
-        jtxInfor.setBounds(420, 250, 220, 30);
-        jtxInfor.setFont(new Font("serif", Font.PLAIN, 18));
-        jlbImgSearch.add(jtxInfor);
+        jtxInforSearch=new JTextField("氏名、電話番号、メール、従業員のIDを入力");
+        jtxInforSearch.setBounds(400, 255, 380, 40);
+        jtxInforSearch.setFont(new Font("serif", Font.BOLD, 18));
+        jlbImage.add(jtxInforSearch);
 
         //Button Details
-        btnSearch=new JButton("検索");
-        btnSearch.setBounds(300, 300, 140, 35);
-        btnSearch.setBackground(Color.LIGHT_GRAY);
-        btnSearch.setForeground(Color.BLACK);
-        btnSearch.setFont(new Font("Times_New_Roman", Font.BOLD, 18));
-        jlbImgSearch.add(btnSearch);
+        btnSearchInfor=new JButton("検索");
+        btnSearchInfor.setBounds(300, 330, 140, 35);
+        btnSearchInfor.setBackground(Color.LIGHT_GRAY);
+        btnSearchInfor.setForeground(Color.BLACK);
+        btnSearchInfor.setFont(new Font("Times_New_Roman", Font.BOLD, 18));
+        jlbImage.add(btnSearchInfor);
+        btnCancel=new JButton("キャンセル");
+        btnCancel.setBounds(460, 330, 140, 35);
+        btnCancel.setBackground(Color.LIGHT_GRAY);
+        btnCancel.setForeground(Color.BLACK);
+        btnCancel.setFont(new Font("Times_New_Roman", Font.BOLD, 18));
+        jlbImage.add(btnCancel);
 
-        btnSearchCancel=new JButton("キャンセル");
-        btnSearchCancel.setBounds(460, 300, 140, 35);
-        btnSearchCancel.setBackground(Color.LIGHT_GRAY);
-        btnSearchCancel.setForeground(Color.BLACK);
-        btnSearchCancel.setFont(new Font("Times_New_Roman", Font.BOLD, 18));
-        jlbImgSearch.add(btnSearchCancel);
-        btnView.addActionListener(this); //Thêm ActionListener cho nút "検索"
-        btnLogout.addActionListener(this);
+        btnReturn=new JButton("戻る");
+        btnReturn.setBounds(500, 440, 120, 40);
+        btnReturn.setBackground(Color.LIGHT_GRAY);
+        btnReturn.setForeground(Color.BLACK);
+        btnReturn.setFont(new Font("serif", Font.BOLD, 18));
+        jlbImage.add(btnReturn);
 
-        //Frame Details
-        userJf.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        userJf.setResizable(false);
-        userJf.setLayout(null);
-        userJf.setLocation(300, 200);
-        userJf.setSize(900, 600);
-        userJf.setVisible(true);
-        btnSearch.addActionListener(new ActionListener() {
+        //Label Details
+
+        //1.Name
+        jlbName=new JLabel("氏名:");
+        jlbName.setBounds(150, 140, 100, 30);
+        jlbName.setFont(new Font("serif", Font.BOLD, 20));
+        jlbImage.add(jlbName);
+
+        jlbSName=new JLabel();
+        jlbSName.setBounds(250, 140, 200, 30);
+        jlbSName.setFont(new Font("serif", Font.BOLD, 20));
+        jlbImage.add(jlbSName);
+
+        //2.Address
+        jlbAddress=new JLabel("住所:");
+        jlbAddress.setBounds(450, 140, 200, 30);
+        jlbAddress.setFont(new Font("serif", Font.BOLD, 20));
+        jlbImage.add(jlbAddress);
+
+        jlbSAddress=new JLabel();
+        jlbSAddress.setBounds(550, 140, 150, 30);
+        jlbSAddress.setFont(new Font("serif", Font.BOLD, 20));
+        jlbImage.add(jlbSAddress);
+
+        //3.Mobile No.
+        jlbPhone=new JLabel("電話番号:");
+        jlbPhone.setBounds(150, 200, 100, 30);
+        jlbPhone.setFont(new Font("serif", Font.BOLD, 20));
+        jlbImage.add(jlbPhone);
+
+        jlbSPhone=new JLabel();
+        jlbSPhone.setBounds(250, 200, 150, 30);
+        jlbSPhone.setFont(new Font("serif", Font.BOLD, 20));
+        jlbImage.add(jlbSPhone);
+
+        //4.Email Id
+        jlbEmail=new JLabel("メール:");
+        jlbEmail.setBounds(450, 200, 100, 30);
+        jlbEmail.setFont(new Font("serif", Font.BOLD, 20));
+        jlbImage.add(jlbEmail);
+
+        jlbSEmail=new JLabel();
+        jlbSEmail.setBounds(550, 200, 200, 30);
+        jlbSEmail.setFont(new Font("serif", Font.BOLD, 20));
+        jlbImage.add(jlbSEmail);
+
+        //5.Gender
+        jlbGender=new JLabel("性別:");
+        jlbGender.setBounds(150, 260, 100, 30);
+        jlbGender.setFont(new Font("serif", Font.BOLD, 20));
+        jlbImage.add(jlbGender);
+
+        jlbSGender=new JLabel();
+        jlbSGender.setBounds(250, 260, 150, 30);
+        jlbSGender.setFont(new Font("serif", Font.BOLD, 20));
+        jlbImage.add(jlbSGender);
+
+        //6.Job Position
+        jlbPos=new JLabel("職位:");
+        jlbPos.setBounds(450, 260, 100, 30);
+        jlbPos.setFont(new Font("serif", Font.BOLD, 20));
+        jlbImage.add(jlbPos);
+
+        jlbSPos=new JLabel();
+        jlbSPos.setBounds(550, 260, 150, 30);
+        jlbSPos.setFont(new Font("serif", Font.BOLD, 20));
+        jlbImage.add(jlbSPos);
+
+        //7.Employee ID
+        jlbID=new JLabel("従業員ID:");
+        jlbID.setBounds(150, 320, 150, 30);
+        jlbID.setFont(new Font("serif", Font.BOLD, 20));
+        jlbImage.add(jlbID);
+
+        jlbSID=new JLabel();
+        jlbSID.setBounds(250, 320, 150, 30);
+        jlbSID.setFont(new Font("serif", Font.BOLD, 20));
+        jlbImage.add(jlbSID);
+
+        //8.Date of Birth
+        jlbDob=new JLabel("生年月日:");
+        jlbDob.setBounds(450, 320, 150, 30);
+        jlbDob.setFont(new Font("serif", Font.BOLD, 20));
+        jlbImage.add(jlbDob);
+
+        jlbSDob=new JLabel();
+        jlbSDob.setBounds(550, 320, 150, 30);
+        jlbSDob.setFont(new Font("serif", Font.BOLD, 20));
+        jlbImage.add(jlbSDob);
+
+        //9.Role ID
+        jlbRoleID=new JLabel("役割ID:");
+        jlbRoleID.setBounds(150, 380, 150, 30);
+        jlbRoleID.setFont(new Font("serif", Font.BOLD, 20));
+        jlbImage.add(jlbRoleID);
+
+        jlbSRoleID=new JLabel();
+        jlbSRoleID.setBounds(250, 380, 150, 30);
+        jlbSRoleID.setFont(new Font("serif", Font.BOLD, 20));
+        jlbImage.add(jlbSRoleID);
+
+        jlbTitle.setVisible(false);
+        jlbName.setVisible(false);
+        jlbAddress.setVisible(false);
+        jlbPhone.setVisible(false);
+        jlbEmail.setVisible(false);
+        jlbGender.setVisible(false);
+        jlbPos.setVisible(false);
+        jlbID.setVisible(false);
+        jlbDob.setVisible(false);
+        jlbRoleID.setVisible(false);
+        jlbInfor.setVisible(false);
+        jtxInforSearch.setVisible(false);
+
+        btnReturn.setVisible(false);
+        btnSearchInfor.setVisible(false);
+        btnCancel.setVisible(false);
+        btnSearchInfor.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 DBConnection dbConnection=new DBConnection(); // Tạo kết nối cơ sở dữ liệu
-                String searchTerm=jtxInfor.getText(); // Lấy giá trị từ JTextField
-
+                String searchTerm=jtxInforSearch.getText(); // Lấy giá trị từ JTextField
                 try {
                     // Thiết lập truy vấn SQL và thực hiện truy vấn
                     String query="SELECT * FROM employees WHERE name = ? OR phone = ? OR email = ? OR employee_id = ?";
                     PreparedStatement preparedStatement=dbConnection.connection.prepareStatement(query);
-
                     // Đặt các giá trị vào các placeholder
                     preparedStatement.setString(1, searchTerm); // name
                     preparedStatement.setString(2, searchTerm); // phone
                     preparedStatement.setString(3, searchTerm); // email
                     preparedStatement.setString(4, searchTerm); // employee_id
-
                     // Thực hiện truy vấn và lấy kết quả
                     ResultSet rs=preparedStatement.executeQuery();
-
                     // Xử lý kết quả và hiển thị thông tin nếu tìm thấy
-                    while (rs.next()) {
+                    if (rs.next()) {
                         // Lấy thông tin từ ResultSet
-                        String employeeId=rs.getString("employee_id");
-                        String name=rs.getString("name");
-                        String gender=rs.getString("gender");
-                        String dob=rs.getString("dob");
-                        String address=rs.getString("address");
-                        String email=rs.getString("email");
-                        String phone=rs.getString("phone");
-                        String position=rs.getString("position");
-
+                        employeeId=rs.getString("employee_id");
+                        name=rs.getString("name");
+                        gender=rs.getString("gender");
+                        dob=rs.getString("dob");
+                        address=rs.getString("address");
+                        email=rs.getString("email");
+                        phone=rs.getString("phone");
+                        position=rs.getString("position");
+                        role_id=rs.getString("role_id");
+                        JOptionPane.showMessageDialog(null, "従業員が見つかりました");
                         // Hiển thị thông tin (ví dụ: sử dụng System.out.println hoặc hiển thị trong giao diện người dùng)
-                        System.out.println("EmployeeID" + employeeId);
-                        System.out.println("Name: " + name);
-                        System.out.println("Gender" + gender);
-                        System.out.println("Date Of Birth" + dob);
-                        System.out.println("Address: " + address);
-                        System.out.println("Email: " + email);
-                        System.out.println("Phone Number: " + phone);
-                        System.out.println("Position: " + position);
+                        jlbName.setVisible(true);
+                        jlbAddress.setVisible(true);
+                        jlbPhone.setVisible(true);
+                        jlbEmail.setVisible(true);
+                        jlbGender.setVisible(true);
+                        jlbPos.setVisible(true);
+                        jlbID.setVisible(true);
+                        jlbDob.setVisible(true);
+                        jlbRoleID.setVisible(true);
+                        jlbSID.setText(employeeId);
+                        jlbSName.setText(name);
+                        jlbSGender.setText(gender);
+                        jlbSDob.setText(dob);
+                        jlbSAddress.setText(address);
+                        jlbSEmail.setText(email);
+                        jlbSPhone.setText(phone);
+                        jlbSPos.setText(position);
+                        jlbSRoleID.setText(role_id);
+                        jlbSID.setVisible(true);
+                        jlbSName.setVisible(true);
+                        jlbSGender.setVisible(true);
+                        jlbSDob.setVisible(true);
+                        jlbSAddress.setVisible(true);
+                        jlbSEmail.setVisible(true);
+                        jlbSPhone.setVisible(true);
+                        jlbSPos.setVisible(true);
+                        jlbSRoleID.setVisible(true);
+                        jtxInforSearch.setVisible(false);
+                        jlbInfor.setVisible(false);
+
+                        btnLogout.setVisible(false);
+                        btnView.setVisible(false);
+                        btnSearchInfor.setVisible(false);
+                        btnCancel.setVisible(false);
+                        btnReturn.setVisible(true);
+                    } else {
+                        JOptionPane.showMessageDialog(null, "従業員が見つかりません");
                     }
-                    // Đóng kết nối cơ sở dữ liệu
-                    dbConnection.connection.close();
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }
             }
         });
-        btnSearchCancel.addActionListener(new ActionListener() {
+        btnReturn.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
-                searchFrame.dispose();
-                userJf.setVisible(true);
+                jlbInfor.setVisible(true);
+                jtxInforSearch.setVisible(true);
+                jtxInforSearch.setText("氏名、電話番号、メール、従業員のIDを入力");
+                btnSearchInfor.setVisible(true);
+                btnCancel.setVisible(true);
+                btnReturn.setVisible(false);
+                jlbName.setVisible(false);
+                jlbSName.setVisible(false);
+                jlbGender.setVisible(false);
+                jlbSGender.setVisible(false);
+                jlbDob.setVisible(false);
+                jlbSDob.setVisible(false);
+                jlbAddress.setVisible(false);
+                jlbSAddress.setVisible(false);
+                jlbEmail.setVisible(false);
+                jlbSEmail.setVisible(false);
+                jlbPhone.setVisible(false);
+                jlbSPhone.setVisible(false);
+                jlbPos.setVisible(false);
+                jlbSPos.setVisible(false);
+                jlbID.setVisible(false);
+                jlbSID.setVisible(false);
+                jlbRoleID.setVisible(false);
+                jlbSRoleID.setVisible(false);
             }
         });
-    }
+        btnView.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                jlbImage.setIcon(img);
+                btnSearchInfor.setVisible(true);
+                btnCancel.setVisible(true);
+                jlbInfor.setVisible(true);
+                jtxInforSearch.setVisible(true);
+                jlbTitle.setVisible(true);
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == btnView) {
-            searchFrame.setVisible(true);
-            userJf.setVisible(false);
-            userJf.dispose();
-        }
-        if (e.getSource()==btnLogout){
-            DBConnection dbConnection=new DBConnection();
-            dbConnection.closeConnection();
-            MainUI mainUI=new MainUI();
-            mainUI.showFrontPage();
-            userJf.setVisible(false);
-            userJf.dispose();
-        }
+                btnView.setVisible(false);
+                btnReturn.setVisible(false);
+                btnLogout.setVisible(false);
+                jlbName.setVisible(false);
+                jlbSName.setVisible(false);
+                jlbGender.setVisible(false);
+                jlbSGender.setVisible(false);
+                jlbDob.setVisible(false);
+                jlbSDob.setVisible(false);
+                jlbAddress.setVisible(false);
+                jlbSAddress.setVisible(false);
+                jlbEmail.setVisible(false);
+                jlbSEmail.setVisible(false);
+                jlbPhone.setVisible(false);
+                jlbSPhone.setVisible(false);
+                jlbPos.setVisible(false);
+                jlbSPos.setVisible(false);
+                jlbID.setVisible(false);
+                jlbSID.setVisible(false);
+                jlbRoleID.setVisible(false);
+                jlbSRoleID.setVisible(false);
+
+            }
+        });
+        btnCancel.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                jlbImage.setIcon(i);
+                btnView.setVisible(true);
+                btnLogout.setVisible(true);
+
+                btnSearchInfor.setVisible(false);
+                btnCancel.setVisible(false);
+                jlbInfor.setVisible(false);
+                jtxInforSearch.setVisible(false);
+                jlbTitle.setVisible(false);
+                jlbName.setVisible(false);
+                jlbSName.setVisible(false);
+                jlbGender.setVisible(false);
+                jlbSGender.setVisible(false);
+                jlbDob.setVisible(false);
+                jlbSDob.setVisible(false);
+                jlbAddress.setVisible(false);
+                jlbSAddress.setVisible(false);
+                jlbEmail.setVisible(false);
+                jlbSEmail.setVisible(false);
+                jlbPhone.setVisible(false);
+                jlbSPhone.setVisible(false);
+                jlbPos.setVisible(false);
+                jlbSPos.setVisible(false);
+                jlbID.setVisible(false);
+                jlbSID.setVisible(false);
+                jlbRoleID.setVisible(false);
+                jlbSRoleID.setVisible(false);
+            }
+        });
+        btnLogout.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                userJf.setVisible(false);
+                userJf.dispose();
+                mainUI = new MainUI();
+                mainUI.showLoginFrame();
+            }
+        });
     }
 
     public void setVisible(boolean b) {

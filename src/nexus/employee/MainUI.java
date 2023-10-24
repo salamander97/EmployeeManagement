@@ -15,7 +15,8 @@ public class MainUI extends JFrame implements ActionListener {
     JTextField jtfUsername;
     JPasswordField jPasswordField;
     JFrame frontPage,login;
-    // Các phương thức khai báo và xử lý chức năng
+    private EmployeeReader employeeReader;
+    //     Các phương thức khai báo và xử lý chức năng
     public MainUI() {
         ImageIcon imgFrontPage=new ImageIcon("src/nexus/employee/images/frontPage_1.png");
         ImageIcon imgLogin=new ImageIcon("src/nexus/employee/images/login.png");
@@ -55,7 +56,8 @@ public class MainUI extends JFrame implements ActionListener {
         jlbImgFrontPage.add(btnLogin); //Thêm btnLogin vào frontPage
 
         btnLogin.addActionListener(this); //Thêm sự kiện cho btnLogin
-    btnLogin.addActionListener(new ActionListener() {
+        btnLogin.addActionListener(new ActionListener() {
+
 
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -63,7 +65,7 @@ public class MainUI extends JFrame implements ActionListener {
                 login.setVisible(true);
             }
         });
-    // Thiết lập login
+        // Thiết lập login
         login=new JFrame();
         login.setSize(900, 600);
         login.setLocation(300, 200);
@@ -148,11 +150,11 @@ public class MainUI extends JFrame implements ActionListener {
                     ResultSet resultSet=dbConnection.statement.executeQuery(sql);
                     if (resultSet.next()) {          //Kiểm tra dữ liệu nhập vào có trùng với dữ liệu trong database hay không
                         // Kiểm tra và xử lý phân quyền dựa trên roleId
-                        int roleId=resultSet.getInt("role_id");
+                        int roleId =resultSet.getInt("role_id");
                         System.out.println("Username: " + username);
                         System.out.println("Password: " + password);
                         System.out.println("Role ID: " + roleId);
-                        EmployeeReader employeeReader=new EmployeeReader();
+                        employeeReader=new EmployeeReader();
                         if (roleId == 1) {
                             // Nếu là admin thì hiển thị màn hình AdminUI
                             JOptionPane.showMessageDialog(null, "ログイン成功");
@@ -162,16 +164,18 @@ public class MainUI extends JFrame implements ActionListener {
                         } else if (roleId == 2) {
                             // Nếu là nhân viên thì hiển thị màn hình EmployeeUI
                             JOptionPane.showMessageDialog(null, "ログイン成功");
-                            EmployeeUI employeeUI=new EmployeeUI();
                             employeeReader.showEmployeeUI();
                             login.dispose();
                             this.setVisible(false);
                         }
                     } else {
                         JOptionPane.showMessageDialog(null, "ユーザー名またはパスワードが正しくありません");
-                        this.setVisible(false);
-                        ForgetPassword forgetPassword=new ForgetPassword();
-                        forgetPassword.setVisible(true);
+                        int click=JOptionPane.showConfirmDialog(null, "アカウントを探す", "Notification", JOptionPane.YES_NO_OPTION);
+                        if (click == JOptionPane.YES_OPTION) {
+                            ForgetPassword forgetPassword=new ForgetPassword();
+                            forgetPassword.setVisible(true);
+                            this.setVisible(false);
+                        }
                     }
                 } catch (Exception e) {
                     e.printStackTrace();

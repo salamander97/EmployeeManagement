@@ -1,5 +1,4 @@
 package nexus.employee;
-import nexus.employee.MainUI;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;

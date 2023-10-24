@@ -5,185 +5,179 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
-class ForgetPassword implements ActionListener
-{
+class ForgetPassword implements ActionListener {
     JFrame jFrame;
     JTextField jtxID;
-    JLabel lblid,lblnew,lblconfirm,lblimage,lblkeyid;
-    JButton btnCheck,btnCancel,btnChange,btnReturn;
-    JPasswordField jtxPConfirm,jtxPNew,jtxKeyID;
-    ForgetPassword()
-    {
-        //Frame Details
-        jFrame=new JFrame("FORGOT PASSWORD");
-        jFrame.setDefaultCloseOperation(WindowConstants. EXIT_ON_CLOSE);
+    JLabel lblID, lblNew, lblConfirm, lblImage, lblKeyID;
+    JButton btnCheck, btnCancel, btnChange, btnReturn;
+    JPasswordField jtxPConfirm, jtxPNew, jtxKeyID;
+
+    ForgetPassword() {
+        // Frame Details
+        jFrame = new JFrame("FORGOT PASSWORD");
+        jFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         jFrame.setResizable(false);
         jFrame.setLayout(null);
         jFrame.setBackground(Color.green);
         jFrame.setLayout(null);
 
-        //Background Image
-        lblimage=new JLabel();
-        lblimage.setBounds(0,0,900,600);
-        lblimage.setLayout(null);
-        ImageIcon img=new ImageIcon("src/nexus/employee/images/forgetPassword.png");
-        lblimage.setIcon(img);
-        jFrame.add(lblimage);
+        // Background Image
+        lblImage = new JLabel();
+        lblImage.setBounds(0, 0, 900, 600);
+        lblImage.setLayout(null);
+        ImageIcon img = new ImageIcon("src/nexus/employee/images/forgetPassword.png");
+        lblImage.setIcon(img);
+        jFrame.add(lblImage);
 
-        lblid=new JLabel("ENTER KEY ID:");
-        lblid.setVisible(true);
-        lblid.setBounds(150,250,150,30);
-        lblid.setForeground(Color.BLACK);
-        lblid.setFont(new Font("serif",Font.BOLD,20));
-        lblimage.add(lblid);
+        lblID = new JLabel("KEY ID:");
+        lblID.setVisible(true);
+        lblID.setBounds(150, 250, 150, 30);
+        lblID.setForeground(Color.BLACK);
+        lblID.setFont(new Font("serif", Font.BOLD, 20));
+        lblImage.add(lblID);
 
-        //Key Id Text Field
-        jtxID=new JTextField();
-        jtxID.setBounds(320,250,200,30);
-        jtxID.setFont(new Font("serif",Font.PLAIN,18));
-        lblimage.add(jtxID);
+        // Key Id Text Field
+        jtxID = new JTextField();
+        jtxID.setBounds(320, 250, 200, 30);
+        jtxID.setFont(new Font("serif", Font.BOLD, 18));
+        lblImage.add(jtxID);
 
-        //Change button
-        btnCheck=new JButton("CHECK");
-        btnCheck.setBounds(320,300,110,30);
-        btnCheck.setBorder(BorderFactory.createCompoundBorder(
-            BorderFactory.createLineBorder(Color.WHITE,3), 
-            BorderFactory.createEmptyBorder(10, 15, 10, 15)));
+        // Change button
+        btnCheck = new JButton("検索");
+        btnCheck.setBounds(320, 300, 110, 30);
+        btnCheck.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(Color.WHITE, 3),
+                BorderFactory.createEmptyBorder(10, 15, 10, 15)));
         btnCheck.setBackground(Color.BLACK);
         btnCheck.setForeground(Color.WHITE);
-        btnCheck.setFont(new Font("Times_New_Roman",Font.PLAIN,18));
-        lblimage.add(btnCheck);
+        btnCheck.setFont(new Font("Times_New_Roman", Font.BOLD, 18));
+        lblImage.add(btnCheck);
 
-        //Cancel button
-        btnCancel=new JButton("CANCEL");
-        btnCancel.setBounds(435,300,110,30);
-        btnCancel.setBorder(BorderFactory.createCompoundBorder(
-            BorderFactory.createLineBorder(Color.WHITE,3), 
-            BorderFactory.createEmptyBorder(5, 15, 5, 15)));
+        // Cancel button
+        btnCancel = new JButton("キャンセル");
+        btnCancel.setBounds(435, 300, 140, 30);
+        btnCancel.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(Color.WHITE, 3),
+                BorderFactory.createEmptyBorder(5, 15, 5, 15)));
         btnCancel.setBackground(Color.BLACK);
         btnCancel.setForeground(Color.WHITE);
-        btnCancel.setFont(new Font("Times_New_Roman",Font.PLAIN,18));
-        lblimage.add(btnCancel);
+        btnCancel.setFont(new Font("Times_New_Roman", Font.BOLD, 18));
+        lblImage.add(btnCancel);
 
         btnCheck.addActionListener(this);
         btnCancel.addActionListener(this);
 
-        //New,Confirm Password and Key ID Label Details
-        lblnew=new JLabel("NEW PASSWORD:");
-        lblnew.setVisible(true);
-        lblnew.setBounds(40,200,250,30);
-        lblnew.setForeground(Color.BLACK);
-        lblnew.setFont(new Font("serif",Font.BOLD,20));
-        lblimage.add(lblnew);
+        // New, Confirm Password, and Key ID Label Details
+        lblNew = new JLabel("新しいパスワード:");
+        lblNew.setBounds(40, 200, 250, 30);
+        lblNew.setForeground(Color.BLACK);
+        lblNew.setFont(new Font("serif", Font.BOLD, 20));
+        lblImage.add(lblNew);
 
-        lblconfirm=new JLabel("CONFIRM PASSWORD:");
-        lblconfirm.setVisible(true);
-        lblconfirm.setBounds(40,250,250,30);
-        lblconfirm.setForeground(Color.BLACK);
-        lblconfirm.setFont(new Font("serif",Font.BOLD,20));
-        lblimage.add(lblconfirm);
+        lblConfirm = new JLabel("新しいパスワード（確認）:");
+        lblConfirm.setBounds(40, 250, 250, 30);
+        lblConfirm.setForeground(Color.BLACK);
+        lblConfirm.setFont(new Font("serif", Font.BOLD, 20));
+        lblImage.add(lblConfirm);
 
-        lblkeyid=new JLabel("NEW KEY ID:");
-        lblkeyid.setVisible(true);
-        lblkeyid.setBounds(40,300,250,30);
-        lblkeyid.setForeground(Color.BLACK);
-        lblkeyid.setFont(new Font("serif",Font.BOLD,20));
-        lblimage.add(lblkeyid);
+        lblKeyID = new JLabel("新しい　ID　キー:");
+        lblKeyID.setBounds(40, 300, 250, 30);
+        lblKeyID.setForeground(Color.BLACK);
+        lblKeyID.setFont(new Font("serif", Font.BOLD, 20));
+        lblImage.add(lblKeyID);
 
-        //New, Confirm Password and New Key Id TextField
-        jtxPNew=new JPasswordField();
-        jtxPNew.setBounds(310,200,190,30);
-        jtxPNew.setFont(new Font("serif",Font.PLAIN,18));
-        lblimage.add(jtxPNew);
+        // New, Confirm Password, and New Key ID Text Fields
+        jtxPNew = new JPasswordField();
+        jtxPNew.setBounds(310, 200, 190, 30);
+        jtxPNew.setFont(new Font("serif", Font.BOLD, 18));
+        lblImage.add(jtxPNew);
 
-        jtxPConfirm=new JPasswordField();
-        jtxPConfirm.setBounds(310,250,190,30);
-        jtxPConfirm.setFont(new Font("serif",Font.PLAIN,18));
-        lblimage.add(jtxPConfirm);
+        jtxPConfirm = new JPasswordField();
+        jtxPConfirm.setBounds(310, 250, 190, 30);
+        jtxPConfirm.setFont(new Font("serif", Font.BOLD, 18));
+        lblImage.add(jtxPConfirm);
 
-        jtxKeyID=new JPasswordField();
-        jtxKeyID.setBounds(310,300,190,30);
-        jtxKeyID.setFont(new Font("serif",Font.PLAIN,18));
-        lblimage.add(jtxKeyID);
+        jtxKeyID = new JPasswordField();
+        jtxKeyID.setBounds(310, 300, 190, 30);
+        jtxKeyID.setFont(new Font("serif", Font.BOLD, 18));
+        lblImage.add(jtxKeyID);
 
-        //Button Change
-        btnChange=new JButton("CHANGE PASSWORD");
-        btnChange.setBounds(140,350,220,40);
+        // Button Change
+        btnChange = new JButton("CHANGE PASSWORD");
+        btnChange.setBounds(140, 350, 220, 40);
         btnChange.setBackground(Color.WHITE);
         btnChange.setForeground(Color.BLACK);
-        btnChange.setFont(new Font("Times_New_Roman",Font.BOLD,18));
-        lblimage.add(btnChange);
+        btnChange.setFont(new Font("Times_New_Roman", Font.BOLD, 18));
+        lblImage.add(btnChange);
         btnChange.addActionListener(this);
 
-        //Button Return
-        btnReturn=new JButton("RETURN");
-        btnReturn.setBounds(380,350,120,40);
+        // Button Return
+        btnReturn = new JButton("RETURN");
+        btnReturn.setBounds(380, 350, 120, 40);
         btnReturn.setBackground(Color.WHITE);
         btnReturn.setForeground(Color.BLACK);
-        btnReturn.setFont(new Font("Times_New_Roman",Font.BOLD,18));
-        lblimage.add(btnReturn);
+        btnReturn.setFont(new Font("Times_New_Roman", Font.BOLD, 18));
+        lblImage.add(btnReturn);
         btnReturn.addActionListener(this);
         btnReturn.setVisible(false);
 
-        
-        lblnew.setVisible(false);
-        lblconfirm.setVisible(false);
-        lblkeyid.setVisible(false);
+        lblNew.setVisible(false);
+        lblConfirm.setVisible(false);
+        lblKeyID.setVisible(false);
         jtxPNew.setVisible(false);
         jtxPConfirm.setVisible(false);
         jtxKeyID.setVisible(false);
         btnChange.setVisible(false);
 
-        jFrame.setSize(900,600);
-        jFrame.setLocation(300,200);
+        jFrame.setSize(900, 600);
+        jFrame.setLocation(300, 200);
         jFrame.setVisible(true);
-
     }
 
     public void actionPerformed(ActionEvent ae) {
-
         if (ae.getSource() == btnCancel) {
             jFrame.dispose();
             MainUI mainUI = new MainUI();
         }
-    
+
         if (ae.getSource() == btnCheck) {
             try {
-                DBConnection c = new DBConnection();
-                String s = jtxID.getText();
-                String str = "select * from login where id = '" + s + "' ";
-                ResultSet rs = c.statement.executeQuery(str);
-                int i = 0;
+                DBConnection dbConnection = new DBConnection();
+                String keyID = jtxID.getText();
+                String str = "select * from login where id = ?";
+                PreparedStatement preparedStatement = dbConnection.connection.prepareStatement(str);
+                preparedStatement.setString(1, keyID);
+                ResultSet rs = preparedStatement.executeQuery();
+                int i = 0; // i=0 thì keyid không tồn tại
                 if (rs.next()) {
                     String keyid = rs.getString(1);
-                    if (keyid.equalsIgnoreCase(s)) {
-                        i = 1;
+                    if (keyid.equalsIgnoreCase(keyID)) {
+                        i = 1; // i=1 thì keyid tồn tại
                     }
                 }
                 if (i == 0) {
                     jFrame.dispose();
-                    JOptionPane.showMessageDialog(null, "Mã khóa không chính xác");
+                    JOptionPane.showMessageDialog(null, "キーIDが存在しません");
                     ForgetPassword fp = new ForgetPassword();
                 }
                 if (i == 1) {
-                    lblnew.setVisible(true);
-                    lblconfirm.setVisible(true);
-                    lblkeyid.setVisible(true);
+                    lblNew.setVisible(true);
+                    lblConfirm.setVisible(true);
+                    lblKeyID.setVisible(true);
                     jtxPNew.setVisible(true);
                     jtxPConfirm.setVisible(true);
                     jtxKeyID.setVisible(true);
                     btnChange.setVisible(true);
                     btnReturn.setVisible(true);
-                    lblid.setVisible(false);
+                    lblID.setVisible(false);
                     jtxID.setVisible(false);
                     btnCheck.setVisible(false);
                     btnCancel.setVisible(false);
                 }
-            } catch (Exception e) {
+            } catch (SQLException e) {
                 e.printStackTrace();
+                JOptionPane.showMessageDialog(null, "エラーが発生しました。もう一度お試しください");
             }
         }
-    
+
         if (ae.getSource() == btnChange) {
             String newpassword = jtxPNew.getText();
             String confirmpassword = jtxPConfirm.getText();
@@ -191,31 +185,29 @@ class ForgetPassword implements ActionListener
             try {
                 DBConnection dbConnection = new DBConnection();
                 if (newpassword.equals(confirmpassword)) {
-                    // UPDATE login SET password = 'new_password', id = 'new_key_id' WHERE id = 1;
-                    String str1 = "UPDATE login SET password='" + newpassword + "', id='" + newkeyid + "' WHERE id='" + jtxID.getText() + "';";
-                    int rowsUpdated = dbConnection.statement.executeUpdate(str1);
-                    if (rowsUpdated > 0) {
-                        String str2 = "select * from login;";
-                        ResultSet rs1 = dbConnection.statement.executeQuery(str2);
-                        String displaykeyid = "";
-                        while (rs1.next()) {
-                            displaykeyid = rs1.getString(1);
-                        }
-                        jFrame.dispose();
-                        JOptionPane.showMessageDialog(null, "Đổi mật khẩu thành công");
-                        MainUI mainUI = new MainUI();
+                    if (newpassword.length() < 8) {
+                        JOptionPane.showMessageDialog(null, "パスワードは8文字以上でなければなりません");
                     } else {
-                        // Xử lý ngoại lệ ở đây
-                        JOptionPane.showMessageDialog(null, "Thay đổi mật khẩu thất bại");
+                        String str = "UPDATE login SET password=?, id=? WHERE id=?";
+                        PreparedStatement preparedStatement = dbConnection.connection.prepareStatement(str);
+                        preparedStatement.setString(1, newpassword);
+                        preparedStatement.setString(2, newkeyid);
+                        preparedStatement.setString(3, jtxID.getText());
+                        int rowsUpdated = preparedStatement.executeUpdate();
+                        if (rowsUpdated > 0) {
+                            JOptionPane.showMessageDialog(null, "パスワードの変更に成功しました");
+                            jFrame.dispose();
+                            MainUI mainUI = new MainUI();
+                        } else {
+                            JOptionPane.showMessageDialog(null, "パスワードの変更に失敗しました");
+                        }
                     }
                 } else {
-//                    jFrame.dispose();
-                    JOptionPane.showMessageDialog(null, "Mật khẩu mới không khớp");
-//                    ForgetPassword fp = new ForgetPassword();
+                    JOptionPane.showMessageDialog(null, "新しいパスワードが一致しません");
                 }
-            } catch (Exception e) {
-                // Xử lý ngoại lệ ở đây
-                System.out.println(e);
+            } catch (SQLException e) {
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(null, "エラーが発生しました。もう一度お試しください");
             }
         }
         if (ae.getSource() == btnReturn) {
@@ -225,9 +217,8 @@ class ForgetPassword implements ActionListener
         }
     }
 
-    public static void main(String[] args)
-    {
-        ForgetPassword f=new ForgetPassword();
+    public static void main(String[] args) {
+        ForgetPassword f = new ForgetPassword();
     }
 
     public void setVisible(boolean b) {

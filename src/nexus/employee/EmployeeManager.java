@@ -3,6 +3,7 @@
 package nexus.employee;
 
 import nexus.employee.userUI.AdminUI;
+import nexus.employee.userUI.EmployeeUI;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,18 +15,18 @@ import java.sql.SQLException;
 
 public class EmployeeManager {
     public JFrame addFrame, removeFrame, updateFrame, searchFrame;
-    private JLabel jlbImgUpdate, jlbAddTitle, jlbTitle, jlbId, jlbName, jlbGender, jlbDob, jlbAddress, jlbEmail, jlbPhone, jlbPos, jlbRoleID,
-            jlbIdView, jlbGenderView, jlbDobView, jlbAddressView, jlbEmailView, jlbPhoneView, jlbPosView, jlbRoleIDView, jlbNameView;
-    JTextField jtxEmployeeID, jtxName, jtxGender, jtxDob, jtxAddress, jtxEmail, jtxPhone, jtxPos, jtxRoleID, jtxInfor, jtxInforSearch;
-    JButton btnUpdate, btnCancel, btnReset, btnAdd;
-    JTextField jtxNameAdd, jtxAddressAdd, jtxPhoneAdd, jtxEmailAdd, jtxGenderAdd, jtxPosAdd, jtxEmployeeIDAdd, jtxDobAdd, jtxRoleIDAdd;
     private String employeeId, name, gender, dob, address, email, phone, position, role_id;
+    public JTextField jtxAAddress, jtxAName, jtxAGender, jtxADob, jtxAEmail, jtxAPhone, jtxAPos, jtxARoleID, jtxAID;
+    MainUI mainUI;
 
     public EmployeeManager() {
-
         ImageIcon img=new ImageIcon("src/nexus/employee/images/frontPage_1.png");
 
 //Component thêm nhân viên
+        JLabel jlbAddTitle, jlbTitle, jlbAddID, jlbAddName, jlbAddGender, jlbAddDob, jlbAddAddress,
+                jlbAddEmail, jlbAddPhone, jlbAddPos, jlbAddRoleID;
+        JButton btnAddCancel, btnReset, btnAdd;
+
         addFrame=new JFrame("追加");
         addFrame.setSize(900, 600);
         addFrame.setLocation(300, 200);
@@ -33,7 +34,7 @@ public class EmployeeManager {
         addFrame.setLayout(null);
 
 
-        //Background Image
+        //Background
         JLabel jlbImgAdd=new JLabel();
         jlbImgAdd.setBounds(0, 0, 900, 600);
         jlbImgAdd.setLayout(null);
@@ -46,97 +47,97 @@ public class EmployeeManager {
         jlbAddTitle.setForeground(Color.BLACK);
         jlbImgAdd.add(jlbAddTitle);
 
-        //Label Details
+        //Label
         //1.Name
-        jlbName=new JLabel("氏名:");
-        jlbName.setBounds(150, 140, 100, 30);
-        jlbName.setFont(new Font("serif", Font.BOLD, 20));
-        jlbImgAdd.add(jlbName);
+        jlbAddName=new JLabel("氏名:");
+        jlbAddName.setBounds(150, 140, 100, 30);
+        jlbAddName.setFont(new Font("serif", Font.BOLD, 20));
+        jlbImgAdd.add(jlbAddName);
 
-        jtxNameAdd=new JTextField();
-        jtxNameAdd.setBounds(250, 140, 150, 30);
-        jlbImgAdd.add(jtxNameAdd);
+        jtxAName=new JTextField();
+        jtxAName.setBounds(250, 140, 150, 30);
+        jlbImgAdd.add(jtxAName);
 
         //2.Address
-        jlbAddress=new JLabel("住所:");
-        jlbAddress.setBounds(450, 140, 200, 30);
-        jlbAddress.setFont(new Font("serif", Font.BOLD, 20));
-        jlbImgAdd.add(jlbAddress);
+        jlbAddAddress=new JLabel("住所:");
+        jlbAddAddress.setBounds(450, 140, 200, 30);
+        jlbAddAddress.setFont(new Font("serif", Font.BOLD, 20));
+        jlbImgAdd.add(jlbAddAddress);
 
-        jtxAddressAdd=new JTextField();
-        jtxAddressAdd.setBounds(550, 140, 150, 30);
-        jlbImgAdd.add(jtxAddressAdd);
+        jtxAAddress=new JTextField();
+        jtxAAddress.setBounds(550, 140, 150, 30);
+        jlbImgAdd.add(jtxAAddress);
 
         //3.Mobile No.
-        jlbPhone=new JLabel("電話番号:");
-        jlbPhone.setBounds(150, 190, 100, 30);
-        jlbPhone.setFont(new Font("serif", Font.BOLD, 20));
-        jlbImgAdd.add(jlbPhone);
+        jlbAddPhone=new JLabel("電話番号:");
+        jlbAddPhone.setBounds(150, 190, 100, 30);
+        jlbAddPhone.setFont(new Font("serif", Font.BOLD, 20));
+        jlbImgAdd.add(jlbAddPhone);
 
-        jtxPhoneAdd=new JTextField();
-        jtxPhoneAdd.setBounds(250, 190, 150, 30);
-        jlbImgAdd.add(jtxPhoneAdd);
+        jtxAPhone=new JTextField();
+        jtxAPhone.setBounds(250, 190, 150, 30);
+        jlbImgAdd.add(jtxAPhone);
 
         //4.Email Id
-        jlbEmail=new JLabel("メール:");
-        jlbEmail.setBounds(450, 190, 100, 30);
-        jlbEmail.setFont(new Font("serif", Font.BOLD, 20));
-        jlbImgAdd.add(jlbEmail);
+        jlbAddEmail=new JLabel("メール:");
+        jlbAddEmail.setBounds(450, 190, 100, 30);
+        jlbAddEmail.setFont(new Font("serif", Font.BOLD, 20));
+        jlbImgAdd.add(jlbAddEmail);
 
-        jtxEmailAdd=new JTextField();
-        jtxEmailAdd.setBounds(550, 190, 150, 30);
-        jlbImgAdd.add(jtxEmailAdd);
+        jtxAEmail=new JTextField();
+        jtxAEmail.setBounds(550, 190, 150, 30);
+        jlbImgAdd.add(jtxAEmail);
 
 
         //5.Gender
-        jlbGender=new JLabel("性別:");
-        jlbGender.setBounds(150, 240, 100, 30);
-        jlbGender.setFont(new Font("serif", Font.BOLD, 20));
-        jlbImgAdd.add(jlbGender);
+        jlbAddGender=new JLabel("性別:");
+        jlbAddGender.setBounds(150, 240, 100, 30);
+        jlbAddGender.setFont(new Font("serif", Font.BOLD, 20));
+        jlbImgAdd.add(jlbAddGender);
 
-        jtxGenderAdd=new JTextField();
-        jtxGenderAdd.setBounds(250, 240, 150, 30);
-        jlbImgAdd.add(jtxGenderAdd);
+        jtxAGender=new JTextField();
+        jtxAGender.setBounds(250, 240, 150, 30);
+        jlbImgAdd.add(jtxAGender);
 
         //6.Job Position
-        jlbPos=new JLabel("職位:");
-        jlbPos.setBounds(450, 240, 100, 30);
-        jlbPos.setFont(new Font("serif", Font.BOLD, 20));
-        jlbImgAdd.add(jlbPos);
+        jlbAddPos=new JLabel("職位:");
+        jlbAddPos.setBounds(450, 240, 100, 30);
+        jlbAddPos.setFont(new Font("serif", Font.BOLD, 20));
+        jlbImgAdd.add(jlbAddPos);
 
-        jtxPosAdd=new JTextField();
-        jtxPosAdd.setBounds(550, 240, 150, 30);
-        jlbImgAdd.add(jtxPosAdd);
+        jtxAPos=new JTextField();
+        jtxAPos.setBounds(550, 240, 150, 30);
+        jlbImgAdd.add(jtxAPos);
 
         //7.Employee ID
-        jlbId=new JLabel("従業員ID:");
-        jlbId.setBounds(150, 290, 150, 30);
-        jlbId.setFont(new Font("serif", Font.BOLD, 20));
-        jlbImgAdd.add(jlbId);
+        jlbAddID=new JLabel("従業員ID:");
+        jlbAddID.setBounds(150, 290, 150, 30);
+        jlbAddID.setFont(new Font("serif", Font.BOLD, 20));
+        jlbImgAdd.add(jlbAddID);
 
-        jtxEmployeeIDAdd=new JTextField();
-        jtxEmployeeIDAdd.setBounds(250, 290, 150, 30);
-        jlbImgAdd.add(jtxEmployeeIDAdd);
+        jtxAID=new JTextField();
+        jtxAID.setBounds(250, 290, 150, 30);
+        jlbImgAdd.add(jtxAID);
 
         //8.Date of Birth
-        jlbDob=new JLabel("生年月日:");
-        jlbDob.setBounds(450, 290, 150, 30);
-        jlbDob.setFont(new Font("serif", Font.BOLD, 20));
-        jlbImgAdd.add(jlbDob);
+        jlbAddDob=new JLabel("生年月日:");
+        jlbAddDob.setBounds(450, 290, 150, 30);
+        jlbAddDob.setFont(new Font("serif", Font.BOLD, 20));
+        jlbImgAdd.add(jlbAddDob);
 
-        jtxDobAdd=new JTextField();
-        jtxDobAdd.setBounds(550, 290, 150, 30);
-        jlbImgAdd.add(jtxDobAdd);
+        jtxADob=new JTextField();
+        jtxADob.setBounds(550, 290, 150, 30);
+        jlbImgAdd.add(jtxADob);
 
         //9.Role ID
-        jlbRoleID=new JLabel("役割ID:");
-        jlbRoleID.setBounds(150, 340, 150, 30);
-        jlbRoleID.setFont(new Font("serif", Font.BOLD, 20));
-        jlbImgAdd.add(jlbRoleID);
+        jlbAddRoleID=new JLabel("役割ID:");
+        jlbAddRoleID.setBounds(150, 340, 150, 30);
+        jlbAddRoleID.setFont(new Font("serif", Font.BOLD, 20));
+        jlbImgAdd.add(jlbAddRoleID);
 
-        jtxRoleIDAdd=new JTextField();
-        jtxRoleIDAdd.setBounds(250, 340, 150, 30);
-        jlbImgAdd.add(jtxRoleIDAdd);
+        jtxARoleID=new JTextField();
+        jtxARoleID.setBounds(250, 340, 150, 30);
+        jlbImgAdd.add(jtxARoleID);
 
         btnAdd=new JButton("追加");
         btnAdd.setBounds(300, 420, 120, 40);
@@ -145,12 +146,12 @@ public class EmployeeManager {
         btnAdd.setFont(new Font("Arial", Font.BOLD, 18));
         jlbImgAdd.add(btnAdd);
 
-        btnCancel=new JButton("キャンセル");
-        btnCancel.setBounds(490, 420, 120, 40);
-        btnCancel.setBackground(Color.LIGHT_GRAY);
-        btnCancel.setForeground(Color.BLACK);
-        btnCancel.setFont(new Font("Arial", Font.BOLD, 18));
-        jlbImgAdd.add(btnCancel);
+        btnAddCancel=new JButton("キャンセル");
+        btnAddCancel.setBounds(490, 420, 120, 40);
+        btnAddCancel.setBackground(Color.LIGHT_GRAY);
+        btnAddCancel.setForeground(Color.BLACK);
+        btnAddCancel.setFont(new Font("Arial", Font.BOLD, 18));
+        jlbImgAdd.add(btnAddCancel);
 
         btnReset=new JButton("リセット");
         btnReset.setBounds(400, 480, 120, 40);
@@ -161,16 +162,15 @@ public class EmployeeManager {
         btnAdd.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                String sql;
-                employeeId=jtxEmployeeIDAdd.getText();
-                name=jtxNameAdd.getText();
-                gender=jtxGenderAdd.getText();
-                dob=jtxDobAdd.getText();
-                address=jtxAddressAdd.getText();
-                email=jtxEmailAdd.getText();
-                phone=jtxPhoneAdd.getText();
-                position=jtxPosAdd.getText();
-                role_id=jtxRoleIDAdd.getText();
+                employeeId=jtxAID.getText();
+                name=jtxAName.getText();
+                gender=jtxAGender.getText();
+                dob=jtxADob.getText();
+                address=jtxAAddress.getText();
+                email=jtxAEmail.getText();
+                phone=jtxAPhone.getText();
+                position=jtxAPos.getText();
+                role_id=jtxARoleID.getText();
 
                 DBConnection dbConnection=new DBConnection(); // Tạo kết nối cơ sở dữ liệu
                 try {
@@ -191,7 +191,6 @@ public class EmployeeManager {
                     AdminUI adminUI=new AdminUI();
                     adminUI.setVisible(true);
                 } catch (Exception ae) {
-                    System.out.println(ae);
                     ae.printStackTrace();
                 }
             }
@@ -202,7 +201,7 @@ public class EmployeeManager {
                 resetJTextField();
             }
         });
-        btnCancel.addActionListener(new ActionListener() {
+        btnAddCancel.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 addFrame.dispose();
@@ -213,8 +212,10 @@ public class EmployeeManager {
 
 //Component xóa nhân viên
         JButton btnRemoveSearch, btnRemoveDelete, btnRemoveCancel, btnRemoveReturn;
-        JTextField jtxRemoveInfor;
-        JLabel jlbImgRemove, jlbRemoveInfor;
+        JTextField jtxInforRemove;
+        JLabel jlbImgRemove, jlbRemoveTittle, jlbRemoveGender, jlbRemoveDob, jlbRemoveAddress, jlbRemoveEmail,
+                jlbRemovePhone, jlbRemovePos, jlbRemoveRoleID, jlbRemoveName, jlbRemoveID, jlbRID, jlbRName,
+                jlbRGender, jlbRDob, jlbRAddress, jlbREmail, jlbRPhone, jlbRPos, jlbRRoleID;
         removeFrame=new JFrame("削除");
         removeFrame.setSize(900, 600);
         removeFrame.setLocation(300, 200);
@@ -228,14 +229,14 @@ public class EmployeeManager {
         jlbImgRemove.setIcon(img);
         removeFrame.add(jlbImgRemove);
 
-        jlbRemoveInfor=new JLabel("従業員の情報");
-        jlbRemoveInfor.setBounds(230, 250, 250, 50);
-        jlbRemoveInfor.setForeground(Color.BLACK);
-        jlbRemoveInfor.setFont(new Font("Times_New_Roman", Font.BOLD, 25));
+        jlbRemoveTittle=new JLabel("従業員の情報");
+        jlbRemoveTittle.setBounds(230, 250, 250, 50);
+        jlbRemoveTittle.setForeground(Color.BLACK);
+        jlbRemoveTittle.setFont(new Font("Times_New_Roman", Font.BOLD, 25));
 
-        jtxRemoveInfor=new JTextField("氏名、電話番号、メール、従業員のIDを入力");
-        jtxRemoveInfor.setBounds(390, 250, 420, 50);
-        jtxRemoveInfor.setFont(new Font("serif", Font.PLAIN, 18));
+        jtxInforRemove=new JTextField("氏名、電話番号、メール、従業員のIDを入力");
+        jtxInforRemove.setBounds(390, 250, 420, 50);
+        jtxInforRemove.setFont(new Font("serif", Font.PLAIN, 18));
 
 
         btnRemoveSearch=new JButton("検索");
@@ -243,7 +244,7 @@ public class EmployeeManager {
         btnRemoveSearch.setBackground(Color.LIGHT_GRAY);
         btnRemoveSearch.setForeground(Color.BLACK);
         btnRemoveSearch.setFont(new Font("Arial", Font.BOLD, 18));
-
+        jlbImgRemove.add(btnRemoveSearch);
 
         btnRemoveReturn=new JButton("戻る");
         btnRemoveReturn.setBounds(600, 330, 140, 35);
@@ -252,13 +253,13 @@ public class EmployeeManager {
         btnRemoveReturn.setFont(new Font("Arial", Font.BOLD, 18));
 
         btnRemoveDelete=new JButton("削除");
-        btnRemoveDelete.setBounds(330, 450, 120, 40);
+        btnRemoveDelete.setBounds(330, 440, 120, 40);
         btnRemoveDelete.setBackground(Color.LIGHT_GRAY);
         btnRemoveDelete.setForeground(Color.BLACK);
         btnRemoveDelete.setFont(new Font("Arial", Font.BOLD, 18));
 
         btnRemoveCancel=new JButton("キャンセル");
-        btnRemoveCancel.setBounds(490, 450, 120, 40);
+        btnRemoveCancel.setBounds(490, 440, 120, 40);
         btnRemoveCancel.setBackground(Color.LIGHT_GRAY);
         btnRemoveCancel.setForeground(Color.BLACK);
         btnRemoveCancel.setFont(new Font("Arial", Font.BOLD, 18));
@@ -269,8 +270,8 @@ public class EmployeeManager {
         jlbTitle.setBounds(350, 50, 620, 50);
         jlbTitle.setFont(new Font("Serif", Font.BOLD, 40));
         jlbTitle.setForeground(Color.BLACK);
-        jlbImgRemove.add(jlbRemoveInfor);
-        jlbImgRemove.add(jtxRemoveInfor);
+        jlbImgRemove.add(jlbRemoveTittle);
+        jlbImgRemove.add(jtxInforRemove);
         jlbImgRemove.add(btnRemoveSearch);
         jlbImgRemove.add(btnRemoveReturn);
         jlbImgRemove.add(btnRemoveDelete);
@@ -279,120 +280,120 @@ public class EmployeeManager {
 
         //Label Details
         //1.Name
-        jlbName=new JLabel("氏名:");
-        jlbName.setBounds(150, 140, 100, 30);
-        jlbName.setFont(new Font("serif", Font.BOLD, 20));
-        jlbImgRemove.add(jlbName);
+        jlbRemoveName=new JLabel("氏名:");
+        jlbRemoveName.setBounds(150, 140, 100, 30);
+        jlbRemoveName.setFont(new Font("serif", Font.BOLD, 20));
+        jlbImgRemove.add(jlbRemoveName);
 
-        jlbNameView=new JLabel();
-        jlbNameView.setBounds(250, 140, 150, 30);
-        jlbNameView.setFont(new Font("serif", Font.BOLD, 20));
-        jlbImgRemove.add(jlbNameView);
+        jlbRName=new JLabel();
+        jlbRName.setBounds(250, 140, 200, 30);
+        jlbRName.setFont(new Font("serif", Font.BOLD, 20));
+        jlbImgRemove.add(jlbRName);
 
         //2.Address
-        jlbAddress=new JLabel("住所:");
-        jlbAddress.setBounds(450, 140, 200, 30);
-        jlbAddress.setFont(new Font("serif", Font.BOLD, 20));
-        jlbImgRemove.add(jlbAddress);
+        jlbRemoveAddress=new JLabel("住所:");
+        jlbRemoveAddress.setBounds(450, 140, 200, 30);
+        jlbRemoveAddress.setFont(new Font("serif", Font.BOLD, 20));
+        jlbImgRemove.add(jlbRemoveAddress);
 
-        jlbAddressView=new JLabel();
-        jlbAddressView.setBounds(550, 140, 150, 30);
-        jlbAddressView.setFont(new Font("serif", Font.BOLD, 20));
-        jlbImgRemove.add(jlbAddressView);
+        jlbRAddress=new JLabel();
+        jlbRAddress.setBounds(550, 140, 150, 30);
+        jlbRAddress.setFont(new Font("serif", Font.BOLD, 20));
+        jlbImgRemove.add(jlbRAddress);
 
         //3.Mobile No.
-        jlbPhone=new JLabel("電話番号:");
-        jlbPhone.setBounds(150, 190, 100, 30);
-        jlbPhone.setFont(new Font("serif", Font.BOLD, 20));
-        jlbImgRemove.add(jlbPhone);
+        jlbRemovePhone=new JLabel("電話番号:");
+        jlbRemovePhone.setBounds(150, 190, 100, 30);
+        jlbRemovePhone.setFont(new Font("serif", Font.BOLD, 20));
+        jlbImgRemove.add(jlbRemovePhone);
 
-        jlbPhoneView=new JLabel();
-        jlbPhoneView.setBounds(250, 190, 150, 30);
-        jlbPhoneView.setFont(new Font("serif", Font.BOLD, 20));
-        jlbImgRemove.add(jlbPhoneView);
+        jlbRPhone=new JLabel();
+        jlbRPhone.setBounds(250, 190, 150, 30);
+        jlbRPhone.setFont(new Font("serif", Font.BOLD, 20));
+        jlbImgRemove.add(jlbRPhone);
 
         //4.Email Id
-        jlbEmail=new JLabel("メール:");
-        jlbEmail.setBounds(450, 190, 100, 30);
-        jlbEmail.setFont(new Font("serif", Font.BOLD, 20));
-        jlbImgRemove.add(jlbEmail);
+        jlbRemoveEmail=new JLabel("メール:");
+        jlbRemoveEmail.setBounds(450, 190, 100, 30);
+        jlbImgRemove.setFont(new Font("serif", Font.BOLD, 20));
+        jlbImgRemove.add(jlbRemoveEmail);
 
-        jlbEmailView=new JLabel();
-        jlbEmailView.setBounds(550, 190, 150, 30);
-        jlbEmailView.setFont(new Font("serif", Font.BOLD, 20));
-        jlbImgRemove.add(jlbEmailView);
+        jlbREmail=new JLabel();
+        jlbREmail.setBounds(550, 190, 200, 30);
+        jlbREmail.setFont(new Font("serif", Font.BOLD, 20));
+        jlbImgRemove.add(jlbREmail);
 
         //5.Gender
-        jlbGender=new JLabel("性別:");
-        jlbGender.setBounds(150, 240, 100, 30);
-        jlbGender.setFont(new Font("serif", Font.BOLD, 20));
-        jlbImgRemove.add(jlbGender);
+        jlbRemoveGender=new JLabel("性別:");
+        jlbRemoveGender.setBounds(150, 240, 100, 30);
+        jlbRemoveGender.setFont(new Font("serif", Font.BOLD, 20));
+        jlbImgRemove.add(jlbRemoveGender);
 
-        jlbGenderView=new JLabel();
-        jlbGenderView.setBounds(250, 240, 150, 30);
-        jlbGenderView.setFont(new Font("serif", Font.BOLD, 20));
-        jlbImgRemove.add(jlbGenderView);
+        jlbRGender=new JLabel();
+        jlbRGender.setBounds(250, 240, 150, 30);
+        jlbRGender.setFont(new Font("serif", Font.BOLD, 20));
+        jlbImgRemove.add(jlbRGender);
 
         //6.Job Position
-        jlbPos=new JLabel("職位:");
-        jlbPos.setBounds(450, 240, 100, 30);
-        jlbPos.setFont(new Font("serif", Font.BOLD, 20));
-        jlbImgRemove.add(jlbPos);
+        jlbRemovePos=new JLabel("職位:");
+        jlbRemovePos.setBounds(450, 240, 100, 30);
+        jlbRemovePos.setFont(new Font("serif", Font.BOLD, 20));
+        jlbImgRemove.add(jlbRemovePos);
 
-        jlbPosView=new JLabel();
-        jlbPosView.setBounds(550, 240, 150, 30);
-        jlbPosView.setFont(new Font("serif", Font.BOLD, 20));
-        jlbImgRemove.add(jlbPosView);
+        jlbRPos=new JLabel();
+        jlbRPos.setBounds(550, 240, 150, 30);
+        jlbRPos.setFont(new Font("serif", Font.BOLD, 20));
+        jlbImgRemove.add(jlbRPos);
 
         //7.Employee ID
-        jlbId=new JLabel("従業員ID:");
-        jlbId.setBounds(150, 290, 150, 30);
-        jlbId.setFont(new Font("serif", Font.BOLD, 20));
-        jlbImgRemove.add(jlbId);
+        jlbRemoveID=new JLabel("従業員ID:");
+        jlbRemoveID.setBounds(150, 290, 150, 30);
+        jlbRemoveID.setFont(new Font("serif", Font.BOLD, 20));
+        jlbImgRemove.add(jlbRemoveID);
 
-        jlbIdView=new JLabel();
-        jlbIdView.setBounds(250, 290, 150, 30);
-        jlbIdView.setFont(new Font("serif", Font.BOLD, 20));
-        jlbImgRemove.add(jlbIdView);
+        jlbRID=new JLabel();
+        jlbRID.setBounds(250, 290, 150, 30);
+        jlbRID.setFont(new Font("serif", Font.BOLD, 20));
+        jlbImgRemove.add(jlbRID);
 
         //8.Date of Birth
-        jlbDob=new JLabel("生年月日:");
-        jlbDob.setBounds(450, 290, 150, 30);
-        jlbDob.setFont(new Font("serif", Font.BOLD, 20));
-        jlbImgRemove.add(jlbDob);
+        jlbRemoveDob=new JLabel("生年月日:");
+        jlbRemoveDob.setBounds(450, 290, 150, 30);
+        jlbRemoveDob.setFont(new Font("serif", Font.BOLD, 20));
+        jlbImgRemove.add(jlbRemoveDob);
 
-        jlbDobView=new JLabel();
-        jlbDobView.setBounds(550, 290, 150, 30);
-        jlbDobView.setFont(new Font("serif", Font.BOLD, 20));
-        jlbImgRemove.add(jlbDobView);
+        jlbRDob=new JLabel();
+        jlbRDob.setBounds(550, 290, 150, 30);
+        jlbRDob.setFont(new Font("serif", Font.BOLD, 20));
+        jlbImgRemove.add(jlbRDob);
 
         //9.Role ID
-        jlbRoleID=new JLabel("役割ID:");
-        jlbRoleID.setBounds(150, 340, 150, 30);
-        jlbRoleID.setFont(new Font("serif", Font.BOLD, 20));
-        jlbImgRemove.add(jlbRoleID);
+        jlbRemoveRoleID=new JLabel("役割ID:");
+        jlbRemoveRoleID.setBounds(150, 340, 150, 30);
+        jlbRemoveRoleID.setFont(new Font("serif", Font.BOLD, 20));
+        jlbImgRemove.add(jlbRemoveRoleID);
 
-        jlbRoleIDView=new JLabel();
-        jlbRoleIDView.setBounds(250, 340, 150, 30);
-        jlbRoleIDView.setFont(new Font("serif", Font.BOLD, 20));
-        jlbImgRemove.add(jlbRoleIDView);
+        jlbRRoleID=new JLabel();
+        jlbRRoleID.setBounds(250, 340, 150, 30);
+        jlbRRoleID.setFont(new Font("serif", Font.BOLD, 20));
+        jlbImgRemove.add(jlbRRoleID);
 
-        jlbName.setVisible(false);
-        jlbAddress.setVisible(false);
-        jlbPhone.setVisible(false);
-        jlbEmail.setVisible(false);
-        jlbGender.setVisible(false);
-        jlbPos.setVisible(false);
-        jlbId.setVisible(false);
-        jlbDob.setVisible(false);
-        jlbRoleID.setVisible(false);
+        jlbRemoveName.setVisible(false);
+        jlbRemoveAddress.setVisible(false);
+        jlbRemovePhone.setVisible(false);
+        jlbRemoveEmail.setVisible(false);
+        jlbRemoveGender.setVisible(false);
+        jlbRemovePos.setVisible(false);
+        jlbRemoveID.setVisible(false);
+        jlbRemoveDob.setVisible(false);
+        jlbRemoveRoleID.setVisible(false);
         btnRemoveDelete.setVisible(false);
         btnRemoveCancel.setVisible(false);
 
         btnRemoveSearch.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 DBConnection dbConnection=new DBConnection(); // Tạo kết nối cơ sở dữ liệu
-                String searchTerm=jtxRemoveInfor.getText(); // Lấy giá trị từ JTextField
+                String searchTerm=jtxInforRemove.getText(); // Lấy giá trị từ JTextField
 
                 try {
                     // Thiết lập truy vấn SQL và thực hiện truy vấn
@@ -423,44 +424,43 @@ public class EmployeeManager {
                         JOptionPane.showMessageDialog(null, "従業員が見つかりました");
                         removeFrame.setVisible(true);
 
-                        jlbIdView.setVisible(true);
-                        jlbNameView.setVisible(true);
-                        jlbGenderView.setVisible(true);
-                        jlbDobView.setVisible(true);
-                        jlbAddressView.setVisible(true);
-                        jlbEmailView.setVisible(true);
-                        jlbPhoneView.setVisible(true);
-                        jlbPosView.setVisible(true);
-                        jlbRoleIDView.setVisible(true);
-                        jlbIdView.setText(employeeId);
-                        jlbNameView.setText(name);
-                        jlbGenderView.setText(gender);
-                        jlbDobView.setText(dob);
-                        jlbAddressView.setText(address);
-                        jlbEmailView.setText(email);
-                        jlbPhoneView.setText(phone);
-                        jlbPosView.setText(position);
-                        jlbRoleIDView.setText(role_id);
-                        jlbId.setVisible(true);
-                        jlbName.setVisible(true);
-                        jlbGender.setVisible(true);
-                        jlbDob.setVisible(true);
-                        jlbAddress.setVisible(true);
-                        jlbEmail.setVisible(true);
-                        jlbPhone.setVisible(true);
-                        jlbPos.setVisible(true);
-                        jlbRoleID.setVisible(true);
+                        jlbRID.setVisible(true);
+                        jlbRName.setVisible(true);
+                        jlbRGender.setVisible(true);
+                        jlbRDob.setVisible(true);
+                        jlbRAddress.setVisible(true);
+                        jlbREmail.setVisible(true);
+                        jlbRPhone.setVisible(true);
+                        jlbRPos.setVisible(true);
+                        jlbRRoleID.setVisible(true);
+                        jlbRID.setText(employeeId);
+                        jlbRName.setText(name);
+                        jlbRGender.setText(gender);
+                        jlbRDob.setText(dob);
+                        jlbRAddress.setText(address);
+                        jlbREmail.setText(email);
+                        jlbRPhone.setText(phone);
+                        jlbRPos.setText(position);
+                        jlbRRoleID.setText(role_id);
+                        jlbRemoveID.setVisible(true);
+                        jlbRemoveName.setVisible(true);
+                        jlbRemoveGender.setVisible(true);
+                        jlbRemoveDob.setVisible(true);
+                        jlbRemoveAddress.setVisible(true);
+                        jlbRemoveEmail.setVisible(true);
+                        jlbRemovePhone.setVisible(true);
+                        jlbRemovePos.setVisible(true);
+                        jlbRemoveRoleID.setVisible(true);
 
-                        jtxRemoveInfor.setVisible(false);
-                        jlbRemoveInfor.setVisible(false);
+                        jtxInforRemove.setVisible(false);
+                        jlbRemoveTittle.setVisible(false);
 
                         btnRemoveSearch.setVisible(false);
                         btnRemoveReturn.setVisible(false);
 
                         btnRemoveCancel.setVisible(true);
                         btnRemoveDelete.setVisible(true);
-                    }
-                    else {
+                    } else {
                         JOptionPane.showMessageDialog(null, "従業員が見つかりませんでした");
                     }
                     // Đóng kết nối cơ sở dữ liệu
@@ -473,37 +473,39 @@ public class EmployeeManager {
         btnRemoveDelete.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                DBConnection dbConnection=new DBConnection();
-                String searchTerm=jtxRemoveInfor.getText();
-                String sql="DELETE FROM employees WHERE name = ? OR employee_id = ? OR phone = ? OR email = ?";
+                int confirm = JOptionPane.showConfirmDialog(removeFrame, "従業員を削除しますか？", "削除", JOptionPane.YES_NO_OPTION);
+                if (confirm == JOptionPane.YES_OPTION) {
+                    DBConnection dbConnection=new DBConnection();
+                    String searchTerm=jtxInforRemove.getText();
+                    String sql="DELETE FROM employees WHERE name = ? OR employee_id = ? OR phone = ? OR email = ?";
 
-                try (PreparedStatement preparedStatement=dbConnection.connection.prepareStatement(sql)) {
-                    preparedStatement.setString(1, searchTerm); // name
-                    preparedStatement.setString(2, searchTerm); // employee_id
-                    preparedStatement.setString(3, searchTerm); // phone
-                    preparedStatement.setString(4, searchTerm); // email
+                    try (PreparedStatement preparedStatement=dbConnection.connection.prepareStatement(sql)) {
+                        preparedStatement.setString(1, searchTerm); // name
+                        preparedStatement.setString(2, searchTerm); // employee_id
+                        preparedStatement.setString(3, searchTerm); // phone
+                        preparedStatement.setString(4, searchTerm); // email
 
-                    int rowsDeleted=preparedStatement.executeUpdate();
-                    if (rowsDeleted > 0) {
-                        JOptionPane.showMessageDialog(null, "従業員を削除できました");
-                        removeFrame.dispose();
-                        AdminUI adminUI=new AdminUI();
-                        adminUI.setVisible(true);
-                    } else {
-                        JOptionPane.showMessageDialog(null, searchTerm + "を削除できませんでした");
+                        int rowsDeleted=preparedStatement.executeUpdate();
+                        if (rowsDeleted > 0) {
+                            JOptionPane.showMessageDialog(null, "従業員を削除できました");
+                            removeFrame.dispose();
+                            AdminUI adminUI=new AdminUI();
+                            adminUI.setVisible(true);
+                        } else {
+                            JOptionPane.showMessageDialog(null, searchTerm + "を削除できませんでした");
+                        }
+                    } catch (SQLException ex) {
+                        ex.printStackTrace();
                     }
-                } catch (SQLException ex) {
-                    ex.printStackTrace();
                 }
             }
         });
-
-
         btnRemoveReturn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 removeFrame.dispose();
                 AdminUI adminUI=new AdminUI();
+                adminUI.setVisible(true);
             }
         });
         btnRemoveCancel.addActionListener(new ActionListener() {
@@ -514,8 +516,13 @@ public class EmployeeManager {
                 adminUI.setVisible(true);
             }
         });
+
 //Component cập nhật nhân viên
 
+        JLabel jlbSearchUpdate, jlbInfoUpdate, jlbImgUpdate, jlbUpdateName, jlbUpdateGender, jlbUpdateDob,
+                jlbUpdateAddress, jlbUpdateEmail, jlbUpdatePhone, jlbUpdatePos, jlbUpdateRoleID, jlbUpdateID;
+        JTextField jtxEmployeeID, jtxName, jtxGender, jtxDob, jtxAddress, jtxEmail, jtxPhone, jtxPos, jtxRoleID, jtxInforUpdate;
+        JButton btnUpdate, btnCancel, btnUpdateSearch, btnUpdateCancel;
         updateFrame=new JFrame("更新");
         updateFrame.setSize(900, 600);
         updateFrame.setLocation(300, 200);
@@ -529,6 +536,41 @@ public class EmployeeManager {
         jlbImgUpdate.setIcon(img);
         updateFrame.add(jlbImgUpdate);
 
+        jlbSearchUpdate=new JLabel("従業員の検索");
+        jlbSearchUpdate.setBounds(350, 50, 620, 50);
+        jlbSearchUpdate.setFont(new Font("Serif", Font.BOLD, 40));
+        jlbSearchUpdate.setForeground(Color.BLACK);
+        jlbImgUpdate.add(jlbSearchUpdate);
+
+
+        //Label Details
+        jlbInfoUpdate=new JLabel("従業員の情報");
+        jlbInfoUpdate.setBounds(230, 250, 250, 50);
+        jlbInfoUpdate.setForeground(Color.BLACK);
+        jlbInfoUpdate.setFont(new Font("Times_New_Roman", Font.BOLD, 25));
+        jlbImgUpdate.add(jlbInfoUpdate);
+
+        jtxInforUpdate=new JTextField("氏名、電話番号、メール、従業員のIDを入力");
+        jtxInforUpdate.setBounds(390, 250, 420, 50);
+        jtxInforUpdate.setFont(new Font("serif", Font.PLAIN, 18));
+        jlbImgUpdate.add(jtxInforUpdate);
+
+        //Button Details
+        btnUpdateSearch=new JButton("検索");
+        btnUpdateSearch.setBounds(300, 330, 140, 35);
+        btnUpdateSearch.setBackground(Color.LIGHT_GRAY);
+        btnUpdateSearch.setForeground(Color.BLACK);
+        btnUpdateSearch.setFont(new Font("Times_New_Roman", Font.BOLD, 18));
+        jlbImgUpdate.add(btnUpdateSearch);
+
+        btnUpdateCancel=new JButton("キャンセル");
+        btnUpdateCancel.setBounds(460, 330, 140, 35);
+        btnUpdateCancel.setBackground(Color.LIGHT_GRAY);
+        btnUpdateCancel.setForeground(Color.BLACK);
+        btnUpdateCancel.setFont(new Font("Times_New_Roman", Font.BOLD, 18));
+        jlbImgUpdate.add(btnUpdateCancel);
+
+
         JLabel jlbUpdateTitle=new JLabel("従業員を更新");
         jlbUpdateTitle.setBounds(350, 50, 620, 50);
         jlbUpdateTitle.setFont(new Font("Serif", Font.BOLD, 40));
@@ -537,94 +579,103 @@ public class EmployeeManager {
 
         //Label Details
         //1.Name
-        jlbName=new JLabel("氏名:");
-        jlbName.setBounds(150, 140, 100, 30);
-        jlbName.setFont(new Font("serif", Font.BOLD, 20));
-        jlbImgUpdate.add(jlbName);
+        jlbUpdateName=new JLabel("氏名:");
+        jlbUpdateName.setBounds(150, 140, 100, 30);
+        jlbUpdateName.setFont(new Font("serif", Font.BOLD, 20));
+        jlbImgUpdate.add(jlbUpdateName);
 
         jtxName=new JTextField();
         jtxName.setBounds(250, 140, 150, 30);
+        jtxName.setFont(new Font("serif", Font.BOLD, 20));
         jlbImgUpdate.add(jtxName);
 
         //2.Address
-        jlbAddress=new JLabel("住所:");
-        jlbAddress.setBounds(450, 140, 200, 30);
-        jlbAddress.setFont(new Font("serif", Font.BOLD, 20));
-        jlbImgUpdate.add(jlbAddress);
+        jlbUpdateAddress=new JLabel("住所:");
+        jlbUpdateAddress.setBounds(450, 140, 200, 30);
+        jlbUpdateAddress.setFont(new Font("serif", Font.BOLD, 20));
+        jlbImgUpdate.add(jlbUpdateAddress);
 
         jtxAddress=new JTextField();
         jtxAddress.setBounds(550, 140, 150, 30);
+        jtxAddress.setFont(new Font("serif", Font.BOLD, 20));
         jlbImgUpdate.add(jtxAddress);
 
         //3.Mobile No.
-        jlbPhone=new JLabel("電話番号:");
-        jlbPhone.setBounds(150, 190, 100, 30);
-        jlbPhone.setFont(new Font("serif", Font.BOLD, 20));
-        jlbImgUpdate.add(jlbPhone);
+        jlbUpdatePhone=new JLabel("電話番号:");
+        jlbUpdatePhone.setBounds(150, 190, 100, 30);
+        jlbUpdatePhone.setFont(new Font("serif", Font.BOLD, 20));
+        jlbImgUpdate.add(jlbUpdatePhone);
 
         jtxPhone=new JTextField();
         jtxPhone.setBounds(250, 190, 150, 30);
+        jtxPhone.setFont(new Font("serif", Font.BOLD, 20));
         jlbImgUpdate.add(jtxPhone);
 
         //4.Email Id
-        jlbEmail=new JLabel("メール:");
-        jlbEmail.setBounds(450, 190, 100, 30);
-        jlbEmail.setFont(new Font("serif", Font.BOLD, 20));
-        jlbImgUpdate.add(jlbEmail);
+        jlbUpdateEmail=new JLabel("メール:");
+        jlbUpdateEmail.setBounds(450, 190, 100, 30);
+        jlbUpdateEmail.setFont(new Font("serif", Font.BOLD, 20));
+        jlbImgUpdate.add(jlbUpdateEmail);
 
         jtxEmail=new JTextField();
         jtxEmail.setBounds(550, 190, 150, 30);
+        jtxEmail.setFont(new Font("serif", Font.BOLD, 20));
         jlbImgUpdate.add(jtxEmail);
 
 
         //5.Gender
-        jlbGender=new JLabel("性別:");
-        jlbGender.setBounds(150, 240, 100, 30);
-        jlbGender.setFont(new Font("serif", Font.BOLD, 20));
-        jlbImgUpdate.add(jlbGender);
+        jlbUpdateGender=new JLabel("性別:");
+        jlbUpdateGender.setBounds(150, 240, 100, 30);
+        jlbUpdateGender.setFont(new Font("serif", Font.BOLD, 20));
+        jlbImgUpdate.add(jlbUpdateGender);
 
         jtxGender=new JTextField();
         jtxGender.setBounds(250, 240, 150, 30);
+        jtxGender.setFont(new Font("serif", Font.BOLD, 20));
         jlbImgUpdate.add(jtxGender);
 
         //6.Job Position
-        jlbPos=new JLabel("職位:");
-        jlbPos.setBounds(450, 240, 100, 30);
-        jlbPos.setFont(new Font("serif", Font.BOLD, 20));
-        jlbImgUpdate.add(jlbPos);
+        jlbUpdatePos=new JLabel("職位:");
+        jlbUpdatePos.setBounds(450, 240, 100, 30);
+        jlbUpdatePos.setFont(new Font("serif", Font.BOLD, 20));
+        jlbImgUpdate.add(jlbUpdatePos);
 
         jtxPos=new JTextField();
         jtxPos.setBounds(550, 240, 150, 30);
+        jtxPos.setFont(new Font("serif", Font.BOLD, 20));
         jlbImgUpdate.add(jtxPos);
 
         //7.Employee ID
-        jlbId=new JLabel("従業員ID:");
-        jlbId.setBounds(150, 290, 150, 30);
-        jlbId.setFont(new Font("serif", Font.BOLD, 20));
-        jlbImgUpdate.add(jlbId);
+        jlbUpdateID=new JLabel("従業員ID:");
+        jlbUpdateID.setBounds(150, 290, 150, 30);
+        jlbUpdateID.setFont(new Font("serif", Font.BOLD, 20));
+        jlbImgUpdate.add(jlbUpdateID);
 
         jtxEmployeeID=new JTextField();
         jtxEmployeeID.setBounds(250, 290, 150, 30);
+        jtxEmployeeID.setFont(new Font("serif", Font.BOLD, 20));
         jlbImgUpdate.add(jtxEmployeeID);
 
         //8.Date of Birth
-        jlbDob=new JLabel("生年月日:");
-        jlbDob.setBounds(450, 290, 150, 30);
-        jlbDob.setFont(new Font("serif", Font.BOLD, 20));
-        jlbImgUpdate.add(jlbDob);
+        jlbUpdateDob=new JLabel("生年月日:");
+        jlbUpdateDob.setBounds(450, 290, 150, 30);
+        jlbUpdateDob.setFont(new Font("serif", Font.BOLD, 20));
+        jlbImgUpdate.add(jlbUpdateDob);
 
         jtxDob=new JTextField();
         jtxDob.setBounds(550, 290, 150, 30);
+        jtxDob.setFont(new Font("serif", Font.BOLD, 20));
         jlbImgUpdate.add(jtxDob);
 
         //9.Role ID
-        jlbRoleID=new JLabel("役割ID:");
-        jlbRoleID.setBounds(150, 340, 150, 30);
-        jlbRoleID.setFont(new Font("serif", Font.BOLD, 20));
-        jlbImgUpdate.add(jlbRoleID);
+        jlbUpdateRoleID=new JLabel("役割ID:");
+        jlbUpdateRoleID.setBounds(150, 340, 150, 30);
+        jlbUpdateRoleID.setFont(new Font("serif", Font.BOLD, 20));
+        jlbImgUpdate.add(jlbUpdateRoleID);
 
         jtxRoleID=new JTextField();
         jtxRoleID.setBounds(250, 340, 150, 30);
+        jtxRoleID.setFont(new Font("serif", Font.BOLD, 20));
         jlbImgUpdate.add(jtxRoleID);
 
 
@@ -635,12 +686,117 @@ public class EmployeeManager {
         btnUpdate.setFont(new Font("Arial", Font.BOLD, 18));
         jlbImgUpdate.add(btnUpdate);
 
-        btnCancel=new JButton("キャンセル");
+        btnCancel=new JButton("戻る");
         btnCancel.setBounds(490, 420, 120, 40);
         btnCancel.setBackground(Color.LIGHT_GRAY);
         btnCancel.setForeground(Color.BLACK);
         btnCancel.setFont(new Font("Arial", Font.BOLD, 18));
         jlbImgUpdate.add(btnCancel);
+
+        jlbUpdateName.setVisible(false);
+        jlbUpdateTitle.setVisible(false);
+        jlbUpdateAddress.setVisible(false);
+        jlbUpdatePhone.setVisible(false);
+        jlbUpdateEmail.setVisible(false);
+        jlbUpdateGender.setVisible(false);
+        jlbUpdatePos.setVisible(false);
+        jlbUpdateID.setVisible(false);
+        jlbUpdateDob.setVisible(false);
+        jlbUpdateRoleID.setVisible(false);
+        jtxName.setVisible(false);
+        jtxAddress.setVisible(false);
+        jtxPhone.setVisible(false);
+        jtxEmail.setVisible(false);
+        jtxGender.setVisible(false);
+        jtxPos.setVisible(false);
+        jtxEmployeeID.setVisible(false);
+        jtxDob.setVisible(false);
+        jtxRoleID.setVisible(false);
+
+        btnUpdate.setVisible(false);
+        btnCancel.setVisible(false);
+
+        btnUpdateSearch.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                DBConnection dbConnection=new DBConnection(); // Tạo kết nối cơ sở dữ liệu
+                String searchTerm=jtxInforUpdate.getText(); // Lấy giá trị từ JTextField
+
+                try {
+                    // Thiết lập truy vấn SQL và thực hiện truy vấn
+                    String query="SELECT * FROM employees WHERE name = ? OR phone = ? OR email = ? OR employee_id = ?";
+                    PreparedStatement preparedStatement=dbConnection.connection.prepareStatement(query);
+
+                    // Đặt các giá trị vào các placeholder
+                    preparedStatement.setString(1, searchTerm); // name
+                    preparedStatement.setString(2, searchTerm); // phone
+                    preparedStatement.setString(3, searchTerm); // email
+                    preparedStatement.setString(4, searchTerm); // employee_id
+
+                    // Thực hiện truy vấn và lấy kết quả
+                    ResultSet rs=preparedStatement.executeQuery();
+
+                    // Xử lý kết quả và hiển thị thông tin nếu tìm thấy
+                    if (rs.next()) {
+                        // Lấy thông tin từ ResultSet
+                        employeeId=rs.getString("employee_id");
+                        name=rs.getString("name");
+                        gender=rs.getString("gender");
+                        dob=rs.getString("dob");
+                        address=rs.getString("address");
+                        email=rs.getString("email");
+                        phone=rs.getString("phone");
+                        position=rs.getString("position");
+                        role_id=rs.getString("role_id");
+                        JOptionPane.showMessageDialog(null, "従業員が見つかりました");
+                        // Hiển thị thông tin (ví dụ: sử dụng System.out.println hoặc hiển thị trong giao diện người dùng)
+                        jlbUpdateID.setVisible(true);
+                        jlbUpdateName.setVisible(true);
+                        jlbUpdateGender.setVisible(true);
+                        jlbUpdateDob.setVisible(true);
+                        jlbUpdateAddress.setVisible(true);
+                        jlbUpdateEmail.setVisible(true);
+                        jlbUpdatePhone.setVisible(true);
+                        jlbUpdatePos.setVisible(true);
+                        jlbUpdateRoleID.setVisible(true);
+                        jtxName.setVisible(true);
+                        jtxAddress.setVisible(true);
+                        jtxPhone.setVisible(true);
+                        jtxEmail.setVisible(true);
+                        jtxGender.setVisible(true);
+                        jtxPos.setVisible(true);
+                        jtxEmployeeID.setVisible(true);
+                        jtxDob.setVisible(true);
+                        jtxRoleID.setVisible(true);
+                        jtxName.setText(name);
+                        jtxAddress.setText(address);
+                        jtxPhone.setText(phone);
+                        jtxEmail.setText(email);
+                        jtxGender.setText(gender);
+                        jtxPos.setText(position);
+                        jtxEmployeeID.setText(employeeId);
+                        jtxDob.setText(dob);
+                        jtxRoleID.setText(role_id);
+
+                        jlbSearchUpdate.setVisible(false);
+                        jlbInfoUpdate.setVisible(false);
+                        jtxInforUpdate.setVisible(false);
+                        btnUpdateSearch.setVisible(false);
+                        btnUpdateCancel.setVisible(false);
+                        btnUpdate.setVisible(true);
+                        btnCancel.setVisible(true);
+
+                    } else {
+                        JOptionPane.showMessageDialog(null, "従業員が見つかりません");
+                        jtxInforUpdate.setText("氏名、電話番号、メール、従業員のIDを入力");
+                    }
+                    // Đóng kết nối cơ sở dữ liệu
+                    dbConnection.connection.close();
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            }
+        });
 
         btnUpdate.addActionListener(new ActionListener() {
             @Override
@@ -658,8 +814,7 @@ public class EmployeeManager {
                     position=jtxPos.getText();
                     role_id=jtxRoleID.getText();
 
-
-                    String searchTerm=jtxInfor.getText(); // Lấy giá trị từ JTextField
+                    String searchTerm=jtxInforUpdate.getText(); // Lấy giá trị từ JTextField
 
                     sql="UPDATE employees SET name = ?, gender = ?, dob = ?, address = ?, email = ?, phone = ?, position = ?, role_id = ? WHERE employee_id = ? OR name = ? OR email = ? OR phone = ?";
                     PreparedStatement preparedStatement=dbConnection.connection.prepareStatement(sql);
@@ -685,12 +840,20 @@ public class EmployeeManager {
                         updateFrame.dispose();
                         AdminUI adminUI=new AdminUI();
                         adminUI.setVisible(true);
-                    } else {
                         JOptionPane.showMessageDialog(null, "従業員の情報を更新できませんでした");
                     }
                 } catch (Exception ae) {
                     ae.printStackTrace();
                 }
+            }
+        });
+        btnUpdateCancel.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                updateFrame.dispose();
+                AdminUI adminUI=new AdminUI();
+                adminUI.setVisible(true);
+
             }
         });
         btnCancel.addActionListener(new ActionListener() {
@@ -701,13 +864,15 @@ public class EmployeeManager {
                 adminUI.setVisible(true);
             }
         });
-
 //Component tìm kiếm nhân viên
-
-        searchFrame=new JFrame("閲覧");
-        JLabel jlbImgSearch, jlbInfor,jlbSearchTitle,jlbSearchName, jlbSearchAddress, jlbSearchPhone, jlbSearchEmail, jlbSearchGender, jlbSearchPos, jlbSearchId, jlbSearchDob, jlbSearchRoleID;
+        JLabel jlbImgSearch, jlbInfor, jlbSearchTitle, jlbSearchName, jlbSearchAddress, jlbSearchPhone,
+                jlbSearchEmail, jlbSearchGender, jlbSearchPos, jlbSearchId, jlbSearchDob, jlbSearchRoleID,
+                jlbSName, jlbSAddress, jlbSPhone, jlbSEmail, jlbSGender, jlbSPos, jlbSID, jlbSDob, jlbSRoleID;
         JButton btnSearchInfor, btnSearchCancel, btnSearchUpdate, btnSearchReturn;
+        JTextField jtxInforSearch;
+
         //Frame Details
+        searchFrame=new JFrame("閲覧");
         searchFrame.setSize(900, 600);
         searchFrame.setLocation(300, 200);
         searchFrame.setResizable(false);
@@ -736,7 +901,7 @@ public class EmployeeManager {
 
         jtxInforSearch=new JTextField("氏名、電話番号、メール、従業員のIDを入力");
         jtxInforSearch.setBounds(400, 255, 380, 40);
-        jtxInforSearch.setFont(new Font("serif", Font.PLAIN, 18));
+        jtxInforSearch.setFont(new Font("serif", Font.BOLD, 18));
         jlbImgSearch.add(jtxInforSearch);
 
         //Button Details
@@ -746,7 +911,6 @@ public class EmployeeManager {
         btnSearchInfor.setForeground(Color.BLACK);
         btnSearchInfor.setFont(new Font("Times_New_Roman", Font.BOLD, 18));
         jlbImgSearch.add(btnSearchInfor);
-
         btnSearchCancel=new JButton("キャンセル");
         btnSearchCancel.setBounds(460, 330, 140, 35);
         btnSearchCancel.setBackground(Color.LIGHT_GRAY);
@@ -778,11 +942,10 @@ public class EmployeeManager {
         jlbSearchName.setBounds(150, 140, 100, 30);
         jlbSearchName.setFont(new Font("serif", Font.BOLD, 20));
         jlbImgSearch.add(jlbSearchName);
-
-        jlbNameView=new JLabel();
-        jlbNameView.setBounds(250, 140, 200, 30);
-        jlbNameView.setFont(new Font("serif", Font.BOLD, 20));
-        jlbImgSearch.add(jlbNameView);
+        jlbSName=new JLabel();
+        jlbSName.setBounds(250, 140, 200, 30);
+        jlbSName.setFont(new Font("serif", Font.BOLD, 20));
+        jlbImgSearch.add(jlbSName);
 
         //2.Address
         jlbSearchAddress=new JLabel("住所:");
@@ -790,10 +953,10 @@ public class EmployeeManager {
         jlbSearchAddress.setFont(new Font("serif", Font.BOLD, 20));
         jlbImgSearch.add(jlbSearchAddress);
 
-        jlbAddressView=new JLabel();
-        jlbAddressView.setBounds(550, 140, 150, 30);
-        jlbAddressView.setFont(new Font("serif", Font.BOLD, 20));
-        jlbImgSearch.add(jlbAddressView);
+        jlbSAddress=new JLabel();
+        jlbSAddress.setBounds(550, 140, 150, 30);
+        jlbSAddress.setFont(new Font("serif", Font.BOLD, 20));
+        jlbImgSearch.add(jlbSAddress);
 
         //3.Mobile No.
         jlbSearchPhone=new JLabel("電話番号:");
@@ -801,10 +964,10 @@ public class EmployeeManager {
         jlbSearchPhone.setFont(new Font("serif", Font.BOLD, 20));
         jlbImgSearch.add(jlbSearchPhone);
 
-        jlbPhoneView=new JLabel();
-        jlbPhoneView.setBounds(250, 200, 150, 30);
-        jlbPhoneView.setFont(new Font("serif", Font.BOLD, 20));
-        jlbImgSearch.add(jlbPhoneView);
+        jlbSPhone=new JLabel();
+        jlbSPhone.setBounds(250, 200, 150, 30);
+        jlbSPhone.setFont(new Font("serif", Font.BOLD, 20));
+        jlbImgSearch.add(jlbSPhone);
 
         //4.Email Id
         jlbSearchEmail=new JLabel("メール:");
@@ -812,10 +975,10 @@ public class EmployeeManager {
         jlbSearchEmail.setFont(new Font("serif", Font.BOLD, 20));
         jlbImgSearch.add(jlbSearchEmail);
 
-        jlbEmailView=new JLabel();
-        jlbEmailView.setBounds(550, 200, 200, 30);
-        jlbEmailView.setFont(new Font("serif", Font.BOLD, 20));
-        jlbImgSearch.add(jlbEmailView);
+        jlbSEmail=new JLabel();
+        jlbSEmail.setBounds(550, 200, 200, 30);
+        jlbSEmail.setFont(new Font("serif", Font.BOLD, 20));
+        jlbImgSearch.add(jlbSEmail);
 
         //5.Gender
         jlbSearchGender=new JLabel("性別:");
@@ -823,10 +986,10 @@ public class EmployeeManager {
         jlbSearchGender.setFont(new Font("serif", Font.BOLD, 20));
         jlbImgSearch.add(jlbSearchGender);
 
-        jlbGenderView=new JLabel();
-        jlbGenderView.setBounds(250, 260, 150, 30);
-        jlbGenderView.setFont(new Font("serif", Font.BOLD, 20));
-        jlbImgSearch.add(jlbGenderView);
+        jlbSGender=new JLabel();
+        jlbSGender.setBounds(250, 260, 150, 30);
+        jlbSGender.setFont(new Font("serif", Font.BOLD, 20));
+        jlbImgSearch.add(jlbSGender);
 
         //6.Job Position
         jlbSearchPos=new JLabel("職位:");
@@ -834,10 +997,10 @@ public class EmployeeManager {
         jlbSearchPos.setFont(new Font("serif", Font.BOLD, 20));
         jlbImgSearch.add(jlbSearchPos);
 
-        jlbPosView=new JLabel();
-        jlbPosView.setBounds(550, 260, 150, 30);
-        jlbPosView.setFont(new Font("serif", Font.BOLD, 20));
-        jlbImgSearch.add(jlbPosView);
+        jlbSPos=new JLabel();
+        jlbSPos.setBounds(550, 260, 150, 30);
+        jlbSPos.setFont(new Font("serif", Font.BOLD, 20));
+        jlbImgSearch.add(jlbSPos);
 
         //7.Employee ID
         jlbSearchId=new JLabel("従業員ID:");
@@ -845,10 +1008,10 @@ public class EmployeeManager {
         jlbSearchId.setFont(new Font("serif", Font.BOLD, 20));
         jlbImgSearch.add(jlbSearchId);
 
-        jlbIdView=new JLabel();
-        jlbIdView.setBounds(250, 320, 150, 30);
-        jlbIdView.setFont(new Font("serif", Font.BOLD, 20));
-        jlbImgSearch.add(jlbIdView);
+        jlbSID=new JLabel();
+        jlbSID.setBounds(250, 320, 150, 30);
+        jlbSID.setFont(new Font("serif", Font.BOLD, 20));
+        jlbImgSearch.add(jlbSID);
 
         //8.Date of Birth
         jlbSearchDob=new JLabel("生年月日:");
@@ -856,10 +1019,10 @@ public class EmployeeManager {
         jlbSearchDob.setFont(new Font("serif", Font.BOLD, 20));
         jlbImgSearch.add(jlbSearchDob);
 
-        jlbDobView=new JLabel();
-        jlbDobView.setBounds(550, 320, 150, 30);
-        jlbDobView.setFont(new Font("serif", Font.BOLD, 20));
-        jlbImgSearch.add(jlbDobView);
+        jlbSDob=new JLabel();
+        jlbSDob.setBounds(550, 320, 150, 30);
+        jlbSDob.setFont(new Font("serif", Font.BOLD, 20));
+        jlbImgSearch.add(jlbSDob);
 
         //9.Role ID
         jlbSearchRoleID=new JLabel("役割ID:");
@@ -867,10 +1030,10 @@ public class EmployeeManager {
         jlbSearchRoleID.setFont(new Font("serif", Font.BOLD, 20));
         jlbImgSearch.add(jlbSearchRoleID);
 
-        jlbRoleIDView=new JLabel();
-        jlbRoleIDView.setBounds(250, 380, 150, 30);
-        jlbRoleIDView.setFont(new Font("serif", Font.BOLD, 20));
-        jlbImgSearch.add(jlbRoleIDView);
+        jlbSRoleID=new JLabel();
+        jlbSRoleID.setBounds(250, 380, 150, 30);
+        jlbSRoleID.setFont(new Font("serif", Font.BOLD, 20));
+        jlbImgSearch.add(jlbSRoleID);
 
         jlbSearchId.setVisible(false);
         jlbSearchName.setVisible(false);
@@ -886,21 +1049,17 @@ public class EmployeeManager {
             public void actionPerformed(ActionEvent e) {
                 DBConnection dbConnection=new DBConnection(); // Tạo kết nối cơ sở dữ liệu
                 String searchTerm=jtxInforSearch.getText(); // Lấy giá trị từ JTextField
-
                 try {
                     // Thiết lập truy vấn SQL và thực hiện truy vấn
                     String query="SELECT * FROM employees WHERE name = ? OR phone = ? OR email = ? OR employee_id = ?";
                     PreparedStatement preparedStatement=dbConnection.connection.prepareStatement(query);
-
                     // Đặt các giá trị vào các placeholder
                     preparedStatement.setString(1, searchTerm); // name
                     preparedStatement.setString(2, searchTerm); // phone
                     preparedStatement.setString(3, searchTerm); // email
                     preparedStatement.setString(4, searchTerm); // employee_id
-
                     // Thực hiện truy vấn và lấy kết quả
                     ResultSet rs=preparedStatement.executeQuery();
-
                     // Xử lý kết quả và hiển thị thông tin nếu tìm thấy
                     if (rs.next()) {
                         // Lấy thông tin từ ResultSet
@@ -925,39 +1084,33 @@ public class EmployeeManager {
                         jlbSearchId.setVisible(true);
                         jlbSearchDob.setVisible(true);
                         jlbSearchRoleID.setVisible(true);
-
-                        jlbIdView.setText(employeeId);
-                        jlbNameView.setText(name);
-                        jlbGenderView.setText(gender);
-                        jlbDobView.setText(dob);
-                        jlbAddressView.setText(address);
-                        jlbEmailView.setText(email);
-                        jlbPhoneView.setText(phone);
-                        jlbPosView.setText(position);
-                        jlbRoleIDView.setText(role_id);
-
-                        jlbIdView.setVisible(true);
-                        jlbNameView.setVisible(true);
-                        jlbGenderView.setVisible(true);
-                        jlbDobView.setVisible(true);
-                        jlbAddressView.setVisible(true);
-                        jlbEmailView.setVisible(true);
-                        jlbPhoneView.setVisible(true);
-                        jlbPosView.setVisible(true);
-                        jlbRoleIDView.setVisible(true);
-
+                        jlbSID.setText(employeeId);
+                        jlbSName.setText(name);
+                        jlbSGender.setText(gender);
+                        jlbSDob.setText(dob);
+                        jlbSAddress.setText(address);
+                        jlbSEmail.setText(email);
+                        jlbSPhone.setText(phone);
+                        jlbSPos.setText(position);
+                        jlbSRoleID.setText(role_id);
+                        jlbSID.setVisible(true);
+                        jlbSName.setVisible(true);
+                        jlbSGender.setVisible(true);
+                        jlbSDob.setVisible(true);
+                        jlbSAddress.setVisible(true);
+                        jlbSEmail.setVisible(true);
+                        jlbSPhone.setVisible(true);
+                        jlbSPos.setVisible(true);
+                        jlbSRoleID.setVisible(true);
                         jtxInforSearch.setVisible(false);
                         jlbInfor.setVisible(false);
                         btnSearchInfor.setVisible(false);
                         btnSearchCancel.setVisible(false);
                         btnSearchUpdate.setVisible(true);
                         btnSearchReturn.setVisible(true);
-
                     } else {
                         JOptionPane.showMessageDialog(null, "従業員が見つかりません");
                     }
-                    // Đóng kết nối cơ sở dữ liệu
-                    dbConnection.connection.close();
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }
@@ -965,9 +1118,11 @@ public class EmployeeManager {
         });
         btnSearchCancel.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                mainUI=new MainUI();
                 searchFrame.dispose();
                 AdminUI adminUI=new AdminUI();
                 adminUI.setVisible(true);
+
             }
         });
         btnSearchReturn.addActionListener(new ActionListener() {
@@ -980,43 +1135,44 @@ public class EmployeeManager {
                 btnSearchUpdate.setVisible(false);
                 btnSearchReturn.setVisible(false);
                 jlbSearchName.setVisible(false);
-                jlbNameView.setVisible(false);
+                jlbSName.setVisible(false);
                 jlbSearchGender.setVisible(false);
-                jlbGenderView.setVisible(false);
+                jlbSGender.setVisible(false);
                 jlbSearchDob.setVisible(false);
-                jlbDobView.setVisible(false);
+                jlbSDob.setVisible(false);
                 jlbSearchAddress.setVisible(false);
-                jlbAddressView.setVisible(false);
+                jlbSAddress.setVisible(false);
                 jlbSearchEmail.setVisible(false);
-                jlbEmailView.setVisible(false);
+                jlbSEmail.setVisible(false);
                 jlbSearchPhone.setVisible(false);
-                jlbPhoneView.setVisible(false);
+                jlbSPhone.setVisible(false);
                 jlbSearchPos.setVisible(false);
-                jlbPosView.setVisible(false);
+                jlbSPos.setVisible(false);
                 jlbSearchId.setVisible(false);
-                jlbIdView.setVisible(false);
+                jlbSID.setVisible(false);
                 jlbSearchRoleID.setVisible(false);
-                jlbRoleIDView.setVisible(false);
+                jlbSRoleID.setVisible(false);
             }
         });
         btnSearchUpdate.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                searchFrame.setVisible(false);
+                updateFrame.setVisible(true);
             }
         });
     }
 
     public void resetJTextField() {
-        jtxNameAdd.setText(""); // Đặt lại JTextField của tên
-        jtxAddressAdd.setText(""); // Đặt lại JTextField của địa chỉ
-        jtxPhoneAdd.setText(""); // Đặt lại JTextField của số điện thoại
-        jtxEmailAdd.setText(""); // Đặt lại JTextField của email
-        jtxGenderAdd.setText(""); // Đặt lại JTextField của giới tính
-        jtxPosAdd.setText(""); // Đặt lại JTextField của vị trí công việc
-        jtxEmployeeIDAdd.setText(""); // Đặt lại JTextField của mã nhân viên
-        jtxDobAdd.setText(""); // Đặt lại JTextField của ngày tháng năm sinh
-        jtxRoleIDAdd.setText(""); // Đặt lại JTextField của mã vai trò
+        jtxAAddress.setText(""); // Đặt lại JTextField của địa chỉ
+        jtxAEmail.setText(""); // Đặt lại JTextField của email
+        jtxAGender.setText(""); // Đặt lại JTextField của giới tính
+        jtxAName.setText(""); // Đặt lại JTextField của tên
+        jtxAPhone.setText(""); // Đặt lại JTextField của số điện thoại
+        jtxAPos.setText(""); // Đặt lại JTextField của vị trí
+        jtxARoleID.setText(""); // Đặt lại JTextField của ID vai trò
+        jtxADob.setText(""); // Đặt lại JTextField của ngày sinh
+        jtxAID.setText("");
     }
 
     public void showSearchFrame() {
@@ -1036,9 +1192,6 @@ public class EmployeeManager {
     }
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            new EmployeeManager();
-        });
-
+        new EmployeeManager();
     }
 }

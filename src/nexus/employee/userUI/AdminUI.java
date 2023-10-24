@@ -10,9 +10,10 @@ import java.awt.event.ActionListener;
 
 public class AdminUI implements ActionListener {
 
-    JFrame adminJf, userJf;
-    JLabel jlbImage, jlbTitle;
+    JFrame adminJf;
+    JLabel jlbImage;
     JButton btnAdd, btnRemove, btnView, btnUpdate,btnLogout;
+    private MainUI mainUI;
     public AdminUI() {
         adminJf=new JFrame("メイン　ページ");
         //Background Image
@@ -41,7 +42,7 @@ public class AdminUI implements ActionListener {
         jlbImage.add(btnRemove);
 
         //3.View Button
-        btnView=new JButton("検索");
+        btnView=new JButton("閲覧");
         btnView.setBounds(490, 350, 120, 40);
         btnView.setFont(new Font("Times_New_Roman", Font.BOLD, 18));
         btnView.setForeground(Color.BLACK);
@@ -100,13 +101,13 @@ public class AdminUI implements ActionListener {
         } else if (ae.getSource() == btnLogout) {
             DBConnection dbConnection=new DBConnection();
             dbConnection.closeConnection();
-            MainUI mainUI=new MainUI();
+            mainUI=new MainUI();
             mainUI.showFrontPage();
             adminJf.setVisible(false);
             adminJf.dispose();
         }
     }
-    public static void main(String args[]) {
+    public static void main(String[] args) {
         new AdminUI();
     }
 
