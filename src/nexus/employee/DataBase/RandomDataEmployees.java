@@ -14,7 +14,6 @@ public class RandomDataEmployees {
     public static void main(String[] args) {
         // Tạo đối tượng DBConnection để kết nối đến cơ sở dữ liệu
         DBConnection dbConnection = new DBConnection();
-
         try {
             if (dbConnection.connection != null) {
                 System.out.println("Kết nối đến cơ sở dữ liệu thành công.");

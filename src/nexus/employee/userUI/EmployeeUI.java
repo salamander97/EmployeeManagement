@@ -4,15 +4,18 @@ import nexus.employee.DBConnection;
 import nexus.employee.EmployeeManager;
 import nexus.employee.MainUI;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 public class EmployeeUI {
     JFrame userJf;
-    JLabel jlbImage;
+    JLabel jlbImage,jlbFace;
     JButton btnView,btnLogout,btnSearchInfor,btnCancel,btnReturn;
     private String employeeId, name, gender, dob, address, email, phone, position, role_id;
     private MainUI mainUI;
@@ -87,7 +90,7 @@ public class EmployeeUI {
         jlbImage.add(btnCancel);
 
         btnReturn=new JButton("戻る");
-        btnReturn.setBounds(500, 440, 120, 40);
+        btnReturn.setBounds(400, 480, 120, 40);
         btnReturn.setBackground(Color.LIGHT_GRAY);
         btnReturn.setForeground(Color.BLACK);
         btnReturn.setFont(new Font("serif", Font.BOLD, 18));
@@ -130,12 +133,12 @@ public class EmployeeUI {
 
         //4.Email Id
         jlbEmail=new JLabel("メール:");
-        jlbEmail.setBounds(450, 200, 100, 30);
+        jlbEmail.setBounds(150, 200, 100, 30);
         jlbEmail.setFont(new Font("serif", Font.BOLD, 20));
         jlbImage.add(jlbEmail);
 
         jlbSEmail=new JLabel();
-        jlbSEmail.setBounds(550, 200, 200, 30);
+        jlbSEmail.setBounds(250, 200, 200, 30);
         jlbSEmail.setFont(new Font("serif", Font.BOLD, 20));
         jlbImage.add(jlbSEmail);
 
@@ -152,12 +155,12 @@ public class EmployeeUI {
 
         //6.Job Position
         jlbPos=new JLabel("職位:");
-        jlbPos.setBounds(450, 260, 100, 30);
+        jlbPos.setBounds(150, 380, 100, 30);
         jlbPos.setFont(new Font("serif", Font.BOLD, 20));
         jlbImage.add(jlbPos);
 
         jlbSPos=new JLabel();
-        jlbSPos.setBounds(550, 260, 150, 30);
+        jlbSPos.setBounds(250, 380, 150, 30);
         jlbSPos.setFont(new Font("serif", Font.BOLD, 20));
         jlbImage.add(jlbSPos);
 
@@ -193,7 +196,42 @@ public class EmployeeUI {
         jlbSRoleID.setBounds(250, 380, 150, 30);
         jlbSRoleID.setFont(new Font("serif", Font.BOLD, 20));
         jlbImage.add(jlbSRoleID);
+        BufferedImage imgFace=null;
+        try{
+            imgFace= ImageIO.read(new File("src/nexus/employee/images/employeeImg/face2.jpeg"));
+        }catch (Exception e){
+            e.printStackTrace();
+        }
 
+        jlbFace = new JLabel();  // Initialize jlbFace
+        jlbFace.setBounds(550, 40, 200, 450);
+        jlbImage.add(jlbFace);
+
+        // Lấy kích thước hiện tại của hình ảnh
+        int imgWidth = imgFace.getWidth(null);
+        int imgHeight = imgFace.getHeight(null);
+
+        // Kích thước của jlbFace
+        int labelWidth = 200;
+        int labelHeight = 450;
+
+        // Tính toán tỷ lệ để điều chỉnh kích thước hình ảnh
+        double scaleFactor = Math.min(1.0 * labelWidth / imgWidth, 1.0 * labelHeight / imgHeight);
+
+        // Đặt kích thước của jlbFace
+        jlbFace.setSize(labelWidth, labelHeight);
+
+        // Tính toán kích thước mới dựa trên tỷ lệ
+        int newWidth = (int) (imgWidth * scaleFactor);
+        int newHeight = (int) (imgHeight * scaleFactor);
+
+        // Sử dụng getScaledInstance để điều chỉnh kích thước hình ảnh
+        Image scaledImage = imgFace.getScaledInstance(newWidth, newHeight, Image.SCALE_SMOOTH);
+
+        // Đặt hình ảnh điều chỉnh vào jlbFace
+        jlbFace.setIcon(new ImageIcon(scaledImage));
+        jlbFace.setVisible(false);
+// Đặt kích thước của jlbFace
         jlbTitle.setVisible(false);
         jlbName.setVisible(false);
         jlbAddress.setVisible(false);
@@ -210,6 +248,8 @@ public class EmployeeUI {
         btnReturn.setVisible(false);
         btnSearchInfor.setVisible(false);
         btnCancel.setVisible(false);
+
+
         btnSearchInfor.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 DBConnection dbConnection=new DBConnection(); // Tạo kết nối cơ sở dữ liệu
@@ -240,14 +280,14 @@ public class EmployeeUI {
                         JOptionPane.showMessageDialog(null, "従業員が見つかりました");
                         // Hiển thị thông tin (ví dụ: sử dụng System.out.println hoặc hiển thị trong giao diện người dùng)
                         jlbName.setVisible(true);
-                        jlbAddress.setVisible(true);
-                        jlbPhone.setVisible(true);
+                        jlbAddress.setVisible(false);
+                        jlbPhone.setVisible(false);
                         jlbEmail.setVisible(true);
                         jlbGender.setVisible(true);
                         jlbPos.setVisible(true);
                         jlbID.setVisible(true);
-                        jlbDob.setVisible(true);
-                        jlbRoleID.setVisible(true);
+                        jlbDob.setVisible(false);
+                        jlbRoleID.setVisible(false);
                         jlbSID.setText(employeeId);
                         jlbSName.setText(name);
                         jlbSGender.setText(gender);
@@ -260,15 +300,15 @@ public class EmployeeUI {
                         jlbSID.setVisible(true);
                         jlbSName.setVisible(true);
                         jlbSGender.setVisible(true);
-                        jlbSDob.setVisible(true);
-                        jlbSAddress.setVisible(true);
+                        jlbSDob.setVisible(false);
+                        jlbSAddress.setVisible(false);
                         jlbSEmail.setVisible(true);
-                        jlbSPhone.setVisible(true);
+                        jlbSPhone.setVisible(false);
                         jlbSPos.setVisible(true);
-                        jlbSRoleID.setVisible(true);
+                        jlbSRoleID.setVisible(false);
                         jtxInforSearch.setVisible(false);
                         jlbInfor.setVisible(false);
-
+                        jlbFace.setVisible(employeeId.equals("123456"));
                         btnLogout.setVisible(false);
                         btnView.setVisible(false);
                         btnSearchInfor.setVisible(false);
@@ -309,6 +349,7 @@ public class EmployeeUI {
                 jlbSID.setVisible(false);
                 jlbRoleID.setVisible(false);
                 jlbSRoleID.setVisible(false);
+                jlbFace.setVisible(false);
             }
         });
         btnView.addActionListener(new ActionListener() {
@@ -319,7 +360,7 @@ public class EmployeeUI {
                 btnCancel.setVisible(true);
                 jlbInfor.setVisible(true);
                 jtxInforSearch.setVisible(true);
-                jlbTitle.setVisible(true);
+                jlbTitle.setVisible(false);
 
                 btnView.setVisible(false);
                 btnReturn.setVisible(false);
@@ -378,7 +419,7 @@ public class EmployeeUI {
             }
         });
         btnLogout.addActionListener(new ActionListener() {
-            @Override
+             @Override
             public void actionPerformed(ActionEvent e) {
                 userJf.setVisible(false);
                 userJf.dispose();

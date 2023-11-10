@@ -36,7 +36,7 @@ public class Welcome extends JFrame {
         lblStatus.setHorizontalAlignment(SwingConstants.LEFT);
         statusPanel.add(lblStatus, BorderLayout.NORTH);
 
-        // Tạo tiến trình
+        // Progress bar　とは　
         progressBar = new JProgressBar(0, 100);
         progressBar.setStringPainted(true);                                              // Cho phép hiển thị tiến trình
         progressBar.setPreferredSize(new Dimension(900, 30));               // Đặt kích thước cho progressBar

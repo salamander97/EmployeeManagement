@@ -16,7 +16,7 @@ public class DBConnection {
             Class.forName("com.mysql.cj.jdbc.Driver");
             // Thiết lập thông tin kết nối đến cơ sở dữ liệu MySQL của bạn
 
-            String url="jdbc:mysql://localhost:3306/QLNV"; // Địa chỉ cơ sở dữ liệu MySQL
+            String url="jdbc:mysql://localhost:3306/Employee Data"; // Địa chỉ cơ sở dữ liệu MySQL
             String username="root"; // Tên đăng nhập MySQL của bạn
             String password="trunghieu97"; // Mật khẩu MySQL của bạn
 

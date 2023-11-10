@@ -150,20 +150,17 @@ public class MainUI extends JFrame implements ActionListener {
                     ResultSet resultSet=dbConnection.statement.executeQuery(sql);
                     if (resultSet.next()) {          //Kiểm tra dữ liệu nhập vào có trùng với dữ liệu trong database hay không
                         // Kiểm tra và xử lý phân quyền dựa trên roleId
+                            JOptionPane.showMessageDialog(null, "ログイン成功");
                         int roleId =resultSet.getInt("role_id");
-                        System.out.println("Username: " + username);
-                        System.out.println("Password: " + password);
-                        System.out.println("Role ID: " + roleId);
                         employeeReader=new EmployeeReader();
                         if (roleId == 1) {
                             // Nếu là admin thì hiển thị màn hình AdminUI
-                            JOptionPane.showMessageDialog(null, "ログイン成功");
                             employeeReader.showAdminUI();
                             login.dispose();
                             this.setVisible(false);
                         } else if (roleId == 2) {
                             // Nếu là nhân viên thì hiển thị màn hình EmployeeUI
-                            JOptionPane.showMessageDialog(null, "ログイン成功");
+//                            JOptionPane.showMessageDialog(null, "ログイン成功");
                             employeeReader.showEmployeeUI();
                             login.dispose();
                             this.setVisible(false);
