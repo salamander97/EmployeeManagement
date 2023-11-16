@@ -5,8 +5,6 @@ import nexus.employee.DBConnection;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.util.Vector;
@@ -84,9 +82,7 @@ public class DepartmentMain {
         tableModel.addColumn("Salary");
         tableModel.addColumn("Country");
 
-        searchButton.addActionListener(e -> {
-            showEmployeeInformationTable();
-        });
+        searchButton.addActionListener(e -> showEmployeeInformationTable());
 
         editButton.addActionListener(e -> {
             int selectedRow = employeeTable.getSelectedRow();

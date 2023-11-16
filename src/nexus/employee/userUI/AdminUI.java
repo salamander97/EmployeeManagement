@@ -13,7 +13,7 @@ public class AdminUI implements ActionListener {
     JFrame adminJf;
     JLabel jlbImage;
     JButton btnAdd, btnRemove, btnView, btnUpdate,btnLogout;
-    private MainUI mainUI;
+
     public AdminUI() {
         adminJf=new JFrame("メイン　ページ");
         //Background Image
@@ -101,7 +101,7 @@ public class AdminUI implements ActionListener {
         } else if (ae.getSource() == btnLogout) {
             DBConnection dbConnection=new DBConnection();
             dbConnection.closeConnection();
-            mainUI=new MainUI();
+            MainUI mainUI=new MainUI();
             mainUI.showFrontPage();
             adminJf.setVisible(false);
             adminJf.dispose();

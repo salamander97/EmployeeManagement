@@ -1,17 +1,16 @@
 package nexus.employee.userUI;
 
 import nexus.employee.DBConnection;
-import nexus.employee.EmployeeManager;
 import nexus.employee.MainUI;
-
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class EmployeeUI {
     JFrame userJf;
@@ -196,42 +195,14 @@ public class EmployeeUI {
         jlbSRoleID.setBounds(250, 380, 150, 30);
         jlbSRoleID.setFont(new Font("serif", Font.BOLD, 20));
         jlbImage.add(jlbSRoleID);
-        BufferedImage imgFace=null;
-        try{
-            imgFace= ImageIO.read(new File("src/nexus/employee/images/employeeImg/face2.jpeg"));
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-
         jlbFace = new JLabel();  // Initialize jlbFace
         jlbFace.setBounds(550, 40, 200, 450);
         jlbImage.add(jlbFace);
 
-        // Lấy kích thước hiện tại của hình ảnh
-        int imgWidth = imgFace.getWidth(null);
-        int imgHeight = imgFace.getHeight(null);
-
-        // Kích thước của jlbFace
-        int labelWidth = 200;
-        int labelHeight = 450;
-
-        // Tính toán tỷ lệ để điều chỉnh kích thước hình ảnh
-        double scaleFactor = Math.min(1.0 * labelWidth / imgWidth, 1.0 * labelHeight / imgHeight);
-
-        // Đặt kích thước của jlbFace
-        jlbFace.setSize(labelWidth, labelHeight);
-
-        // Tính toán kích thước mới dựa trên tỷ lệ
-        int newWidth = (int) (imgWidth * scaleFactor);
-        int newHeight = (int) (imgHeight * scaleFactor);
-
-        // Sử dụng getScaledInstance để điều chỉnh kích thước hình ảnh
-        Image scaledImage = imgFace.getScaledInstance(newWidth, newHeight, Image.SCALE_SMOOTH);
+        jlbFace.setVisible(false);
 
         // Đặt hình ảnh điều chỉnh vào jlbFace
-        jlbFace.setIcon(new ImageIcon(scaledImage));
         jlbFace.setVisible(false);
-// Đặt kích thước của jlbFace
         jlbTitle.setVisible(false);
         jlbName.setVisible(false);
         jlbAddress.setVisible(false);
@@ -250,183 +221,198 @@ public class EmployeeUI {
         btnCancel.setVisible(false);
 
 
-        btnSearchInfor.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                DBConnection dbConnection=new DBConnection(); // Tạo kết nối cơ sở dữ liệu
-                String searchTerm=jtxInforSearch.getText(); // Lấy giá trị từ JTextField
-                try {
-                    // Thiết lập truy vấn SQL và thực hiện truy vấn
-                    String query="SELECT * FROM employees WHERE name = ? OR phone = ? OR email = ? OR employee_id = ?";
-                    PreparedStatement preparedStatement=dbConnection.connection.prepareStatement(query);
-                    // Đặt các giá trị vào các placeholder
-                    preparedStatement.setString(1, searchTerm); // name
-                    preparedStatement.setString(2, searchTerm); // phone
-                    preparedStatement.setString(3, searchTerm); // email
-                    preparedStatement.setString(4, searchTerm); // employee_id
-                    // Thực hiện truy vấn và lấy kết quả
-                    ResultSet rs=preparedStatement.executeQuery();
-                    // Xử lý kết quả và hiển thị thông tin nếu tìm thấy
-                    if (rs.next()) {
-                        // Lấy thông tin từ ResultSet
-                        employeeId=rs.getString("employee_id");
-                        name=rs.getString("name");
-                        gender=rs.getString("gender");
-                        dob=rs.getString("dob");
-                        address=rs.getString("address");
-                        email=rs.getString("email");
-                        phone=rs.getString("phone");
-                        position=rs.getString("position");
-                        role_id=rs.getString("role_id");
-                        JOptionPane.showMessageDialog(null, "従業員が見つかりました");
-                        // Hiển thị thông tin (ví dụ: sử dụng System.out.println hoặc hiển thị trong giao diện người dùng)
-                        jlbName.setVisible(true);
-                        jlbAddress.setVisible(false);
-                        jlbPhone.setVisible(false);
-                        jlbEmail.setVisible(true);
-                        jlbGender.setVisible(true);
-                        jlbPos.setVisible(true);
-                        jlbID.setVisible(true);
-                        jlbDob.setVisible(false);
-                        jlbRoleID.setVisible(false);
-                        jlbSID.setText(employeeId);
-                        jlbSName.setText(name);
-                        jlbSGender.setText(gender);
-                        jlbSDob.setText(dob);
-                        jlbSAddress.setText(address);
-                        jlbSEmail.setText(email);
-                        jlbSPhone.setText(phone);
-                        jlbSPos.setText(position);
-                        jlbSRoleID.setText(role_id);
-                        jlbSID.setVisible(true);
-                        jlbSName.setVisible(true);
-                        jlbSGender.setVisible(true);
-                        jlbSDob.setVisible(false);
-                        jlbSAddress.setVisible(false);
-                        jlbSEmail.setVisible(true);
-                        jlbSPhone.setVisible(false);
-                        jlbSPos.setVisible(true);
-                        jlbSRoleID.setVisible(false);
-                        jtxInforSearch.setVisible(false);
-                        jlbInfor.setVisible(false);
-                        jlbFace.setVisible(employeeId.equals("123456"));
-                        btnLogout.setVisible(false);
-                        btnView.setVisible(false);
-                        btnSearchInfor.setVisible(false);
-                        btnCancel.setVisible(false);
-                        btnReturn.setVisible(true);
-                    } else {
-                        JOptionPane.showMessageDialog(null, "従業員が見つかりません");
+        btnSearchInfor.addActionListener(e -> {
+            DBConnection dbConnection=new DBConnection(); // Tạo kết nối cơ sở dữ liệu
+            String searchTerm=jtxInforSearch.getText(); // Lấy giá trị từ JTextField
+            try {
+                // Thiết lập truy vấn SQL và thực hiện truy vấn
+                String query="SELECT * FROM employees WHERE name = ? OR phone = ? OR email = ? OR employee_id = ?";
+                PreparedStatement preparedStatement=dbConnection.connection.prepareStatement(query);
+                // Đặt các giá trị vào các placeholder
+                preparedStatement.setString(1, searchTerm); // name
+                preparedStatement.setString(2, searchTerm); // phone
+                preparedStatement.setString(3, searchTerm); // email
+                preparedStatement.setString(4, searchTerm); // employee_id
+                // Thực hiện truy vấn và lấy kết quả
+                ResultSet rs=preparedStatement.executeQuery();
+                // Xử lý kết quả và hiển thị thông tin nếu tìm thấy
+                if (rs.next()) {
+                    // Lấy thông tin từ ResultSet
+                    employeeId=rs.getString("employee_id");
+                    name=rs.getString("name");
+                    gender=rs.getString("gender");
+                    dob=rs.getString("dob");
+                    address=rs.getString("address");
+                    email=rs.getString("email");
+                    phone=rs.getString("phone");
+                    position=rs.getString("position");
+                    role_id=rs.getString("role_id");
+                    JOptionPane.showMessageDialog(null, "従業員が見つかりました");
+                    String imagePath = "src/nexus/employee/images/employeeImg/" + employeeId + ".jpg";
+                    try {
+                        BufferedImage image = ImageIO.read(new File(imagePath));
+
+                        // Lấy kích thước thực của hình ảnh
+                        int imgWidth = image.getWidth();
+                        int imgHeight = image.getHeight();
+
+                        // Kích thước của jlbFace
+                        int labelWidth = 200;
+                        int labelHeight = 450;
+
+                        // Tính toán tỷ lệ để điều chỉnh kích thước hình ảnh
+                        double scaleFactor = Math.min(1.0 * labelWidth / imgWidth, 1.0 * labelHeight / imgHeight);
+
+                        // Tính toán kích thước mới dựa trên tỷ lệ
+                        int newWidth = (int) (imgWidth * scaleFactor);
+                        int newHeight = (int) (imgHeight * scaleFactor);
+
+                        // Sử dụng getScaledInstance để điều chỉnh kích thước hình ảnh
+                        Image scaledImage = image.getScaledInstance(newWidth, newHeight, Image.SCALE_SMOOTH);
+
+                        // Đặt hình ảnh điều chỉnh vào jlbFace
+                        jlbFace.setIcon(new ImageIcon(scaledImage));
+                        jlbFace.setVisible(true);
+                    } catch (Exception ae) {
+                        Logger.getLogger(EmployeeUI.class.getName()).log(Level.SEVERE, "Exception occurred", ae);
                     }
-                } catch (Exception ex) {
-                    ex.printStackTrace();
+                    // Hiển thị thông tin (ví dụ: sử dụng System.out.println hoặc hiển thị trong giao diện người dùng)
+                    jlbName.setVisible(true);
+                    jlbAddress.setVisible(false);
+                    jlbPhone.setVisible(false);
+                    jlbEmail.setVisible(true);
+                    jlbGender.setVisible(true);
+                    jlbPos.setVisible(true);
+                    jlbID.setVisible(true);
+                    jlbDob.setVisible(false);
+                    jlbRoleID.setVisible(false);
+                    jlbSID.setText(employeeId);
+                    jlbSName.setText(name);
+                    jlbSGender.setText(gender);
+                    jlbSDob.setText(dob);
+                    jlbSAddress.setText(address);
+                    jlbSEmail.setText(email);
+                    jlbSPhone.setText(phone);
+                    jlbSPos.setText(position);
+                    jlbSRoleID.setText(role_id);
+                    jlbSID.setVisible(true);
+                    jlbSName.setVisible(true);
+                    jlbSGender.setVisible(true);
+                    jlbSDob.setVisible(false);
+                    jlbSAddress.setVisible(false);
+                    jlbSEmail.setVisible(true);
+                    jlbSPhone.setVisible(false);
+                    jlbSPos.setVisible(true);
+                    jlbSRoleID.setVisible(false);
+                    jtxInforSearch.setVisible(false);
+                    jlbInfor.setVisible(false);
+                    jlbFace.setVisible(true);
+                    btnLogout.setVisible(false);
+                    btnView.setVisible(false);
+                    btnSearchInfor.setVisible(false);
+                    btnCancel.setVisible(false);
+                    btnReturn.setVisible(true);
+                } else {
+                    JOptionPane.showMessageDialog(null, "従業員が見つかりません");
                 }
+            } catch (Exception ex) {
+                Logger.getLogger(EmployeeUI.class.getName()).log(Level.SEVERE, "Exception occurred", ex);
             }
         });
-        btnReturn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                jlbInfor.setVisible(true);
-                jtxInforSearch.setVisible(true);
-                jtxInforSearch.setText("氏名、電話番号、メール、従業員のIDを入力");
-                btnSearchInfor.setVisible(true);
-                btnCancel.setVisible(true);
-                btnReturn.setVisible(false);
-                jlbName.setVisible(false);
-                jlbSName.setVisible(false);
-                jlbGender.setVisible(false);
-                jlbSGender.setVisible(false);
-                jlbDob.setVisible(false);
-                jlbSDob.setVisible(false);
-                jlbAddress.setVisible(false);
-                jlbSAddress.setVisible(false);
-                jlbEmail.setVisible(false);
-                jlbSEmail.setVisible(false);
-                jlbPhone.setVisible(false);
-                jlbSPhone.setVisible(false);
-                jlbPos.setVisible(false);
-                jlbSPos.setVisible(false);
-                jlbID.setVisible(false);
-                jlbSID.setVisible(false);
-                jlbRoleID.setVisible(false);
-                jlbSRoleID.setVisible(false);
-                jlbFace.setVisible(false);
-            }
+        btnReturn.addActionListener(e -> {
+            jlbInfor.setVisible(true);
+            jtxInforSearch.setVisible(true);
+            jtxInforSearch.setText("氏名、電話番号、メール、従業員のIDを入力");
+            btnSearchInfor.setVisible(true);
+            btnCancel.setVisible(true);
+            btnReturn.setVisible(false);
+            jlbName.setVisible(false);
+            jlbSName.setVisible(false);
+            jlbGender.setVisible(false);
+            jlbSGender.setVisible(false);
+            jlbDob.setVisible(false);
+            jlbSDob.setVisible(false);
+            jlbAddress.setVisible(false);
+            jlbSAddress.setVisible(false);
+            jlbEmail.setVisible(false);
+            jlbSEmail.setVisible(false);
+            jlbPhone.setVisible(false);
+            jlbSPhone.setVisible(false);
+            jlbPos.setVisible(false);
+            jlbSPos.setVisible(false);
+            jlbID.setVisible(false);
+            jlbSID.setVisible(false);
+            jlbRoleID.setVisible(false);
+            jlbSRoleID.setVisible(false);
+            jlbFace.setVisible(false);
         });
-        btnView.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                jlbImage.setIcon(img);
-                btnSearchInfor.setVisible(true);
-                btnCancel.setVisible(true);
-                jlbInfor.setVisible(true);
-                jtxInforSearch.setVisible(true);
-                jlbTitle.setVisible(false);
 
-                btnView.setVisible(false);
-                btnReturn.setVisible(false);
-                btnLogout.setVisible(false);
-                jlbName.setVisible(false);
-                jlbSName.setVisible(false);
-                jlbGender.setVisible(false);
-                jlbSGender.setVisible(false);
-                jlbDob.setVisible(false);
-                jlbSDob.setVisible(false);
-                jlbAddress.setVisible(false);
-                jlbSAddress.setVisible(false);
-                jlbEmail.setVisible(false);
-                jlbSEmail.setVisible(false);
-                jlbPhone.setVisible(false);
-                jlbSPhone.setVisible(false);
-                jlbPos.setVisible(false);
-                jlbSPos.setVisible(false);
-                jlbID.setVisible(false);
-                jlbSID.setVisible(false);
-                jlbRoleID.setVisible(false);
-                jlbSRoleID.setVisible(false);
+        btnView.addActionListener(e -> {
+            jlbImage.setIcon(img);
+            btnSearchInfor.setVisible(true);
+            btnCancel.setVisible(true);
+            jlbInfor.setVisible(true);
+            jtxInforSearch.setVisible(true);
+            jlbTitle.setVisible(false);
 
-            }
-        });
-        btnCancel.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                jlbImage.setIcon(i);
-                btnView.setVisible(true);
-                btnLogout.setVisible(true);
+            btnView.setVisible(false);
+            btnReturn.setVisible(false);
+            btnLogout.setVisible(false);
+            jlbName.setVisible(false);
+            jlbSName.setVisible(false);
+            jlbGender.setVisible(false);
+            jlbSGender.setVisible(false);
+            jlbDob.setVisible(false);
+            jlbSDob.setVisible(false);
+            jlbAddress.setVisible(false);
+            jlbSAddress.setVisible(false);
+            jlbEmail.setVisible(false);
+            jlbSEmail.setVisible(false);
+            jlbPhone.setVisible(false);
+            jlbSPhone.setVisible(false);
+            jlbPos.setVisible(false);
+            jlbSPos.setVisible(false);
+            jlbID.setVisible(false);
+            jlbSID.setVisible(false);
+            jlbRoleID.setVisible(false);
+            jlbSRoleID.setVisible(false);
 
-                btnSearchInfor.setVisible(false);
-                btnCancel.setVisible(false);
-                jlbInfor.setVisible(false);
-                jtxInforSearch.setVisible(false);
-                jlbTitle.setVisible(false);
-                jlbName.setVisible(false);
-                jlbSName.setVisible(false);
-                jlbGender.setVisible(false);
-                jlbSGender.setVisible(false);
-                jlbDob.setVisible(false);
-                jlbSDob.setVisible(false);
-                jlbAddress.setVisible(false);
-                jlbSAddress.setVisible(false);
-                jlbEmail.setVisible(false);
-                jlbSEmail.setVisible(false);
-                jlbPhone.setVisible(false);
-                jlbSPhone.setVisible(false);
-                jlbPos.setVisible(false);
-                jlbSPos.setVisible(false);
-                jlbID.setVisible(false);
-                jlbSID.setVisible(false);
-                jlbRoleID.setVisible(false);
-                jlbSRoleID.setVisible(false);
-            }
         });
-        btnLogout.addActionListener(new ActionListener() {
-             @Override
-            public void actionPerformed(ActionEvent e) {
-                userJf.setVisible(false);
-                userJf.dispose();
-                mainUI = new MainUI();
-                mainUI.showLoginFrame();
-            }
+        btnCancel.addActionListener(e -> {
+            jlbImage.setIcon(i);
+            btnView.setVisible(true);
+            btnLogout.setVisible(true);
+
+            btnSearchInfor.setVisible(false);
+            btnCancel.setVisible(false);
+            jlbInfor.setVisible(false);
+            jtxInforSearch.setVisible(false);
+            jlbTitle.setVisible(false);
+            jlbName.setVisible(false);
+            jlbSName.setVisible(false);
+            jlbGender.setVisible(false);
+            jlbSGender.setVisible(false);
+            jlbDob.setVisible(false);
+            jlbSDob.setVisible(false);
+            jlbAddress.setVisible(false);
+            jlbSAddress.setVisible(false);
+            jlbEmail.setVisible(false);
+            jlbSEmail.setVisible(false);
+            jlbPhone.setVisible(false);
+            jlbSPhone.setVisible(false);
+            jlbPos.setVisible(false);
+            jlbSPos.setVisible(false);
+            jlbID.setVisible(false);
+            jlbSID.setVisible(false);
+            jlbRoleID.setVisible(false);
+            jlbSRoleID.setVisible(false);
         });
+        btnLogout.addActionListener(e -> {
+           userJf.setVisible(false);
+           userJf.dispose();
+           mainUI = new MainUI();
+           mainUI.showLoginFrame();
+       });
     }
 
     public void setVisible(boolean b) {

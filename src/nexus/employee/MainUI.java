@@ -1,7 +1,4 @@
 package nexus.employee;
-
-import nexus.employee.userUI.EmployeeUI;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -15,7 +12,7 @@ public class MainUI extends JFrame implements ActionListener {
     JTextField jtfUsername;
     JPasswordField jPasswordField;
     JFrame frontPage,login;
-    private EmployeeReader employeeReader;
+
     //     Các phương thức khai báo và xử lý chức năng
     public MainUI() {
         ImageIcon imgFrontPage=new ImageIcon("src/nexus/employee/images/frontPage_1.png");
@@ -56,14 +53,9 @@ public class MainUI extends JFrame implements ActionListener {
         jlbImgFrontPage.add(btnLogin); //Thêm btnLogin vào frontPage
 
         btnLogin.addActionListener(this); //Thêm sự kiện cho btnLogin
-        btnLogin.addActionListener(new ActionListener() {
-
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                frontPage.setVisible(false);
-                login.setVisible(true);
-            }
+        btnLogin.addActionListener(e -> {
+            frontPage.setVisible(false);
+            login.setVisible(true);
         });
         // Thiết lập login
         login=new JFrame();
@@ -144,15 +136,16 @@ public class MainUI extends JFrame implements ActionListener {
             {
                 try {
                     DBConnection dbConnection=new DBConnection();
+                    char[] passwordChars = jPasswordField.getPassword();
                     String username=jtfUsername.getText();
-                    String password=jPasswordField.getText();
+                    String password = String.valueOf(passwordChars);
                     String sql="SELECT * FROM login WHERE username = '" + username + "' AND password = '" + password + "'";   //Lấy dữ liệu từ database
                     ResultSet resultSet=dbConnection.statement.executeQuery(sql);
                     if (resultSet.next()) {          //Kiểm tra dữ liệu nhập vào có trùng với dữ liệu trong database hay không
                         // Kiểm tra và xử lý phân quyền dựa trên roleId
                             JOptionPane.showMessageDialog(null, "ログイン成功");
                         int roleId =resultSet.getInt("role_id");
-                        employeeReader=new EmployeeReader();
+                        EmployeeReader employeeReader=new EmployeeReader();
                         if (roleId == 1) {
                             // Nếu là admin thì hiển thị màn hình AdminUI
                             employeeReader.showAdminUI();
