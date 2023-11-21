@@ -1,6 +1,6 @@
 package nexus.employee.userUI;
 
-import nexus.employee.DBConnection;
+import nexus.employee.DataBase.DBConnection;
 import nexus.employee.MainUI;
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -15,9 +15,11 @@ import java.util.logging.Logger;
 public class EmployeeUI {
     JFrame userJf;
     JLabel jlbImage,jlbFace;
-    JButton btnView,btnLogout,btnSearchInfor,btnCancel,btnReturn;
+    JButton btnView,btnChangePW,btnLogout,btnSearchInfor,btnCancel,btnReturn;
     private String employeeId, name, gender, dob, address, email, phone, position, role_id;
     private MainUI mainUI;
+    private  int keyID;
+
 
     public EmployeeUI() {
 
@@ -25,7 +27,7 @@ public class EmployeeUI {
         jlbImage=new JLabel();
         jlbImage.setBounds(0, 0, 900, 600);
         jlbImage.setLayout(null);
-        ImageIcon img=new ImageIcon("src/nexus/employee/images/frontPage_1.png");
+        ImageIcon img=new ImageIcon("src/nexus/employee/images/frontPage.png");
         ImageIcon i=new ImageIcon("src/nexus/employee/images/mainController.png");
 
         userJf=new JFrame("閲覧");
@@ -42,6 +44,13 @@ public class EmployeeUI {
         btnView.setForeground(Color.BLACK);
         btnView.setBackground(Color.LIGHT_GRAY);
         jlbImage.add(btnView);
+
+        btnChangePW=new JButton("パスワードを変更");
+        btnChangePW.setBounds(340, 460, 200, 40);
+        btnChangePW.setFont(new Font("Times_New_Roman", Font.BOLD, 18));
+        btnChangePW.setForeground(Color.BLACK);
+        btnChangePW.setBackground(Color.LIGHT_GRAY);
+        jlbImage.add(btnChangePW);
 
         btnLogout=new JButton("ログアウト");
         btnLogout.setBounds(470, 400, 120, 40);
@@ -196,7 +205,7 @@ public class EmployeeUI {
         jlbSRoleID.setFont(new Font("serif", Font.BOLD, 20));
         jlbImage.add(jlbSRoleID);
         jlbFace = new JLabel();  // Initialize jlbFace
-        jlbFace.setBounds(550, 40, 200, 450);
+        jlbFace.setBounds(550, 40, 300, 450);
         jlbImage.add(jlbFace);
 
         jlbFace.setVisible(false);
@@ -219,7 +228,6 @@ public class EmployeeUI {
         btnReturn.setVisible(false);
         btnSearchInfor.setVisible(false);
         btnCancel.setVisible(false);
-
 
         btnSearchInfor.addActionListener(e -> {
             DBConnection dbConnection=new DBConnection(); // Tạo kết nối cơ sở dữ liệu
@@ -274,6 +282,27 @@ public class EmployeeUI {
                         jlbFace.setIcon(new ImageIcon(scaledImage));
                         jlbFace.setVisible(true);
                     } catch (Exception ae) {
+                        imagePath = "src/nexus/employee/images/employeeImg/Default.png";
+                        BufferedImage image = ImageIO.read(new File(imagePath));
+                        int imgWidth = image.getWidth();
+                        int imgHeight = image.getHeight();
+
+                        // Kích thước của jlbFace
+                        int labelWidth = 300;
+                        int labelHeight = 350;
+
+                        // Tính toán tỷ lệ để điều chỉnh kích thước hình ảnh
+                        double scaleFactor = Math.min(1.0 * labelWidth / imgWidth, 1.0 * labelHeight / imgHeight);
+
+                        // Tính toán kích thước mới dựa trên tỷ lệ
+                        int newWidth = (int) (imgWidth * scaleFactor);
+                        int newHeight = (int) (imgHeight * scaleFactor);
+
+                        // Sử dụng getScaledInstance để điều chỉnh kích thước hình ảnh
+                        Image scaledImage = image.getScaledInstance(newWidth, newHeight, Image.SCALE_SMOOTH);
+
+                        jlbFace.setIcon(new ImageIcon(image));
+                        jlbFace.setVisible(true);
                         Logger.getLogger(EmployeeUI.class.getName()).log(Level.SEVERE, "Exception occurred", ae);
                     }
                     // Hiển thị thông tin (ví dụ: sử dụng System.out.println hoặc hiển thị trong giao diện người dùng)
@@ -407,6 +436,54 @@ public class EmployeeUI {
             jlbRoleID.setVisible(false);
             jlbSRoleID.setVisible(false);
         });
+        btnChangePW.addActionListener(e -> {
+            boolean validPassword = false;
+            while (!validPassword) {
+                try {
+                    JPasswordField newPasswordField = new JPasswordField();
+                    JPasswordField confirmPasswordField = new JPasswordField();
+                    keyID = MainUI.keyID;
+                    JPanel panel = new JPanel(new GridLayout(0, 1));
+                    panel.add(new JLabel("新しいパスワード:"));
+                    panel.add(newPasswordField);
+                    panel.add(new JLabel("新しいパスワードを再入力:"));
+                    panel.add(confirmPasswordField);
+
+                    int option = JOptionPane.showConfirmDialog(null, panel, "パスワードを変更:", JOptionPane.OK_CANCEL_OPTION);
+                    if (option == JOptionPane.OK_OPTION) {
+                        char[] newPasswordChars = newPasswordField.getPassword();
+                        char[] confirmPasswordChars = confirmPasswordField.getPassword();
+                        String newPassword = new String(newPasswordChars);
+                        String confirmPassword = new String(confirmPasswordChars);
+
+                        if (!newPassword.equals(confirmPassword)) {
+                            JOptionPane.showMessageDialog(null, "パスワードが一致しません。");
+                        } else if (newPassword.length() < 8 || !containsUppercase(newPassword) || !containsLowercase(newPassword) || !containsDigit(newPassword)) {
+                            JOptionPane.showMessageDialog(null, "パスワードは少なくとも8文字で、少なくとも1つの大文字の文字と1つの数字を含める必要があります.");
+                        } else {
+                            DBConnection dbConnection = new DBConnection();
+                            String sql = "UPDATE login SET password=? WHERE id=?";
+                            PreparedStatement preparedStatement = dbConnection.connection.prepareStatement(sql);
+                            preparedStatement.setString(1, newPassword);
+                            preparedStatement.setInt(2, keyID);
+
+                            int rowsAffected = preparedStatement.executeUpdate();
+
+                            if (rowsAffected > 0) {
+                                JOptionPane.showMessageDialog(null, "パスワードを更新しました。");
+                                validPassword = true;
+                            } else {
+                                JOptionPane.showMessageDialog(null, "パスワードを更新できませんでした。もう１度お試しください。");
+                            }
+                        }
+                    } else {
+                        break;
+                    }
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            }
+        });
         btnLogout.addActionListener(e -> {
            userJf.setVisible(false);
            userJf.dispose();
@@ -414,7 +491,24 @@ public class EmployeeUI {
            mainUI.showLoginFrame();
        });
     }
+    private boolean containsUppercase(String s) {
+        return !s.equals(s.toLowerCase());
+    }
 
+    // Kiểm tra xem chuỗi có chứa chữ cái viết thường
+    private boolean containsLowercase(String s) {
+        return !s.equals(s.toUpperCase());
+    }
+
+    // Kiểm tra xem chuỗi có chứa chữ số
+    private boolean containsDigit(String s) {
+        for (char c : s.toCharArray()) {
+            if (Character.isDigit(c)) {
+                return true;
+            }
+        }
+        return false;
+    }
     public void setVisible(boolean b) {
         userJf.setVisible(b);
     }

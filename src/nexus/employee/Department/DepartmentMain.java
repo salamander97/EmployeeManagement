@@ -1,6 +1,6 @@
 package nexus.employee.Department;
 
-import nexus.employee.DBConnection;
+import nexus.employee.DataBase.DBConnection;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;

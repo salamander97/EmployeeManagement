@@ -74,10 +74,10 @@ public class Welcome extends JFrame {
                 } else {
                     lblStatus.setText("読み込み完了");
                     timer.stop();
+                    contentPane.setVisible(false);
+                    contentPane.disable();
                     MainUI mainUI = new MainUI();
                     mainUI.setVisible(true);
-                    dispose();
-                    contentPane.setVisible(false);
                 }
             }
         });
@@ -87,7 +87,7 @@ public class Welcome extends JFrame {
     }
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {                  // Tạo một luồng xử lý giao diện
+        SwingUtilities.invokeLater(() -> {
             Welcome progressDialog = new Welcome();
             progressDialog.setVisible(true);
         });

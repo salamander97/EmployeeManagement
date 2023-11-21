@@ -1,7 +1,5 @@
 package nexus.employee.DataBase;
 
-import nexus.employee.DBConnection;
-
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 

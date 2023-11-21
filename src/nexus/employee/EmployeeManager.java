@@ -2,14 +2,13 @@
 
 package nexus.employee;
 
+import nexus.employee.DataBase.DBConnection;
 import nexus.employee.userUI.AdminUI;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.nio.file.Files;
@@ -28,7 +27,7 @@ public class EmployeeManager {
     private String selectedImagePath=""; // Khởi tạo với giá trị mặc định là chuỗi rỗng
 
     public EmployeeManager() {
-        ImageIcon img=new ImageIcon("src/nexus/employee/images/frontPage_1.png");
+        ImageIcon img=new ImageIcon("src/nexus/employee/images/frontPage.png");
         //Hiển thị lương dưới dạng số nguyên
 //Component thêm nhân viên
         JLabel jlbAddTitle, jlbTitle, jlbAddID, jlbAddName, jlbAddGender, jlbAddDob, jlbAddAddress, jlbAddEmail, jlbAddPhone, jlbAddPos, jlbAddRoleID;
@@ -183,7 +182,7 @@ public class EmployeeManager {
 
         btnChooseImage.addActionListener(e -> {
             JFileChooser fileChooser=new JFileChooser();
-            fileChooser.setFileFilter(new FileNameExtensionFilter("Image Files", "jpg", "jpeg", "png", "gif"));
+            fileChooser.setFileFilter(new FileNameExtensionFilter("Image Files", "jpg"));
 
             int result=fileChooser.showOpenDialog(addFrame);
             if (result == JFileChooser.APPROVE_OPTION) {
@@ -583,10 +582,10 @@ public class EmployeeManager {
                                 AdminUI adminUI=new AdminUI();
                                 adminUI.setVisible(true);
                             } else {
-                                JOptionPane.showMessageDialog(null, "Ảnh không thể xóa");
+                                JOptionPane.showMessageDialog(null, "写真は削除出来ません");
                             }
                         } else {
-                            JOptionPane.showMessageDialog(null, "Ảnh không tồn tại");
+                            JOptionPane.showMessageDialog(null, "写真は存在しません");
                         }
                     } else {
                         JOptionPane.showMessageDialog(null, searchTerm + "を削除できませんでした");
@@ -1487,102 +1486,96 @@ public class EmployeeManager {
             jlbFace.setVisible(true);
             btnDatabaseUpdate.setVisible(true);
             btnSearchUpdate.setVisible(false);
-            btnDatabaseUpdate.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    try {
-                        DBConnection dbConnection=new DBConnection(); // Tạo kết nối cơ sở dữ liệu
-                        String sql;
-                        employeeId=jtxSID.getText();
-                        name=jtxSName.getText();
-                        gender=jtxSGender.getText();
-                        dob=jtxSDob.getText();
-                        address=jtxSAddress.getText();
-                        email=jtxSEmail.getText();
-                        phone=jtxSPhone.getText();
-                        position=jtxSposition.getText();
-                        role_id=jtxSRoleID.getText();
+            btnDatabaseUpdate.addActionListener(e1 -> {
+                try {
+                    DBConnection dbConnection=new DBConnection(); // Tạo kết nối cơ sở dữ liệu
+                    String sql;
+                    employeeId=jtxSID.getText();
+                    name=jtxSName.getText();
+                    gender=jtxSGender.getText();
+                    dob=jtxSDob.getText();
+                    address=jtxSAddress.getText();
+                    email=jtxSEmail.getText();
+                    phone=jtxSPhone.getText();
+                    position=jtxSposition.getText();
+                    role_id=jtxSRoleID.getText();
 
-                        char secondDigit = phone.charAt(1);
-                        if (!phone.matches("^0[987]{1}[0]{1}[0-9]{4}[0-9]{4}$")) {
-                            if (phone.charAt(0) != '0') {
-                                JOptionPane.showMessageDialog(null, "電話番号の１番目は０である必要があります");
-                                return;
-                            }
-                            else if (!(secondDigit == '7' || secondDigit == '8' || secondDigit == '9')) {
-                                JOptionPane.showMessageDialog(null, "電話番号の2番目の数字は7、8、9である必要があります。");
-                                return;
-                            } else if (phone.charAt(2) != '0') {
-                                JOptionPane.showMessageDialog(null, "電話番号の3番目の数字は0である必要があります。");
-                                return;
-                            } else {
-                                JOptionPane.showMessageDialog(null, "電話番号が無効です。11桁の電話番号を入力してください。");
-                                return;
-                            }
-                        }
-
-                        String emailRegex = "^[A-Za-z0-9]+[A-Za-z0-9]*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)$";
-                        if (!email.matches(emailRegex)) {
-                            JOptionPane.showMessageDialog(null, "メールは正しくない");
+                    char secondDigit = phone.charAt(1);
+                    if (!phone.matches("^0[987]{1}[0]{1}[0-9]{4}[0-9]{4}$")) {
+                        if (phone.charAt(0) != '0') {
+                            JOptionPane.showMessageDialog(null, "電話番号の１番目は０である必要があります");
                             return;
                         }
-                        if (!employeeId.matches("^TH[0-9]{6}$")){
-                            JOptionPane.showMessageDialog(null,"従業員IDはTHで始まり、その後に6桁の数字でなければなりません。");
+                        else if (!(secondDigit == '7' || secondDigit == '8' || secondDigit == '9')) {
+                            JOptionPane.showMessageDialog(null, "電話番号の2番目の数字は7、8、9である必要があります。");
                             return;
-                        }
-                        String dateFormat="\\d{4}-\\d{2}-\\d{2}";
-                        if (!dob.matches(dateFormat)) {
-                            JOptionPane.showMessageDialog(null, "生年月日はyyyy-MM-ddの形式で入力してください");
+                        } else if (phone.charAt(2) != '0') {
+                            JOptionPane.showMessageDialog(null, "電話番号の3番目の数字は0である必要があります。");
                             return;
-                        }
-                        // Kiểm tra xem JTextField có giá trị hay không
-                        if (employeeId.isEmpty()) {
-                            JOptionPane.showMessageDialog(null, "従業員IDを入力してください。");
-                            return;
-                        }
-                        if (!role_id.equals("1") && !role_id.equals("2")) {
-                            JOptionPane.showMessageDialog(null, "役割は1、2のいずれかである必要があります。");
-                            return;
-                        }
-
-
-                        sql="UPDATE employees SET employee_id = ?, name = ?, gender = ?, dob = ?, address = ?, email = ?, phone = ?, position = ?, role_id = ? WHERE employee_id = ? OR name = ? OR email = ? OR phone = ?";
-                        PreparedStatement preparedStatement=dbConnection.connection.prepareStatement(sql);
-                        preparedStatement.setString(1,employeeId);
-                        preparedStatement.setString(2, name);
-                        preparedStatement.setString(3, gender);
-                        preparedStatement.setString(4, dob);
-                        preparedStatement.setString(5, address);
-                        preparedStatement.setString(6, email);
-                        preparedStatement.setString(7, phone);
-                        preparedStatement.setString(8, position);
-                        preparedStatement.setString(9, role_id);
-                        preparedStatement.setString(10,searchTemp);
-                        preparedStatement.setString(11, searchTemp); // Đặt giá trị từ jtxInfor vào tham số thứ 10
-                        preparedStatement.setString(12, searchTemp); // Đặt giá trị từ jtxInfor vào tham số thứ 11
-                        preparedStatement.setString(13, searchTemp); // Đặt giá trị từ jtxInfor vào tham số thứ 12
-
-                        int rowsInserted=preparedStatement.executeUpdate();
-                        System.out.println("Update");
-                        System.out.println("Đây là dữ liệu JTextField" + searchTemp);
-                        boolean result=preparedStatement.execute();
-                        System.out.println("Đây là dữ liệu result" + result);
-                        System.out.println(name + gender + dob + address + email + phone + position + role_id + employeeId);
-                        // Kiểm tra kết quả và hiển thị thông báo
-                        if (rowsInserted > 0) {
-                            JOptionPane.showMessageDialog(null, "従業員の情報を更新しました");
-                            updateFrame.setVisible(false);
-                            updateFrame.dispose();
-                            searchFrame.setVisible(false);
-                            searchFrame.dispose();
-                            AdminUI adminUI=new AdminUI();
-                            adminUI.setVisible(true);
                         } else {
-                            JOptionPane.showMessageDialog(null, "従業員の情報を更新できませんでした");
+                            JOptionPane.showMessageDialog(null, "電話番号が無効です。11桁の電話番号を入力してください。");
+                            return;
                         }
-                    } catch (Exception ae) {
-                        ae.printStackTrace();
                     }
+
+                    String emailRegex = "^[A-Za-z0-9]+[A-Za-z0-9]*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)$";
+                    if (!email.matches(emailRegex)) {
+                        JOptionPane.showMessageDialog(null, "メールは正しくない");
+                        return;
+                    }
+                    if (!employeeId.matches("^TH[0-9]{6}$")){
+                        JOptionPane.showMessageDialog(null,"従業員IDはTHで始まり、その後に6桁の数字でなければなりません。");
+                        return;
+                    }
+                    String dateFormat="\\d{4}-\\d{2}-\\d{2}";
+                    if (!dob.matches(dateFormat)) {
+                        JOptionPane.showMessageDialog(null, "生年月日はyyyy-MM-ddの形式で入力してください");
+                        return;
+                    }
+                    // Kiểm tra xem JTextField có giá trị hay không
+                    if (employeeId.isEmpty()) {
+                        JOptionPane.showMessageDialog(null, "従業員IDを入力してください。");
+                        return;
+                    }
+                    if (!role_id.equals("1") && !role_id.equals("2")) {
+                        JOptionPane.showMessageDialog(null, "役割は1、2のいずれかである必要があります。");
+                        return;
+                    }
+
+
+                    sql="UPDATE employees SET employee_id = ?, name = ?, gender = ?, dob = ?, address = ?, email = ?, phone = ?, position = ?, role_id = ? WHERE employee_id = ? OR name = ? OR email = ? OR phone = ?";
+                    PreparedStatement preparedStatement=dbConnection.connection.prepareStatement(sql);
+                    preparedStatement.setString(1,employeeId);
+                    preparedStatement.setString(2, name);
+                    preparedStatement.setString(3, gender);
+                    preparedStatement.setString(4, dob);
+                    preparedStatement.setString(5, address);
+                    preparedStatement.setString(6, email);
+                    preparedStatement.setString(7, phone);
+                    preparedStatement.setString(8, position);
+                    preparedStatement.setString(9, role_id);
+                    preparedStatement.setString(10,searchTemp);
+                    preparedStatement.setString(11, searchTemp); // Đặt giá trị từ jtxInfor vào tham số thứ 10
+                    preparedStatement.setString(12, searchTemp); // Đặt giá trị từ jtxInfor vào tham số thứ 11
+                    preparedStatement.setString(13, searchTemp); // Đặt giá trị từ jtxInfor vào tham số thứ 12
+
+                    int rowsInserted=preparedStatement.executeUpdate();
+                    boolean result=preparedStatement.execute();
+                    System.out.println(name + gender + dob + address + email + phone + position + role_id + employeeId);
+                    // Kiểm tra kết quả và hiển thị thông báo
+                    if (rowsInserted > 0) {
+                        JOptionPane.showMessageDialog(null, "従業員の情報を更新しました");
+                        updateFrame.setVisible(false);
+                        updateFrame.dispose();
+                        searchFrame.setVisible(false);
+                        searchFrame.dispose();
+                        AdminUI adminUI=new AdminUI();
+                        adminUI.setVisible(true);
+                    } else {
+                        JOptionPane.showMessageDialog(null, "従業員の情報を更新できませんでした");
+                    }
+                } catch (Exception ae) {
+                    ae.printStackTrace();
                 }
             });
         });

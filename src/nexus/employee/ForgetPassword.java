@@ -1,33 +1,41 @@
 package nexus.employee;
 
+import nexus.employee.DataBase.DBConnection;
+
 import java.sql.*;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
-class ForgetPassword implements ActionListener {
-    JFrame jFrame;
+public class ForgetPassword implements ActionListener {
+    JFrame forgotPW,changePW;
     JTextField jtxID;
-    JLabel lblID, lblNew, lblConfirm, lblImage, lblKeyID;
+    JLabel lblID, lblNew, lblConfirm, lblImage,lblImage1, lblKeyID;
     JButton btnCheck, btnCancel, btnChange, btnReturn;
     JPasswordField jtxPConfirm, jtxPNew, jtxKeyID;
-
-    ForgetPassword() {
+    public String key_ID;
+    public ForgetPassword() {
         // Frame Details
-        jFrame=new JFrame("FORGOT PASSWORD");
-        jFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        jFrame.setResizable(false);
-        jFrame.setLayout(null);
-        jFrame.setBackground(Color.green);
-        jFrame.setLayout(null);
+        forgotPW=new JFrame("FORGOT PASSWORD");
+        forgotPW.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        forgotPW.setResizable(false);
+        forgotPW.setLayout(null);
+        forgotPW.setBackground(Color.green);
+        forgotPW.setLayout(null);
 
         // Background Image
+        lblImage1=new JLabel();
+        lblImage1.setBounds(0, 0, 900, 600);
+        lblImage1.setLayout(null);
+        ImageIcon img1=new ImageIcon("src/nexus/employee/images/forgetPassword.png");
+        lblImage1.setIcon(img1);
+
         lblImage=new JLabel();
         lblImage.setBounds(0, 0, 900, 600);
         lblImage.setLayout(null);
         ImageIcon img=new ImageIcon("src/nexus/employee/images/forgetPassword.png");
         lblImage.setIcon(img);
-        jFrame.add(lblImage);
+        forgotPW.add(lblImage);
 
         lblID=new JLabel("KEY ID:");
         lblID.setVisible(true);
@@ -127,14 +135,28 @@ class ForgetPassword implements ActionListener {
         jtxKeyID.setVisible(false);
         btnChange.setVisible(false);
 
-        jFrame.setSize(900, 600);
-        jFrame.setLocation(300, 200);
-        jFrame.setVisible(true);
+        forgotPW.setSize(900, 600);
+        forgotPW.setLocation(300, 200);
+        forgotPW.setVisible(true);
+
+
+        changePW=new JFrame("パスワードを変更する");
+        changePW.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        changePW.setResizable(false);
+        changePW.setLayout(null);
+        changePW.setBackground(Color.green);
+        changePW.setLayout(null);
+        changePW.setSize(900, 600);
+        changePW.setLocation(300, 200);
+        changePW.setVisible(false);
+        changePW.add(lblImage1);
+        key_ID=String.valueOf(MainUI.keyID);
+        System.out.println(key_ID);
     }
 
     public void actionPerformed(ActionEvent ae) {
         if (ae.getSource() == btnCancel) {
-            jFrame.dispose();
+            forgotPW.dispose();
             MainUI mainUI=new MainUI();
         }
 
@@ -159,23 +181,12 @@ class ForgetPassword implements ActionListener {
                         }
                     }
                     if (i == 0) {
-                        jFrame.dispose();
+                        forgotPW.dispose();
                         JOptionPane.showMessageDialog(null, "キーIDが存在しません");
                         ForgetPassword fp=new ForgetPassword();
                     }
                     if (i == 1) {
-                        lblNew.setVisible(true);
-                        lblConfirm.setVisible(true);
-                        lblKeyID.setVisible(true);
-                        jtxPNew.setVisible(true);
-                        jtxPConfirm.setVisible(true);
-                        jtxKeyID.setVisible(true);
-                        btnChange.setVisible(true);
-                        btnReturn.setVisible(true);
-                        lblID.setVisible(false);
-                        jtxID.setVisible(false);
-                        btnCheck.setVisible(false);
-                        btnCancel.setVisible(false);
+                        showChangePasswordFrame();
                     }
                 }
             } catch (SQLException e) {
@@ -188,7 +199,6 @@ class ForgetPassword implements ActionListener {
             String newpassword=jtxPNew.getText();
             String confirmpassword=jtxPConfirm.getText();
             String newkeyid=jtxKeyID.getText();
-
             if (newpassword.isEmpty()) {
                 JOptionPane.showMessageDialog(null, "新しいパスワードを入力してください。");
             } else if (confirmpassword.isEmpty()) {
@@ -198,7 +208,7 @@ class ForgetPassword implements ActionListener {
             } else if (!isValidKeyID(newkeyid)) {
                 JOptionPane.showMessageDialog(null, "キーIDは6桁の数字でなければなりません。");
             } else if (!isValidPassword(newpassword)) {
-                JOptionPane.showMessageDialog(null, "パスワードは少なくとも8文字で、¥n" +
+                JOptionPane.showMessageDialog(null, "パスワードは少なくとも8文字で、" +
                         "少なくとも1つの大文字の文字と1つの数字を含める必要があります.");
             } else if (!newpassword.equals(confirmpassword)) {
                 JOptionPane.showMessageDialog(null, "パスワードが同じではありません");
@@ -222,7 +232,7 @@ class ForgetPassword implements ActionListener {
                         int rowsUpdated=preparedStatement.executeUpdate();
                         if (rowsUpdated > 0) {
                             JOptionPane.showMessageDialog(null, "パスワードの変更に成功しました");
-                            jFrame.dispose();
+                            forgotPW.dispose();
                             MainUI mainUI=new MainUI();
                         } else {
                             JOptionPane.showMessageDialog(null, "パスワードの変更に失敗しました");
@@ -235,7 +245,7 @@ class ForgetPassword implements ActionListener {
             }
         }
         if (ae.getSource() == btnReturn) {
-            jFrame.dispose();
+            forgotPW.dispose();
             MainUI mainUI=new MainUI();
             mainUI.showLoginFrame();
         }
@@ -276,7 +286,24 @@ class ForgetPassword implements ActionListener {
         ForgetPassword f=new ForgetPassword();
     }
 
+    public void showForgetPasswordFrame() {
+        forgotPW.setVisible(true);
+    }
+    public void showChangePasswordFrame() {
+        lblNew.setVisible(true);
+        lblConfirm.setVisible(true);
+        lblKeyID.setVisible(true);
+        jtxPNew.setVisible(true);
+        jtxPConfirm.setVisible(true);
+        jtxKeyID.setVisible(true);
+        btnChange.setVisible(true);
+        btnReturn.setVisible(true);
+        lblID.setVisible(false);
+        jtxID.setVisible(false);
+        btnCheck.setVisible(false);
+        btnCancel.setVisible(false);
+        changePW.setVisible(true);
+    }
     public void setVisible(boolean b) {
-        jFrame.setVisible(true);
     }
 }
