@@ -1,4 +1,5 @@
 package nexus.employee;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -10,26 +11,26 @@ public class Welcome extends JFrame {
     private Timer timer;
 
     public Welcome() {
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setSize(900, 600);
         setLocation(300, 200);
         setLayout(new BorderLayout());
         setUndecorated(true);
 
         // Tạo một bảng điều khiển để chứa hình nền, nhãn trạng thái và tiến trình
-        JPanel contentPane = new JPanel();
+        JPanel contentPane=new JPanel();
         contentPane.setLayout(new BorderLayout());
 
         // Tạo hình nền
-        JLabel background = new JLabel(new ImageIcon("src/nexus/employee/images/welcome.png"));
+        JLabel background=new JLabel(new ImageIcon("src/nexus/employee/images/welcome.png"));
         contentPane.add(background, BorderLayout.CENTER);
 
         // Tạo panel cho tiến trình và nhãn trạng thái
-        JPanel statusPanel = new JPanel(new BorderLayout());
+        JPanel statusPanel=new JPanel(new BorderLayout());
         statusPanel.setOpaque(false); // Cho phép nền của statusPanel hiển thị hình nền của background
 
         // Tạo nhãn trạng thái
-        lblStatus = new JLabel("   アプリケーションを起動しています...");
+        lblStatus=new JLabel("   アプリケーションを起動しています...");
         lblStatus.setFont(new Font("Arial", Font.PLAIN, 13));
         lblStatus.setPreferredSize(new Dimension(900, 28));                // Đặt kích thước cho lblStatus
         lblStatus.setOpaque(true);                                                      // Cho phép lblStatus hiển thị màu nền
@@ -37,7 +38,7 @@ public class Welcome extends JFrame {
         statusPanel.add(lblStatus, BorderLayout.NORTH);
 
         // Progress bar　とは　
-        progressBar = new JProgressBar(0, 100);
+        progressBar=new JProgressBar(0, 100);
         progressBar.setStringPainted(true);                                              // Cho phép hiển thị tiến trình
         progressBar.setPreferredSize(new Dimension(900, 30));               // Đặt kích thước cho progressBar
         progressBar.setBackground(new Color(148, 255, 178));                    // Đặt màu nền cho progressBar là #CDFFD8
@@ -51,8 +52,8 @@ public class Welcome extends JFrame {
         setContentPane(contentPane);
 
         // Tạo timer
-        timer = new Timer(50, new ActionListener() {
-            int i = -1;
+        timer=new Timer(10, new ActionListener() {
+            int i=-1;
 
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -74,21 +75,22 @@ public class Welcome extends JFrame {
                 } else {
                     lblStatus.setText("読み込み完了");
                     timer.stop();
-                    contentPane.setVisible(false);
-                    contentPane.disable();
-                    MainUI mainUI = new MainUI();
+                    contentPane.setVisible(false); // Ẩn đi cửa sổ Welcome
+                    MainUI mainUI=new MainUI();
                     mainUI.setVisible(true);
+                    dispose(); // Đóng cửa sổ Welcome hoàn toàn
                 }
             }
-        });
 
+        });
         // Start the timer
         timer.start();
     }
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
-            Welcome progressDialog = new Welcome();
+            Welcome progressDialog=new Welcome();
+            progressDialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
             progressDialog.setVisible(true);
         });
     }

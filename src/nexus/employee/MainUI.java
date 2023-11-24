@@ -1,4 +1,5 @@
 package nexus.employee;
+
 import nexus.employee.DataBase.DBConnection;
 
 import javax.swing.*;
@@ -11,11 +12,11 @@ import java.sql.ResultSet;
 public class MainUI extends JFrame implements ActionListener {
     public static int keyID;
     // Các component cho FrontPage
-    JLabel jlbImgFrontPage,jlbImgLogin,lblTitle,jlbUsername,jlbPassword;
-    JButton btnLogin,btnLogin1,btnCancel,btnForgotPassword;
+    JLabel jlbImgFrontPage, jlbImgLogin, lblTitle, jlbUsername, jlbPassword;
+    JButton btnLogin, btnLogin1, btnCancel, btnForgotPassword;
     JTextField jtfUsername;
     JPasswordField jPasswordField;
-    JFrame frontPage,login;
+    JFrame frontPage, login;
     public static String username;
     public static String password;
     private int roleId;
@@ -82,21 +83,21 @@ public class MainUI extends JFrame implements ActionListener {
 
         jlbUsername=new JLabel("ユーザー名");
         jlbUsername.setBounds(245, 300, 120, 30);        //Đặt vị trí và kích thước cho jlbUsername
-        jlbUsername.setFont(new Font("Times_New_Roman",Font.BOLD,20));  //Đặt font cho jlbUsername
+        jlbUsername.setFont(new Font("Times_New_Roman", Font.BOLD, 20));  //Đặt font cho jlbUsername
         jlbUsername.setForeground(Color.white);                             //Đặt màu chữ cho jlbUsername
         jlbImgLogin.add(jlbUsername);                                             //Thêm jlbUsername vào login
 
         // Thiết lập jlbPassword
         jlbPassword=new JLabel("パスワード");
         jlbPassword.setBounds(245, 350, 120, 30);              //Đặt vị trí và kích thước cho jlbPassword
-        jlbPassword.setFont(new Font("Times_New_Roman",Font.BOLD,20)); //Đặt font cho jlbPassword
+        jlbPassword.setFont(new Font("Times_New_Roman", Font.BOLD, 20)); //Đặt font cho jlbPassword
         jlbPassword.setForeground(Color.white);                                   //Đặt màu chữ cho jlbPassword
         jlbImgLogin.add(jlbPassword);                                             //Thêm jlbPassword vào login
 
         // Thiết lập tfUsername
         jtfUsername=new JTextField();
         jtfUsername.setBounds(350, 300, 180, 30);               //Đặt vị trí và kích thước cho tfUsername
-        jtfUsername.setFont(new Font("Times_New_Roman",Font.PLAIN,18)); //Đặt font cho tfUsername
+        jtfUsername.setFont(new Font("Times_New_Roman", Font.PLAIN, 18)); //Đặt font cho tfUsername
         jtfUsername.setForeground(Color.black);                                     //Đặt màu chữ cho tfUsername
         jtfUsername.setBackground(Color.white);                                     //Đặt màu nền cho tfUsername
         jlbImgLogin.add(jtfUsername);                                               //Thêm tfUsername vào login
@@ -104,7 +105,7 @@ public class MainUI extends JFrame implements ActionListener {
         // Thiết lập tfPassword
         jPasswordField=new JPasswordField();
         jPasswordField.setBounds(350, 350, 180, 30);            //Đặt vị trí và kích thước cho tfPassword
-        jPasswordField.setFont(new Font("Times_New_Roman",Font.PLAIN,18));   //Đặt font cho tfPassword
+        jPasswordField.setFont(new Font("Times_New_Roman", Font.PLAIN, 18));   //Đặt font cho tfPassword
         jPasswordField.setForeground(Color.black);                                 //Đặt màu chữ cho tfPassword
         jPasswordField.setBackground(Color.white);                                 //Đặt màu nền cho tfPassword
         jlbImgLogin.add(jPasswordField);                                                 //Thêm tfPassword vào login
@@ -112,12 +113,10 @@ public class MainUI extends JFrame implements ActionListener {
         // Thiết lập nút Login
         btnLogin1=new JButton("ログイン");
         btnLogin1.setBounds(550, 298, 130, 35);         //Đặt vị trí và kích thước cho btnLogin
-        btnLogin1.setFont(new Font("Times_New_Roman",Font.BOLD,18));       //Đặt font cho btnLogin
+        btnLogin1.setFont(new Font("Times_New_Roman", Font.BOLD, 18));       //Đặt font cho btnLogin
         btnLogin1.setContentAreaFilled(true);
         btnLogin1.setOpaque(false);
         btnLogin1.setBackground(Color.white);                              //Đặt màu nền cho btnLogin
-//        btnLogin1.setForeground(new Color(82, 113, 255));        //Đặt màu chữ cho btnLogin  ＜ーーー
-//        btnLogin1.setForeground(Color.BLACK);        //Đặt màu chữ cho btnLogin  ＜ーーー
 
         btnLogin1.setBorderPainted(true); //Đặt nút btnLogin trong suốt
         btnLogin1.addActionListener(this);                              //Thêm sự kiện cho btnLogin
@@ -128,7 +127,7 @@ public class MainUI extends JFrame implements ActionListener {
         btnCancel.setBounds(550, 348, 130, 35);         //Đặt vị trí và kích thước cho btnCancel
         btnCancel.setBackground(Color.black);                              //Đặt màu nền cho btnCancel
         btnCancel.setForeground(Color.BLACK);                              //Đặt màu chữ cho btnCancel
-        btnCancel.setFont(new Font("Times_New_Roman",Font.BOLD,18));       //Đặt font cho btnCancel
+        btnCancel.setFont(new Font("Times_New_Roman", Font.BOLD, 18));       //Đặt font cho btnCancel
         btnCancel.addActionListener(this);                              //Thêm sự kiện cho btnCancel
         jlbImgLogin.add(btnCancel);                                              //Thêm btnCancel vào login
 
@@ -137,56 +136,52 @@ public class MainUI extends JFrame implements ActionListener {
         btnForgotPassword.setBounds(340, 415, 200, 35); //Đặt vị trí và kích thước cho btnForgotPassword
         btnForgotPassword.setBackground(Color.black);                      //Đặt màu nền cho btnForgotPassword
         btnForgotPassword.setForeground(Color.BLACK);                      //Đặt màu chữ cho btnForgotPassword
-        btnForgotPassword.setFont(new Font("Times_New_Roman",Font.BOLD,18)); //Đặt font cho btnForgotPassword
+        btnForgotPassword.setFont(new Font("Times_New_Roman", Font.BOLD, 18)); //Đặt font cho btnForgotPassword
         btnForgotPassword.addActionListener(this);                      //Thêm sự kiện cho btnForgotPassword
         jlbImgLogin.add(btnForgotPassword);                                      //Thêm btnForgotPassword vào login
-
     }
 
-    public static int getKeyIDFromDB(String username,String password){
+    public static int getKeyIDFromDB(String username, String password) {
         int keyID=-1;
-        try{
-         DBConnection dbConnection=new DBConnection();
-            String sql = "SELECT id FROM login WHERE username = ? AND password = ?";
-            PreparedStatement preparedStatement = dbConnection.connection.prepareStatement(sql);
+        try {
+            DBConnection dbConnection=new DBConnection();
+            String sql="SELECT id FROM login WHERE username = ? AND password = ?";
+            PreparedStatement preparedStatement=dbConnection.connection.prepareStatement(sql);
             preparedStatement.setString(1, username);
             preparedStatement.setString(2, password);
-            ResultSet resultSet = preparedStatement.executeQuery();
+            ResultSet resultSet=preparedStatement.executeQuery();
             if (resultSet.next()) {
-                MainUI.keyID = resultSet.getInt("id");
+                MainUI.keyID=resultSet.getInt("id");
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return keyID;
     }
+
     public void actionPerformed(ActionEvent ae) { //Xử lý sự kiện cho các nút
         if (ae.getSource() == btnLogin1) {
             {
                 try {
                     DBConnection dbConnection=new DBConnection();
-                    char[] passwordChars = jPasswordField.getPassword();
+                    char[] passwordChars=jPasswordField.getPassword();
                     username=jtfUsername.getText();
-                    password = String.valueOf(passwordChars);
-                    int keyID=getKeyIDFromDB(username,password);
+                    password=String.valueOf(passwordChars);
                     String sql="SELECT * FROM login WHERE username = '" + username + "' AND password = '" + password + "'";   //Lấy dữ liệu từ database
                     ResultSet resultSet=dbConnection.statement.executeQuery(sql);
-                    System.out.println(username+ password);
                     if (resultSet.next()) {          //Kiểm tra dữ liệu nhập vào có trùng với dữ liệu trong database hay không
                         // Kiểm tra và xử lý phân quyền dựa trên roleId
-                        roleId = resultSet.getInt("role_id");
+                        roleId=resultSet.getInt("role_id");
                         JOptionPane.showMessageDialog(null, "ログイン成功");
-                        getKeyIDFromDB(username,password);
+                        getKeyIDFromDB(username, password);
                         EmployeeReader employeeReader=new EmployeeReader();
                         if (roleId == 1) {
                             // Nếu là admin thì hiển thị màn hình AdminUI
                             employeeReader.showAdminUI();
                             login.dispose();
                             this.setVisible(false);
-
                         } else if (roleId == 2) {
                             // Nếu là nhân viên thì hiển thị màn hình EmployeeUI
-//                            JOptionPane.showMessageDialog(null, "ログイン成功");
                             employeeReader.showEmployeeUI();
                             login.dispose();
                             this.setVisible(false);
@@ -215,12 +210,15 @@ public class MainUI extends JFrame implements ActionListener {
             this.dispose();
         }
     }
+
     public void showLoginFrame() {
         login.setVisible(true);
     }
+
     public void showFrontPage() {
         frontPage.setVisible(true);
     }
+
     public static void main(String[] args) {
         // Tạo giao diện
         MainUI mainUI=new MainUI();

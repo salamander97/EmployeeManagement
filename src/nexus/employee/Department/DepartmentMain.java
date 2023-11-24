@@ -7,6 +7,7 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.sql.*;
 import java.text.SimpleDateFormat;
+import java.util.Objects;
 import java.util.Vector;
 
 public class DepartmentMain {
@@ -22,11 +23,12 @@ public class DepartmentMain {
     private void initialize() {
         frame = new JFrame("Employee Information");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setBounds(0, 0, 900, 600);
+        frame.setSize(900, 600);
+        frame.setLocation(300, 200);
         ImageIcon i=new ImageIcon("src/nexus/employee/images/mainController.png");
         JLabel jlbImage=new JLabel();
         jlbImage.setBounds(0, 0, 900, 600);
-        jlbImage.setLayout(null);
+//        jlbImage.setLayout(null);
         jlbImage.setIcon(i);
         frame.add(jlbImage);
         // Tạo combobox để chọn phòng ban
@@ -34,14 +36,17 @@ public class DepartmentMain {
 
         departmentComboBox = new JComboBox<>();
         departmentComboBox.setModel(new DefaultComboBoxModel<>(new String[]{"Software Development", "Testing", "Project Management", "UI/UX Design", "Marketing"}));
-        departmentComboBox.setBounds(300, 350, 120, 40);
         departmentComboBox.setFont(new Font("Times_New_Roman", Font.BOLD, 18));
+        departmentComboBox.setBounds(0, 30, 270, 150);
+        departmentComboBox.revalidate();
+        departmentComboBox.repaint();
+
         departmentComboBox.setForeground(Color.BLACK);
         departmentComboBox.setBackground(Color.LIGHT_GRAY);
         jlbImage.add(departmentComboBox);
 
         JButton searchButton = new JButton("Search");
-        searchButton.setBounds(490, 350, 120, 40);
+        searchButton.setBounds(340, 150, 120, 40);
         searchButton.setFont(new Font("Times_New_Roman", Font.BOLD, 18));
         searchButton.setForeground(Color.BLACK);
         searchButton.setBackground(Color.LIGHT_GRAY);
@@ -79,10 +84,12 @@ public class DepartmentMain {
         tableModel.addColumn("Address");
         tableModel.addColumn("Email");
         tableModel.addColumn("Phone");
-        tableModel.addColumn("Salary");
-        tableModel.addColumn("Country");
+        tableModel.addColumn("Position");
 
-        searchButton.addActionListener(e -> showEmployeeInformationTable());
+        searchButton.addActionListener(e -> {
+            String selectedDepartment = Objects.requireNonNull(departmentComboBox.getSelectedItem()).toString();
+            displayEmployeesByDepartment(selectedDepartment);
+        });
 
         editButton.addActionListener(e -> {
             int selectedRow = employeeTable.getSelectedRow();
@@ -102,24 +109,24 @@ public class DepartmentMain {
             }
         });
     }
-    private void showEmployeeInformationTable() {
-        // Create a new JFrame to display the employee information table
-        JFrame employeeInfoFrame = new JFrame("Employee Information Table");
-        employeeInfoFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        employeeInfoFrame.setBounds(100, 100, 800, 400);
-
-        // Create a JTable to display employee information
-        JTable employeeTable = new JTable(tableModel);
-        JScrollPane scrollPane = new JScrollPane(employeeTable);
-        employeeInfoFrame.add(scrollPane, BorderLayout.CENTER);
-
-        // Populate the JTable with employee data based on the selected department
-        String selectedDepartment = departmentComboBox.getSelectedItem().toString();
-        displayEmployeesByDepartment(selectedDepartment);
-
-        // Show the frame with the employee information table
-        employeeInfoFrame.setVisible(true);
-    }
+//    private void showEmployeeInformationTable() {
+//        // Create a new JFrame to display the employee information table
+//        JFrame employeeInfoFrame = new JFrame("Employee Information Table");
+//        employeeInfoFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+//        employeeInfoFrame.setBounds(100, 100, 800, 400);
+//
+//        // Create a JTable to display employee information
+//        JTable employeeTable = new JTable(tableModel);
+//        JScrollPane scrollPane = new JScrollPane(employeeTable);
+//        employeeInfoFrame.add(scrollPane, BorderLayout.CENTER);
+//
+//        // Populate the JTable with employee data based on the selected department
+//        String selectedDepartment = Objects.requireNonNull(departmentComboBox.getSelectedItem()).toString();
+//        displayEmployeesByDepartment(selectedDepartment);
+//
+//        // Show the frame with the employee information table
+//        employeeInfoFrame.setVisible(true);
+//    }
 
     private void openEditDialog(int selectedRow) {
         // Lấy thông tin từ dòng được chọn
@@ -129,8 +136,7 @@ public class DepartmentMain {
         String address = (String) tableModel.getValueAt(selectedRow, 3);
         String email = (String) tableModel.getValueAt(selectedRow, 4);
         String phone = (String) tableModel.getValueAt(selectedRow, 5);
-        int salary = (int) tableModel.getValueAt(selectedRow, 6);
-        String country = (String) tableModel.getValueAt(selectedRow, 7);
+        String position = (String) tableModel.getValueAt(selectedRow, 6);
 
         // Tạo cửa sổ dialog
         JDialog editDialog = new JDialog(frame, "Edit Employee");
@@ -144,8 +150,7 @@ public class DepartmentMain {
         JTextField addressField = createTextField(address, true);
         JTextField emailField = createTextField(email, true);
         JTextField phoneField = createTextField(phone, true);
-        JTextField salaryField = createTextField(String.valueOf(salary), true);
-        JTextField countryField = createTextField(country, true);
+        JTextField positionField = createTextField(position, true);
 
         // Thêm các trường nhập liệu vào cửa sổ dialog
         editDialog.add(new JLabel("Name:"));
@@ -160,10 +165,8 @@ public class DepartmentMain {
         editDialog.add(emailField);
         editDialog.add(new JLabel("Phone:"));
         editDialog.add(phoneField);
-        editDialog.add(new JLabel("Salary:"));
-        editDialog.add(salaryField);
-        editDialog.add(new JLabel("Country:"));
-        editDialog.add(countryField);
+        editDialog.add(new JLabel("Position:"));
+        editDialog.add(positionField);
 
         // Tạo nút "Save" để lưu thông tin chỉnh sửa
         JButton saveButton = new JButton("Save");
@@ -174,10 +177,10 @@ public class DepartmentMain {
             String newAddress = addressField.getText();
             String newEmail = emailField.getText();
             String newPhone = phoneField.getText();
-            int newSalary = Integer.parseInt(salaryField.getText());
-            String newCountry = countryField.getText();
+            String newPosition = positionField.getText();
 
-            updateEmployeeInDatabase(selectedRow, newName, newGender, newDob, newAddress, newEmail, newPhone, newSalary, newCountry);
+//            updateEmployeeInDatabase(selectedRow, newName, newGender, newDob, newAddress, newEmail, newPhone, newPosition);
+            updateEmployeeInDatabase(selectedRow, newName, newGender, newDob, newAddress, newEmail, newPhone, newPosition);
             editDialog.dispose();
         });
 
@@ -194,13 +197,13 @@ public class DepartmentMain {
         return textField;
     }
 
-    private void updateEmployeeInDatabase(int selectedRow, String name, String gender, String dob, String address, String email, String phone, int salary, String country) {
+    private void updateEmployeeInDatabase(int selectedRow, String name, String gender, String dob, String address, String email, String phone, String position) {
         // Sử dụng DBConnection để truy vấn cơ sở dữ liệu
         DBConnection dbConnection = new DBConnection();
         Connection connection = dbConnection.connection;
         if (connection != null) {
             try {
-                String query = "UPDATE Employees SET name = ?, gender = ?, dob = ?, address = ?, email = ?, phone = ?, salary = ?, country = ? WHERE name = ?";
+                String query = "UPDATE Employees SET name = ?, gender = ?, dob = ?, address = ?, email = ?, phone = ?, position = ? WHERE name = ?";
                 PreparedStatement statement = connection.prepareStatement(query);
 
                 statement.setString(1, name);
@@ -209,9 +212,8 @@ public class DepartmentMain {
                 statement.setString(4, address);
                 statement.setString(5, email);
                 statement.setString(6, phone);
-                statement.setInt(7, salary);
-                statement.setString(8, country);
-                statement.setString(9, name);
+                statement.setString(7, position);
+                statement.setString(8, name);
 
                 statement.executeUpdate();
                 statement.close();
@@ -223,8 +225,7 @@ public class DepartmentMain {
                 tableModel.setValueAt(address, selectedRow, 3);
                 tableModel.setValueAt(email, selectedRow, 4);
                 tableModel.setValueAt(phone, selectedRow, 5);
-                tableModel.setValueAt(salary, selectedRow, 6);
-                tableModel.setValueAt(country, selectedRow, 7);
+                tableModel.setValueAt(position, selectedRow, 6);
 
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -242,7 +243,8 @@ public class DepartmentMain {
         Connection connection = dbConnection.connection;
         if (connection != null) {
             try {
-                String query = "SELECT * FROM Employees WHERE departmentID = ?";
+
+                String query = "SELECT * FROM employees WHERE departments = ?";
                 PreparedStatement statement = connection.prepareStatement(query);
 
                 int departmentID = getDepartmentIDByName(department, connection);
@@ -252,6 +254,7 @@ public class DepartmentMain {
                 ResultSet resultSet = statement.executeQuery();
 
                 tableModel.setRowCount(0);
+//                tableModel.addRow(rowData);
 
                 while (resultSet.next()) {
                     String name = resultSet.getString("name");
@@ -260,8 +263,7 @@ public class DepartmentMain {
                     String address = resultSet.getString("address");
                     String email = resultSet.getString("email");
                     String phone = resultSet.getString("phone");
-                    int salary = resultSet.getInt("salary");
-                    String country = resultSet.getString("country");
+                    String position = resultSet.getString("position");
 
                     Vector<Object> row = new Vector<>();
                     row.add(name);
@@ -270,8 +272,7 @@ public class DepartmentMain {
                     row.add(address);
                     row.add(email);
                     row.add(phone);
-                    row.add(salary);
-                    row.add(country);
+                    row.add(position);
                     tableModel.addRow(row);
                 }
 
@@ -291,7 +292,8 @@ public class DepartmentMain {
     private int getDepartmentIDByName(String departmentName, Connection connection) {
         int departmentID = -1;
         try {
-            String query = "SELECT DepartmentID FROM Department WHERE DepartmentName = ?";
+//            String query = "SELECT DepartmentID FROM Departments WHERE DepartmentName = ?";
+            String query = "SELECT DepartmentID FROM Departments WHERE DepartmentName = ?";
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setString(1, departmentName);
 
@@ -314,11 +316,12 @@ public class DepartmentMain {
         Connection connection = dbConnection.connection;
         if (connection != null) {
             try {
-                String query = "DELETE FROM Employees WHERE name = ?";
+                String query = "DELETE FROM employees WHERE name = ?";
                 PreparedStatement statement = connection.prepareStatement(query);
                 statement.setString(1, name);
                 statement.executeUpdate();
                 statement.close();
+                System.out.println("Deleted employee " + name);
 
                 tableModel.removeRow(selectedRow); // Xóa dòng trong bảng
 

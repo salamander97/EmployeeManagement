@@ -21,6 +21,7 @@ public class AdminUI implements ActionListener {
     public AdminUI() {
         MainUI.getKeyIDFromDB(MainUI.username, MainUI.password);
         keyID = MainUI.keyID;
+
         adminJf=new JFrame("メイン　ページ");
         //Background Image
         jlbImage=new JLabel();
@@ -123,7 +124,6 @@ public class AdminUI implements ActionListener {
                             PreparedStatement preparedStatement = dbConnection.connection.prepareStatement(sql);
                             preparedStatement.setString(1, newPassword);
                             preparedStatement.setInt(2, keyID);
-
                             int rowsAffected = preparedStatement.executeUpdate();
 
                             if (rowsAffected > 0) {

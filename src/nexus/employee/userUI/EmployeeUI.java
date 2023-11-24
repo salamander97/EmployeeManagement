@@ -335,6 +335,7 @@ public class EmployeeUI {
                     jlbSRoleID.setVisible(false);
                     jtxInforSearch.setVisible(false);
                     jlbInfor.setVisible(false);
+                    btnChangePW.setVisible(false);
                     jlbFace.setVisible(true);
                     btnLogout.setVisible(false);
                     btnView.setVisible(false);
@@ -380,6 +381,7 @@ public class EmployeeUI {
             jlbImage.setIcon(img);
             btnSearchInfor.setVisible(true);
             btnCancel.setVisible(true);
+            btnChangePW.setVisible(false);
             jlbInfor.setVisible(true);
             jtxInforSearch.setVisible(true);
             jlbTitle.setVisible(false);
@@ -411,9 +413,11 @@ public class EmployeeUI {
             jlbImage.setIcon(i);
             btnView.setVisible(true);
             btnLogout.setVisible(true);
+            btnChangePW.setVisible(true);
 
             btnSearchInfor.setVisible(false);
             btnCancel.setVisible(false);
+
             jlbInfor.setVisible(false);
             jtxInforSearch.setVisible(false);
             jlbTitle.setVisible(false);

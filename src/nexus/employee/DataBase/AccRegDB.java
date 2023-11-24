@@ -106,8 +106,25 @@ public class AccRegDB {
                 JOptionPane.showMessageDialog(regFrame, "役職は1か2で入力してください。\n1は管理者、2は従業員です");
                 return;
             }
+            if(!username.matches("(?i).* \\badmin\\b.*")){
+                JOptionPane.showMessageDialog(regFrame, "他のユーザー名を入力してください。");
+                return;
+            }
                 DBConnection dbConnection=new DBConnection();
-                System.out.println(id +  username + password+roleId );
+                String checkId="SELECT id FROM login WHERE id=?";
+                String checkUsername="SELECT username FROM login WHERE username=?";
+                PreparedStatement checkUsernameStatement=dbConnection.connection.prepareStatement(checkUsername);
+                checkUsernameStatement.setString(1, username);
+                PreparedStatement checkIdStatement=dbConnection.connection.prepareStatement(checkId);
+                checkIdStatement.setString(1, id);
+                if(checkIdStatement.executeQuery().next()){
+                    JOptionPane.showMessageDialog(regFrame, "このIDは既に存在します。");
+                    return;
+                }
+                if(checkUsernameStatement.executeQuery().next()){
+                    JOptionPane.showMessageDialog(regFrame, "このユーザー名は既に存在します。");
+                    return;
+                }
                 String sql="INSERT INTO login(id, username, password, role_id) VALUES(?,?,?,?)";
                 PreparedStatement preparedStatement=dbConnection.connection.prepareStatement(sql);
                 preparedStatement.setString(1, id);
@@ -115,6 +132,7 @@ public class AccRegDB {
                 preparedStatement.setString(3, password);
                 preparedStatement.setString(4, roleId);
                 preparedStatement.executeUpdate();
+                JOptionPane.showMessageDialog(regFrame, "アカウントを作成することに成功しました！");
                 System.out.println("アカウントを作成することに成功しました！");
                 dbConnection.closeConnection();
                 regFrame.setVisible(false);
@@ -125,20 +143,6 @@ public class AccRegDB {
             }
         });
     }
-
-//    private static void addUserToDatabase(DBConnection dbConnection, String username,
-//                                          String password, String id, String roleId) {
-//        try {
-//            //Tạo câu lệnh truy vấn thêm tài khoản người dùng
-//            //ユーザーアカウントを追加するクエリを作成する
-//            String sql="INSERT INTO login(id, username, password, role_id) VALUES(?,?,?,?)";
-//            System.out.println(id + roleId + username + password);
-//            System.out.println("Thêm người dùng mới thành công!");
-//
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//    }
 
     public static void main(String[] args) {
         showRegFrame();
