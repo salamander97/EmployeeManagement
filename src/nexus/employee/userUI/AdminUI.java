@@ -64,6 +64,7 @@ public class AdminUI implements ActionListener {
         btnUpdate.setBackground(Color.LIGHT_GRAY);
         jlbImage.add(btnUpdate);
 
+        //5.Registration button
         btnReg=new JButton("登録");
         btnReg.setBounds(300, 420, 120, 40);
         btnReg.setFont(new Font("Times_New_Roman", Font.BOLD,18));
